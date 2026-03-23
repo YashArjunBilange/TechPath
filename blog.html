@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
+  <meta name="description" content="Blog - AI Engineering, Industry Insights & Career Growth Tips">
+  <title>Blog | TechPath - AI Engineering Resources</title>
+  <link rel="icon" type="image/png" href="https://via.placeholder.com/32/3b82f6/ffffff?text=AI">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/blog.css">
+</head>
+<body>
+  <canvas id="neural-canvas" class="neural-bg" aria-hidden="true"></canvas>
+
+  <header class="header glass-header">
+    <div class="container header-container">
+      <div class="logo">
+        <i class="fas fa-robot" aria-hidden="true"></i>
+        <span>TechPath<span class="dot">.</span></span>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+      <nav class="navbar" id="navbar">
+        <ul class="nav-menu">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="first-year.html" class="nav-link">First Year</a></li>
+          <li><a href="second-year.html" class="nav-link">Second Year</a></li>
+          <li><a href="third-year.html" class="nav-link">Third Year</a></li>
+          <li><a href="fourth-year.html" class="nav-link">Fourth Year</a></li>
+          <li><a href="blog.html" class="nav-link active">Blog</a></li>
+          <li><a href="#" class="nav-link" id="resume-trigger">Resume Builder</a></li>
+          <li>
+            <button id="login-btn" class="nav-link btn-login">Login</button>
+          </li>
+          <li class="user-menu-container">
+            <button id="user-menu-btn" class="nav-link user-menu-btn" style="display:none;">👤 User</button>
+            <div id="user-dropdown" class="user-dropdown" style="display:none;">
+              <a href="#" onclick="showStudentDetails(event)"><i class="fas fa-user-circle"></i> Student Profile</a>
+              <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- BLOG HERO SECTION -->
+    <section class="blog-hero">
+      <div class="container">
+        <h1 class="blog-title">
+          <i class="fas fa-blog"></i> TechPath Blog
+        </h1>
+        <p class="blog-subtitle">Industry insights, career growth tips, and AI engineering deep dives</p>
+      </div>
+    </section>
+
+    <!-- SEARCH & FILTER SECTION -->
+    <section class="blog-controls">
+      <div class="container">
+        <div class="search-filter-wrapper">
+          <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="search-input" placeholder="Search articles..." class="search-input">
+          </div>
+          <div class="filter-tags">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="ai">
+              <i class="fas fa-brain"></i> AI
+            </button>
+            <button class="filter-btn" data-filter="career">
+              <i class="fas fa-briefcase"></i> Career
+            </button>
+            <button class="filter-btn" data-filter="tutorial">
+              <i class="fas fa-graduation-cap"></i> Tutorial
+            </button>
+            <button class="filter-btn" data-filter="industry">
+              <i class="fas fa-industry"></i> Industry
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BLOG ARTICLES GRID -->
+    <section class="blog-articles">
+      <div class="container">
+        <div class="articles-grid" id="articles-grid">
+          
+          <!-- Article 1 -->
+          <article class="article-card" data-category="ai">
+            <div class="article-image">
+              <img src="https://images.unsplash.com/photo-1526374965328-7f5ae4e8f650?w=1200&h=600&fit=crop" alt="Machine learning algorithms visualization">
+              <span class="category-badge ai-badge"><i class="fas fa-brain"></i> AI</span>
+            </div>
+            <div class="article-content">
+              <div class="article-meta">
+                <span class="article-date"><i class="fas fa-calendar"></i> Mar 20, 2026</span>
+                <span class="read-time"><i class="fas fa-clock"></i> 12 min read</span>
+              </div>
+              <h3 class="article-title">
+                <i class="fas fa-lightbulb"></i> Machine Learning Fundamentals Every Engineer Should Know
+              </h3>
+              <p class="article-excerpt">
+                Master the essential concepts of machine learning and understand how algorithms learn from data to solve real-world problems.
+              </p>
+              <div class="article-footer">
+                <span class="author"><i class="fas fa-user"></i> TechPath Editorial</span>
+                <a href="ml-fundamentals-engineers.html" class="read-more-btn">Read More <i class="fas fa-arrow-right"></i></a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Article 2 -->
+          <article class="article-card" data-category="career">
+            <div class="article-image">
+              <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&h=600&fit=crop" alt="Professional working on AI projects">
+              <span class="category-badge career-badge"><i class="fas fa-briefcase"></i> Career</span>
+            </div>
+            <div class="article-content">
+              <div class="article-meta">
+                <span class="article-date"><i class="fas fa-calendar"></i> Mar 18, 2026</span>
+                <span class="read-time"><i class="fas fa-clock"></i> 14 min read</span>
+              </div>
+              <h3 class="article-title">
+                <i class="fas fa-rocket"></i> Landing Your First AI Job: A Complete Guide
+              </h3>
+              <p class="article-excerpt">
+                Your roadmap to securing your first AI job in 2026. Learn what employers want, how to build a standout portfolio, and strategies for landing interviews.
+              </p>
+              <div class="article-footer">
+                <span class="author"><i class="fas fa-user"></i> TechPath Editorial</span>
+                <a href="first-ai-job-guide.html" class="read-more-btn">Read More <i class="fas fa-arrow-right"></i></a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Article 3 -->
+          <article class="article-card" data-category="tutorial">
+            <div class="article-image">
+              <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&h=600&fit=crop" alt="Python code and development environment">
+              <span class="category-badge tutorial-badge"><i class="fas fa-graduation-cap"></i> Tutorial</span>
+            </div>
+            <div class="article-content">
+              <div class="article-meta">
+                <span class="article-date"><i class="fas fa-calendar"></i> Mar 15, 2026</span>
+                <span class="read-time"><i class="fas fa-clock"></i> 15 min read</span>
+              </div>
+              <h3 class="article-title">
+                <i class="fas fa-code"></i> Advanced Python for AI: From Theory to Production
+              </h3>
+              <p class="article-excerpt">
+                Master advanced Python patterns, optimization techniques, and best practices for building production-grade AI systems. From vectorization to async processing, elevate your AI engineering skills.
+              </p>
+              <div class="article-footer">
+                <span class="author"><i class="fas fa-user"></i> TechPath Editorial</span>
+                <a href="advanced-python-ai-production.html" class="read-more-btn">Read More <i class="fas fa-arrow-right"></i></a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Article 4 -->
+          <article class="article-card" data-category="industry">
+            <div class="article-image">
+              <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=1200&h=600&fit=crop" alt="Technology and industry trends visualization">
+              <span class="category-badge industry-badge"><i class="fas fa-industry"></i> Industry</span>
+            </div>
+            <div class="article-content">
+              <div class="article-meta">
+                <span class="article-date"><i class="fas fa-calendar"></i> Mar 22, 2026</span>
+                <span class="read-time"><i class="fas fa-clock"></i> 13 min read</span>
+              </div>
+              <h3 class="article-title">
+                <i class="fas fa-chart-line"></i> AI Industry Trends 2026: What's Next?
+              </h3>
+              <p class="article-excerpt">
+                Explore the most significant AI industry trends shaping 2026. From edge AI to multimodal models, discover where the industry is heading and what it means for your career.
+              </p>
+              <div class="article-footer">
+                <span class="author"><i class="fas fa-user"></i> TechPath Editorial</span>
+                <a href="ai-industry-trends-2026.html" class="read-more-btn">Read More <i class="fas fa-arrow-right"></i></a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Article 5 -->
+          <article class="article-card" data-category="tutorial">
+            <div class="article-image">
+              <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&h=600&fit=crop" alt="Data science and analysis workflow">
+              <span class="category-badge tutorial-badge"><i class="fas fa-graduation-cap"></i> Tutorial</span>
+            </div>
+            <div class="article-content">
+              <div class="article-meta">
+                <span class="article-date"><i class="fas fa-calendar"></i> Mar 10, 2026</span>
+                <span class="read-time"><i class="fas fa-clock"></i> 12 min read</span>
+              </div>
+              <h3 class="article-title">
+                <i class="fas fa-chart-bar"></i> Data Preprocessing: The Unsung Hero of ML
+              </h3>
+              <p class="article-excerpt">
+                Master data preprocessing techniques that separate good ML projects from great ones. Learn to handle missing data, outliers, and transformations that actually matter.
+              </p>
+              <div class="article-footer">
+                <span class="author"><i class="fas fa-user"></i> TechPath Editorial</span>
+                <a href="data-preprocessing-ml-hero.html" class="read-more-btn">Read More <i class="fas fa-arrow-right"></i></a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Article 6 -->
+          <article class="article-card" data-category="ai">
+            <div class="article-image">
+              <img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=1200&h=600&fit=crop" alt="Neural network and deep learning visualization">
+              <span class="category-badge ai-badge"><i class="fas fa-brain"></i> AI</span>
+            </div>
+            <div class="article-content">
+              <div class="article-meta">
+                <span class="article-date"><i class="fas fa-calendar"></i> Mar 8, 2026</span>
+                <span class="read-time"><i class="fas fa-clock"></i> 14 min read</span>
+              </div>
+              <h3 class="article-title">
+                <i class="fas fa-network-wired"></i> Deep Learning Architecture Explained
+              </h3>
+              <p class="article-excerpt">
+                Understand the fundamental architectures powering modern AI. From CNNs to Transformers, learn how different neural network designs solve different problems.
+              </p>
+              <div class="article-footer">
+                <span class="author"><i class="fas fa-user"></i> TechPath Editorial</span>
+                <a href="deep-learning-architecture.html" class="read-more-btn">Read More <i class="fas fa-arrow-right"></i></a>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT US SECTION -->
+    <section class="about-us-section">
+      <div class="container">
+        <div class="about-header">
+          <h2><i class="fas fa-info-circle"></i> About TechPath</h2>
+          <p class="about-lead">Empowering the next generation of AI engineers through comprehensive roadmaps, resources, and community</p>
+        </div>
+
+        <div class="about-content">
+          <div class="about-mission">
+            <h3><i class="fas fa-bullseye"></i> Our Mission</h3>
+            <p>
+              TechPath is dedicated to democratizing AI engineering education. We provide a comprehensive, year-by-year roadmap 
+              that guides students from their first year through to graduation and placement. Our platform combines curated 
+              learning resources, industry certifications, and hands-on projects to ensure students are job-ready.
+            </p>
+          </div>
+
+          <div class="about-values">
+            <h3><i class="fas fa-heart"></i> What We Stand For</h3>
+            <ul class="values-list">
+              <li><i class="fas fa-check-circle"></i> <strong>Quality Education:</strong> Only the best resources from top engineers and educators</li>
+              <li><i class="fas fa-check-circle"></i> <strong>Structured Learning:</strong> Clear, year-wise progression focused on practical skills</li>
+              <li><i class="fas fa-check-circle"></i> <strong>Industry Ready:</strong> Certifications and projects that matter to employers</li>
+              <li><i class="fas fa-check-circle"></i> <strong>Community First:</strong> Support and guidance from peers and mentors</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- TEAM SECTION -->
+        <div class="team-section">
+          <h2><i class="fas fa-users"></i> Meet Our Creators</h2>
+          <div class="team-grid">
+            
+            <!-- Team Member 1 -->
+            <div class="team-card">
+              <div class="team-image">
+                <img src="https://via.placeholder.com/150/3b82f6/ffffff?text=TC" alt="Tejas Choudhar">
+                <div class="social-overlay">
+                  <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                  <a href="#" title="GitHub"><i class="fab fa-github"></i></a>
+                  <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                </div>
+              </div>
+              <h3>Tejas Choudhar</h3>
+              <p class="role"><i class="fas fa-star"></i> Co-Founder</p>
+              <p class="bio">AI enthusiast with a passion for education and mentoring aspiring engineers</p>
+            </div>
+
+            <!-- Team Member 2 -->
+            <div class="team-card">
+              <div class="team-image">
+                <img src="https://via.placeholder.com/150/10b981/ffffff?text=YB" alt="Yash Bilange">
+                <div class="social-overlay">
+                  <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                  <a href="#" title="GitHub"><i class="fab fa-github"></i></a>
+                  <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                </div>
+              </div>
+              <h3>Yash Bilange</h3>
+              <p class="role"><i class="fas fa-star"></i> Co-Founder</p>
+              <p class="bio">Full-stack developer focused on building scalable EdTech solutions</p>
+            </div>
+
+            <!-- Team Member 3 -->
+            <div class="team-card">
+              <div class="team-image">
+                <img src="https://via.placeholder.com/150/f59e0b/ffffff?text=AC" alt="Abhishek Chavan">
+                <div class="social-overlay">
+                  <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                  <a href="#" title="GitHub"><i class="fab fa-github"></i></a>
+                  <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                </div>
+              </div>
+              <h3>Abhishek Chavan</h3>
+              <p class="role"><i class="fas fa-star"></i> Co-Founder</p>
+              <p class="bio">Data scientist and AI researcher committed to making quality education accessible</p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEWSLETTER SECTION -->
+    <section class="newsletter-section">
+      <div class="container">
+        <div class="newsletter-content">
+          <h2><i class="fas fa-envelope"></i> Stay Updated</h2>
+          <p>Get the latest AI insights and career tips delivered to your inbox every week.</p>
+          <form class="newsletter-form">
+            <input type="email" placeholder="Enter your email" required>
+            <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Subscribe</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4><i class="fas fa-robot"></i> TechPath</h4>
+          <p>Your comprehensive AI engineering roadmap from first year to placement.</p>
+          <div class="social-links">
+            <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="#" title="GitHub"><i class="fab fa-github"></i></a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="#">Privacy</a></li>
+            <li><a href="#">Terms</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="#">Documentation</a></li>
+            <li><a href="#">Contact Us</a></li>
+            <li><a href="#">Support</a></li>
+            <li><a href="#">FAQ</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 TechPath. All rights reserved | Made with <i class="fas fa-heart" style="color: #ef4444;"></i> for AI Engineers</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- MODALS -->
+  <div id="auth-modal" class="modal" style="display: none;">
+    <div class="modal-content"></div>
+  </div>
+  <div id="resume-modal" class="modal" style="display: none;">
+    <div class="modal-content"></div>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/blog.js"></script>
+</body>
+</html>

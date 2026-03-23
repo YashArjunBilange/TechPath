@@ -1,0 +1,148 @@
+/* FIRST YEAR THEME - #3b82f6 */
+:root {
+  --year-primary: #3b82f6;
+  --year-gradient: linear-gradient(135deg, #3b82f6, #2563eb);
+}
+
+.year-hero.first-year-hero {
+  background: var(--year-gradient);
+  color: white;
+  padding: 80px 0;
+  text-align: center;
+}
+
+.gradient-text-first {
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+.section-title {
+  font-size: 2.2rem;
+  margin-bottom: 40px;
+  position: relative;
+  display: inline-block;
+}
+
+.section-title:after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 80px;
+  height: 4px;
+  background: var(--year-primary);
+  border-radius: 2px;
+}
+
+.subject-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 32px;
+  margin-top: 48px;
+}
+
+.subject-card {
+  background: white;
+  border-radius: 24px;
+  padding: 28px;
+  box-shadow: 0 10px 30px rgba(59,130,246,0.08);
+  border: 1px solid #eef2f6;
+  transition: all 0.25s;
+}
+
+.subject-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(59,130,246,0.15);
+  border-color: #3b82f6;
+}
+
+.subject-card h3 {
+  margin-bottom: 16px;
+  color: var(--dark);
+  font-size: 1.5rem;
+}
+
+.subject-card h3 i {
+  color: var(--year-primary);
+  margin-right: 8px;
+}
+
+.resources {
+  display: flex;
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.resource-link {
+  padding: 8px 20px;
+  border-radius: 30px;
+  background: #f1f5f9;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.resource-link:hover {
+  transform: scale(1.05);
+}
+
+.youtube { 
+  color: #ff0000;
+  background: #ffe5e5;
+}
+
+.notes { 
+  color: var(--dark);
+  background: #e2e8f0;
+}
+
+.certificates {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 20px;
+}
+
+.cert-item {
+  font-size: 0.95rem;
+  padding: 8px 16px;
+  background: #f8fafc;
+  border-radius: 30px;
+  border-left: 4px solid var(--year-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cert-item a {
+  color: var(--dark);
+  transition: color 0.2s;
+}
+
+.cert-item a:hover {
+  color: var(--year-primary);
+}
+
+.cert-heading {
+  font-size: 1.1rem;
+  margin: 8px 0 4px;
+  color: var(--dark);
+}
+
+.free-heading i {
+  color: #10b981;
+}
+
+.paid-heading i {
+  color: #f59e0b;
+}
+
+.free-cert {
+  border-left-color: #10b981;
+}
+
+.paid-cert {
+  border-left-color: #f59e0b;
+}

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
+  <meta name="description" content="Machine Learning Fundamentals Every Engineer Should Know - TechPath Blog">
+  <title>Machine Learning Fundamentals Every Engineer Should Know | TechPath Blog</title>
+  <link rel="icon" type="image/png" href="https://via.placeholder.com/32/3b82f6/ffffff?text=AI">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/blog.css">
+</head>
+<body>
+  <canvas id="neural-canvas" class="neural-bg" aria-hidden="true"></canvas>
+
+  <header class="header glass-header">
+    <div class="container header-container">
+      <div class="logo">
+        <i class="fas fa-robot" aria-hidden="true"></i>
+        <span>TechPath<span class="dot">.</span></span>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+      <nav class="navbar" id="navbar">
+        <ul class="nav-menu">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="first-year.html" class="nav-link">First Year</a></li>
+          <li><a href="second-year.html" class="nav-link">Second Year</a></li>
+          <li><a href="third-year.html" class="nav-link">Third Year</a></li>
+          <li><a href="fourth-year.html" class="nav-link">Fourth Year</a></li>
+          <li><a href="blog.html" class="nav-link active">Blog</a></li>
+          <li><a href="#" class="nav-link" id="resume-trigger">Resume Builder</a></li>
+          <li>
+            <button id="login-btn" class="nav-link btn-login">Login</button>
+          </li>
+          <li class="user-menu-container">
+            <button id="user-menu-btn" class="nav-link user-menu-btn" style="display:none;">👤 User</button>
+            <div id="user-dropdown" class="user-dropdown" style="display:none;">
+              <a href="#" onclick="showStudentDetails(event)"><i class="fas fa-user-circle"></i> Student Profile</a>
+              <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- ARTICLE HEADER -->
+    <section class="article-header">
+      <div class="container">
+        <div class="article-meta-header">
+          <span class="article-category ai-badge"><i class="fas fa-brain"></i> AI</span>
+          <span class="article-date"><i class="fas fa-calendar"></i> March 20, 2026</span>
+          <span class="read-time"><i class="fas fa-clock"></i> 12 min read</span>
+        </div>
+        <h1 class="article-title-full">Machine Learning Fundamentals Every Engineer Should Know</h1>
+        <p class="article-subtitle">Master the essential concepts of machine learning and understand how algorithms learn from data to solve real-world problems.</p>
+        <div class="article-author">
+          <div class="author-info">
+            <div class="author-details">
+              <span class="author-name">TechPath Editorial</span>
+              <span class="author-bio">AI Engineering Education Experts</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ARTICLE CONTENT -->
+    <section class="article-content-section">
+      <div class="container">
+        <div class="article-body">
+
+          <div class="article-intro">
+            <p>Machine learning has transformed from a niche academic field into an essential skill for modern engineers. Whether you're building predictive models, recommending products, or detecting anomalies, understanding ML fundamentals is no longer optional—it's a requirement. In this comprehensive guide, we'll break down the core concepts that form the foundation of all machine learning systems, from supervised learning to neural networks, and equip you with the knowledge to make informed decisions when designing and implementing ML solutions.</p>
+          </div>
+
+          <h2>What Is Machine Learning, Really?</h2>
+          <p>Machine learning is fundamentally different from traditional programming. Instead of explicitly writing rules for a computer to follow, you provide data and algorithms, and the system learns the patterns. This paradigm shift enables systems to handle complexity that would be impossible to code manually.</p>
+          <p>At its core, ML seeks to answer: 'Can a computer learn from experience to improve performance on a task?' The answer is a resounding yes, and it's powering everything from recommendation systems to autonomous vehicles.</p>
+          <p>There are three primary learning paradigms:</p>
+          <p><strong>Supervised Learning</strong>: You provide labeled data (input-output pairs), and the algorithm learns to map inputs to outputs. This is used for classification and regression tasks.</p>
+          <p><strong>Unsupervised Learning</strong>: You provide unlabeled data, and the algorithm discovers hidden patterns or structure. Common use cases include clustering and dimensionality reduction.</p>
+          <p><strong>Reinforcement Learning</strong>: An agent learns through interaction with an environment, receiving rewards or penalties for actions taken.</p>
+
+          <h2>The Three Types of Learning</h2>
+          <p>Understanding these learning paradigms is essential for selecting the right approach for your problem.</p>
+          <p><strong>Supervised Learning in Practice</strong>: Imagine you're building a spam classifier. You gather thousands of emails labeled as 'spam' or 'not spam'. You train an algorithm on this labeled data, and it learns to recognize patterns that distinguish spam from legitimate emails. When new emails arrive, the model applies what it learned to make predictions.</p>
+          <p>Common supervised algorithms include:</p>
+          <ul>
+            <li>Linear Regression: Predicts continuous values</li>
+            <li>Logistic Regression: Binary classification despite its name</li>
+            <li>Decision Trees: Interpretable models creating if-then rules</li>
+            <li>Random Forests: Ensemble of decision trees for robust predictions</li>
+            <li>Support Vector Machines (SVM): Powerful for high-dimensional data</li>
+          </ul>
+
+          <p><strong>Unsupervised Learning Discovery</strong>: Unlike supervised learning, you don't have labels. A classic example is customer segmentation—you have customer purchase data but don't know which customers are similar. Unsupervised algorithms can group customers into segments based on behavior patterns.</p>
+          <p>Key unsupervised techniques:</p>
+          <ul>
+            <li>K-Means Clustering: Groups data into k clusters</li>
+            <li>Hierarchical Clustering: Creates tree-like groupings</li>
+            <li>Principal Component Analysis (PCA): Reduces dimensions while preserving variance</li>
+            <li>Autoencoders: Neural networks for dimensionality reduction</li>
+          </ul>
+
+          <p><strong>Reinforcement Learning</strong>: Imagine training a model to play chess. You don't provide correct moves; instead, the model learns through self-play, receiving positive rewards for winning and negative rewards for losing. Over time, it develops strategies to maximize reward.</p>
+
+          <h2>The Training Process: From Data to Model</h2>
+          <p>Every ML model follows a similar lifecycle:</p>
+          <ol>
+            <li><strong>Data Collection & Preparation</strong>: Gather relevant data and clean it. This step often consumes 80% of ML project time.</li>
+            <li><strong>Feature Engineering</strong>: Transform raw data into meaningful features. Domain expertise shines here.</li>
+            <li><strong>Model Selection</strong>: Choose an appropriate algorithm for your problem.</li>
+            <li><strong>Training</strong>: Use training data to fit the model parameters.</li>
+            <li><strong>Evaluation</strong>: Assess performance on held-out test data.</li>
+            <li><strong>Hyperparameter Tuning</strong>: Adjust model parameters to optimize performance.</li>
+            <li><strong>Deployment</strong>: Put the model into production.</li>
+          </ol>
+
+          <p>A critical concept is the <strong>train-test split</strong>. You must separate your data into training (70-80%) and test sets (20-30%). Training on the entire dataset leads to overfitting—the model memorizes the data rather than learning generalizable patterns.</p>
+
+          <div class="code-block">
+            <pre><code>from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+
+# Split data
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+# Train model
+model = RandomForestClassifier(n_estimators=100)
+model.fit(X_train, y_train)
+
+# Evaluate
+predictions = model.predict(X_test)
+accuracy = accuracy_score(y_test, predictions)
+print(f"Model Accuracy: {accuracy:.2%}")</code></pre>
+          </div>
+
+          <h2>Overfitting and Underfitting: The Balancing Act</h2>
+          <p>One of the biggest challenges in ML is finding the sweet spot between overfitting and underfitting.</p>
+          <p><strong>Overfitting</strong> occurs when your model learns the training data too well, including its noise and quirks. It performs exceptionally on training data but poorly on new, unseen data. High model complexity is often the culprit.</p>
+          <p><strong>Underfitting</strong> happens when your model is too simple to capture the underlying patterns. It performs poorly on both training and test data. This is usually a sign you need a more complex model or better features.</p>
+          <p>The solution is <strong>regularization</strong>—techniques that penalize model complexity:</p>
+          <ul>
+            <li>L1 Regularization (Lasso): Encourages sparse solutions</li>
+            <li>L2 Regularization (Ridge): Penalizes large coefficients</li>
+            <li>Dropout: Randomly deactivates neurons during training</li>
+            <li>Early Stopping: Halt training when validation performance plateaus</li>
+          </ul>
+
+          <p>Visualizing the learning curve—plotting training and validation error against the number of training examples—reveals whether you're overfitting or underfitting.</p>
+
+          <h2>Evaluation Metrics: Measuring What Matters</h2>
+          <p>Accuracy isn't everything. Consider this scenario: you're building a cancer detection model where 99% of patients are healthy. A model that always predicts 'healthy' achieves 99% accuracy but is useless.</p>
+          <p>You need appropriate metrics:</p>
+          <p><strong>Classification Metrics</strong>:</p>
+          <ul>
+            <li><strong>Precision</strong>: Of positive predictions, how many are correct? Important when false positives are costly.</li>
+            <li><strong>Recall</strong>: Of actual positives, how many did we find? Critical when false negatives are dangerous.</li>
+            <li><strong>F1-Score</strong>: Harmonic mean of precision and recall; useful for imbalanced datasets.</li>
+            <li><strong>AUC-ROC</strong>: Evaluates performance across different classification thresholds.</li>
+          </ul>
+
+          <p><strong>Regression Metrics</strong>:</p>
+          <ul>
+            <li><strong>MAE (Mean Absolute Error)</strong>: Average absolute difference between predictions and actual values.</li>
+            <li><strong>RMSE (Root Mean Squared Error)</strong>: Penalizes larger errors more heavily.</li>
+            <li><strong>R² Score</strong>: Proportion of variance explained by the model.</li>
+          </ul>
+
+          <p>Always choose metrics aligned with your business objectives, not just the highest numbers.</p>
+
+          <h2>Feature Engineering: The Secret Ingredient</h2>
+          <p>Raw data is often not predictive. Feature engineering creates meaningful inputs.</p>
+          <p>Common techniques:</p>
+          <p><strong>Scaling and Normalization</strong>: Many algorithms perform better when features are on similar scales. Standardization (mean=0, std=1) and normalization (scale to 0-1) are common approaches.</p>
+          <p><strong>Encoding Categorical Variables</strong>: Algorithms expect numerical input. Techniques include:</p>
+          <ul>
+            <li>One-Hot Encoding: Creates binary columns for each category</li>
+            <li>Label Encoding: Maps categories to integers</li>
+            <li>Ordinal Encoding: Preserves ordering in ordinal data</li>
+          </ul>
+
+          <p><strong>Feature Selection</strong>: Not all features are equally important. Techniques include:</p>
+          <ul>
+            <li>Filter Methods: Remove low-variance or highly correlated features</li>
+            <li>Wrapper Methods: Use model performance to select features</li>
+            <li>Embedded Methods: Feature selection built into the algorithm (like in decision trees)</li>
+          </ul>
+
+          <p><strong>Creating New Features</strong>: Sometimes combining existing features creates stronger predictors. For example, in predicting house prices, combining 'lot_size' and 'house_size' to create 'density' might be informative.</p>
+
+          <h2>Key Takeaways for Engineers</h2>
+          <p>As engineers entering the ML space, remember:</p>
+          <ol>
+            <li><strong>Start simple</strong>: Begin with interpretable models like linear regression or decision trees before moving to complex neural networks.</li>
+            <li><strong>Data quality trumps model complexity</strong>: A simple model on high-quality data outperforms a complex model on poor data.</li>
+            <li><strong>Always validate</strong>: Use proper train-test splits and cross-validation. Never evaluate on training data.</li>
+            <li><strong>Understand your metrics</strong>: Choose evaluation metrics that align with your problem's business objectives.</li>
+            <li><strong>Feature engineering matters</strong>: Spend time understanding your data and crafting meaningful features.</li>
+            <li><strong>Reproducibility is essential</strong>: Document your preprocessing steps, random seeds, and model configurations.</li>
+            <li><strong>Iterate systematically</strong>: ML is experimental. Log experiments, compare results, and iterate on successful approaches.</li>
+          </ol>
+
+          <div class="article-conclusion">
+            <h2>Conclusion</h2>
+            <p>Machine learning fundamentals form the bedrock of building intelligent systems. From understanding supervised and unsupervised learning to navigating the challenges of overfitting and selecting appropriate evaluation metrics, these concepts will guide your ML journey. The field is continuously evolving, but the fundamentals remain constant. Start with these principles, practice with real datasets, and gradually build expertise. Remember, becoming an ML engineer isn't about knowing every algorithm—it's about understanding when and how to apply them effectively.</p>
+
+            <div class="cta-section">
+              <p><strong>Ready to go deeper?</strong> Start building your first ML model with Python and scikit-learn. Try solving a classification problem from Kaggle to practice these concepts in a real-world context. Share your results and join our community of aspiring ML engineers. Happy learning!</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- BACK TO BLOG -->
+    <section class="back-to-blog">
+      <div class="container">
+        <a href="blog.html" class="back-btn">
+          <i class="fas fa-arrow-left"></i> Back to Blog
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <div class="footer-logo">
+            <i class="fas fa-robot"></i>
+            <span>TechPath<span class="dot">.</span></span>
+          </div>
+          <p>Empowering the next generation of AI engineers through comprehensive roadmaps, resources, and community.</p>
+        </div>
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="first-year.html">First Year</a></li>
+            <li><a href="second-year.html">Second Year</a></li>
+            <li><a href="third-year.html">Third Year</a></li>
+            <li><a href="fourth-year.html">Fourth Year</a></li>
+            <li><a href="blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Connect</h4>
+          <div class="social-links">
+            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-discord"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 TechPath. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/blog.js"></script>
+</body>
+</html>

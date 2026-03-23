@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
+  <meta name="description" content="AI Engineering Roadmap – Master Artificial Intelligence from First Year to Placement">
+  <title>AI Engineering Roadmap | TechPath</title>
+  <!-- Favicon placeholder -->
+  <link rel="icon" type="image/png" href="https://via.placeholder.com/32/3b82f6/ffffff?text=AI">
+  <!-- Google Fonts: Poppins + Roboto -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome 6 (CDN) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- CANVAS BACKGROUND (AI NEURAL NETWORK ANIMATION) -->
+  <canvas id="neural-canvas" class="neural-bg" aria-hidden="true"></canvas>
+
+  <!-- STICKY GLASSMORPHISM HEADER -->
+  <header class="header glass-header">
+    <div class="container header-container">
+      <div class="logo">
+        <i class="fas fa-robot" aria-hidden="true"></i>
+        <span>TechPath<span class="dot">.</span></span>
+      </div>
+      <!-- Hamburger menu toggle -->
+      <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+      <nav class="navbar" id="navbar">
+        <ul class="nav-menu">
+          <li><a href="index.html" class="nav-link active">Home</a></li>
+          <li><a href="first-year.html" class="nav-link">First Year</a></li>
+          <li><a href="second-year.html" class="nav-link">Second Year</a></li>
+          <li><a href="third-year.html" class="nav-link">Third Year</a></li>
+          <li><a href="fourth-year.html" class="nav-link">Fourth Year</a></li>
+          <li><a href="blog.html" class="nav-link">Blog</a></li>
+          <li><a href="#" class="nav-link" id="resume-trigger">Resume Builder</a></li>
+          <li>
+            <button id="login-btn" class="nav-link btn-login">Login</button>
+          </li>
+          <li class="user-menu-container">
+            <button id="user-menu-btn" class="nav-link user-menu-btn" style="display:none;">👤 User</button>
+            <div id="user-dropdown" class="user-dropdown" style="display:none;">
+              <a href="#" onclick="showStudentDetails(event)"><i class="fas fa-user-circle"></i> Student Profile</a>
+              <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO SECTION -->
+    <section class="hero">
+      <div class="container hero-container">
+        <div class="hero-content">
+          <h1 class="hero-title">
+            Master AI Engineering, <br />
+            <span class="gradient-text">One Roadmap at a Time</span>
+          </h1>
+          <p class="hero-subtitle">
+            From freshman fundamentals to placement mastery – your all-in-one EdTech SaaS platform with certificates, guides, and AI-powered tools.
+          </p>
+          <div class="hero-buttons">
+            <a href="first-year.html" class="btn btn-primary btn-glow">Start Learning <i class="fas fa-arrow-right"></i></a>
+            <a href="#roadmaps" class="btn btn-secondary">Explore Roadmaps</a>
+          </div>
+          <!-- Social proof -->
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS (3-STEP) -->
+    <section class="how-it-works">
+      <div class="container">
+        <div class="section-header">
+          <h2>Your success <span class="gradient-text">blueprint</span></h2>
+          <p>Three simple steps to become an AI engineer</p>
+        </div>
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-icon">1</div>
+            <i class="fas fa-map-signs fa-3x"></i>
+            <h3>Pick your year</h3>
+            <p>Choose from 1st to 4th year – each roadmap is curated by top 1% engineers.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-icon">2</div>
+            <i class="fas fa-certificate fa-3x"></i>
+            <h3>Earn certificates</h3>
+            <p>Every subject includes 6 free/paid certificates. Build verified credentials.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-icon">3</div>
+            <i class="fas fa-file-alt fa-3x"></i>
+            <h3>Craft your resume</h3>
+            <p>Use our AI-powered resume builder, download PDF, impress recruiters.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 LARGE ROADMAP CARDS -->
+    <section id="roadmaps" class="roadmaps">
+      <div class="container">
+        <div class="section-header">
+          <h2>Choose your <span class="gradient-text">roadmap</span></h2>
+          <p>Specialized tracks with 50+ subjects & 200+ projects</p>
+        </div>
+        <div class="roadmap-cards">
+          <div class="roadmap-card" data-year="1" style="--year-color: #3b82f6;">
+            <i class="fas fa-code fa-3x"></i>
+            <h3>First Year</h3>
+            <p>C, Python, OOP, Data Science fundamentals</p>
+            <span class="subject-count">4 subjects · 24 certificates</span>
+            <a href="first-year.html" class="card-link">Explore <i class="fas fa-arrow-right"></i></a>
+          </div>
+          <div class="roadmap-card" data-year="2" style="--year-color: #10b981;">
+            <i class="fas fa-database fa-3x"></i>
+            <h3>Second Year</h3>
+            <p>ML, DSA, DBMS, Full-stack, career guides</p>
+            <span class="subject-count">7 subjects · 42 certificates</span>
+            <a href="second-year.html" class="card-link">Explore <i class="fas fa-arrow-right"></i></a>
+          </div>
+          <div class="roadmap-card" data-year="3" style="--year-color: #f59e0b;">
+            <i class="fas fa-microchip fa-3x"></i>
+            <h3>Third Year</h3>
+            <p>AI, CV, Deep Learning, Embedded AI, 6 career tracks</p>
+            <span class="subject-count">7 subjects · 42 certificates</span>
+            <a href="third-year.html" class="card-link">Explore <i class="fas fa-arrow-right"></i></a>
+          </div>
+          <div class="roadmap-card" data-year="4" style="--year-color: #8b5cf6;">
+            <i class="fas fa-briefcase fa-3x"></i>
+            <h3>Fourth Year</h3>
+            <p>Placement prep, System Design, 30+ universities</p>
+            <span class="subject-count">6 prep areas · 30 universities</span>
+            <a href="fourth-year.html" class="card-link">Explore <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6-FEATURE GRID -->
+    <section class="features">
+      <div class="container">
+        <div class="section-header">
+          <h2>Everything you need to <span class="gradient-text">succeed</span></h2>
+          <p>Industry-first tools built for aspiring AI engineers</p>
+        </div>
+        <div class="feature-grid">
+          <div class="feature-item"><i class="fas fa-video"></i><h4>200+ Video lessons</h4><p>Curated YouTube & notes</p></div>
+          <div class="feature-item"><i class="fas fa-certificate"></i><h4>Certificate engine</h4><p>Free & paid certs per subject</p></div>
+          <div class="feature-item"><i class="fas fa-file-pdf"></i><h4>Resume builder</h4><p>ATS-friendly PDF</p></div>
+          <div class="feature-item"><i class="fas fa-university"></i><h4>30 university guides</h4><p>MS/PhD shortlists</p></div>
+          <div class="feature-item"><i class="fas fa-chart-line"></i><h4>Career tracks</h4><p>AI, CV, Embedded AI</p></div>
+          <div class="feature-item"><i class="fas fa-users"></i><h4>Open source guide</h4><p>GitHub & LinkedIn</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="stats-section">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat-card"><i class="fas fa-book-open"></i><span class="counter" data-target="50">0</span><p>Subjects</p></div>
+          <div class="stat-card"><i class="fas fa-certificate"></i><span class="counter" data-target="100">0</span><p>Certifications</p></div>
+          <div class="stat-card"><i class="fas fa-code-branch"></i><span class="counter" data-target="100">0</span><p>Projects</p></div>
+          <div class="stat-card"><i class="fas fa-university"></i><span class="counter" data-target="30">0</span><p>Universities</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER with Newsletter -->
+    <footer class="footer">
+      <div class="container footer-container">
+        <div class="footer-newsletter">
+          <h4>Newsletter</h4>
+          <p>Get weekly AI roadmap updates</p>
+          <form class="newsletter-form" id="newsletter-form">
+            <input type="email" placeholder="Your email" required>
+            <button type="submit" class="btn-subscribe"><i class="fas fa-paper-plane"></i></button>
+          </form>
+        </div>
+        <div class="footer-links">
+          <div class="footer-col">
+            <h5>Quick links</h5>
+            <ul>
+              <li><a href="first-year.html">First Year</a></li>
+              <li><a href="second-year.html">Second Year</a></li>
+              <li><a href="third-year.html">Third Year</a></li>
+              <li><a href="fourth-year.html">Fourth Year</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h5>Resources</h5>
+            <ul>
+              <li><a href="#">Certificates</a></li>
+              <li><a href="#">Resume builder</a></li>
+              <li><a href="#">University hub</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h5>Contact</h5>
+            <ul>
+              <li><a href="mailto:hello@airoadmap.com">hello@airoadmap.com</a></li>
+              <li><a href="#">+1 (800) 456-7890</a></li>
+            </ul>
+            <div class="social-icons">
+              <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+              <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+              <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+              <a href="#" aria-label="Discord"><i class="fab fa-discord"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 AI Engineering Roadmap. All rights reserved. Built for future engineers.</p>
+      </div>
+    </footer>
+  </main>
+
+  <!-- AUTH MODAL (LOGIN/SIGNUP) -->
+  <div id="auth-modal" class="modal auth-modal">
+    <div class="modal-content auth-modal-content">
+      <button class="auth-close-btn">&times;</button>
+      <div class="auth-modal-header">
+        <h2>Login</h2>
+      </div>
+
+      <div id="auth-message" class="auth-message" style="display:none;"></div>
+
+      <!-- LOGIN FORM -->
+      <form id="login-form" class="auth-form" style="display:block;">
+        <div class="form-group">
+          <label for="auth-email">Email</label>
+          <input type="email" id="auth-email" placeholder="your@email.com" required>
+        </div>
+        <div class="form-group">
+          <label for="auth-password">Password</label>
+          <input type="password" id="auth-password" placeholder="••••••••" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 16px;">Login</button>
+      </form>
+
+      <!-- REGISTER FORM -->
+      <form id="register-form" class="auth-form" style="display:none;">
+        <div class="form-group">
+          <label for="auth-email">Email</label>
+          <input type="email" id="auth-email" placeholder="your@email.com" required>
+        </div>
+        <div class="form-group">
+          <label for="auth-username">Username</label>
+          <input type="text" id="auth-username" placeholder="your_username" required>
+        </div>
+        <div class="form-group">
+          <label for="auth-year">Year of Study</label>
+          <select id="auth-year" required>
+            <option value="">Select your year</option>
+            <option value="1">First Year</option>
+            <option value="2">Second Year</option>
+            <option value="3">Third Year</option>
+            <option value="4">Fourth Year</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="auth-password">Password</label>
+          <input type="password" id="auth-password" placeholder="••••••••" required>
+        </div>
+        <div class="form-group">
+          <label for="auth-confirm-password">Confirm Password</label>
+          <input type="password" id="auth-confirm-password" placeholder="••••••••" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 16px;">Sign Up</button>
+      </form>
+
+      <div class="auth-footer">
+        <button id="switch-auth-mode" class="btn-text">Don't have an account? Sign up</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESUME BUILDER MODAL -->
+<div id="resume-modal" class="modal" style="display: none;">
+
+  <div class="modal-content">
+    <button class="close-modal" style="position: absolute; top: 16px; right: 24px; background: none; border: none; font-size: 28px; cursor: pointer; color: #666;">&times;</button>
+
+    <h2>Resume Builder</h2>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; height: calc(90vh - 250px); margin-bottom: 16px;">
+      <!-- LEFT COLUMN: FORM INPUTS -->
+      <div style="overflow-y: auto; padding-right: 8px;">
+        <form id="resume-form">
+
+          <input id="full-name" placeholder="Full Name" required>
+          <div id="full-name-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/100</div>
+
+          <input id="email" placeholder="Email" required>
+          <div id="email-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/100</div>
+
+          <input id="phone" placeholder="Phone">
+          <div id="phone-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/20</div>
+
+          <input id="linkedin" placeholder="LinkedIn">
+          <div id="linkedin-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/100</div>
+
+          <textarea id="summary" placeholder="Summary"></textarea>
+          <div id="summary-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/500</div>
+
+          <textarea id="education" placeholder="Education"></textarea>
+          <div id="education-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/500</div>
+
+          <textarea id="skills" placeholder="Skills (comma separated)"></textarea>
+          <div id="skills-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/500</div>
+
+          <textarea id="projects" placeholder="Projects"></textarea>
+          <div id="projects-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/500</div>
+
+          <textarea id="certifications" placeholder="Certifications (one per line)"></textarea>
+          <div id="certifications-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/500</div>
+
+          <textarea id="achievements" placeholder="Achievements (one per line)"></textarea>
+          <div id="achievements-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/500</div>
+        </form>
+      </div>
+
+      <!-- RIGHT COLUMN: PREVIEW -->
+      <div style="overflow-y: auto; border-left: 2px solid #e2e8f0; padding-left: 16px;">
+        <h3 style="margin-top: 0; color: #333;">📄 Preview</h3>
+        <div id="preview-content"></div>
+      </div>
+    </div>
+
+    <div style="display: flex; gap: 8px; flex-wrap: wrap; flex-shrink: 0;">
+      <button type="button" id="generate-resume" style="background: #3b82f6; color: white; padding: 10px 16px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">Generate Preview</button>
+      <button type="button" id="save-resume-btn" style="background: #10b981; color: white; padding: 10px 16px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">💾 Save Resume</button>
+      <button type="button" id="download-pdf" style="background: #f59e0b; color: white; padding: 10px 16px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">📥 Download PDF</button>
+      <button type="button" id="clear-form" style="background: #ef4444; color: white; padding: 10px 16px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">🗑️ Clear</button>
+      <button type="button" id="view-resumes" style="background: #8b5cf6; color: white; padding: 10px 16px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">📄 Saved Resumes</button>
+    </div>
+
+  </div>
+
+</div>
+
+<div id="saved-resumes-modal" class="modal" style="display: none;">
+  <div class="modal-content">
+    <button class="close-modal" onclick="document.getElementById('saved-resumes-modal').style.display='none'" style="position: absolute; top: 16px; right: 24px; background: none; border: none; font-size: 28px; cursor: pointer; color: #666;">&times;</button>
+    <h2>📄 Saved Resumes</h2>
+    <div id="saved-resumes-list"></div>
+  </div>
+</div>
+
+<script src="js/auth.js"></script>
+<script src="js/saved-resumes.js"></script>
+<script src="js/main.js"></script>
+<script src="js/counter.js"></script>
+<script src="js/certificates.js"></script>
+<script src="js/resume-builder.js"></script>
+<script src="js/year-pages.js"></script>

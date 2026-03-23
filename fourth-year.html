@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
+  <title>Fourth Year & Placement | AI Engineering</title>
+  <link rel="icon" type="image/png" href="https://via.placeholder.com/32/8b5cf6/ffffff?text=AI">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/fourth-year.css">
+</head>
+<body>
+  <canvas id="neural-canvas" class="neural-bg" aria-hidden="true"></canvas>
+  
+  <header class="header glass-header">
+    <div class="container header-container">
+      <div class="logo">
+        <i class="fas fa-robot"></i>
+        <span>AI Roadmap<span class="dot">.</span></span>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+      <nav class="navbar" id="navbar">
+        <ul class="nav-menu">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="first-year.html" class="nav-link">First Year</a></li>
+          <li><a href="second-year.html" class="nav-link">Second Year</a></li>
+          <li><a href="third-year.html" class="nav-link">Third Year</a></li>
+          <li><a href="fourth-year.html" class="nav-link active">Fourth Year</a></li>
+          <li><a href="blog.html" class="nav-link">Blog</a></li>
+          <li><a href="#" class="nav-link" id="resume-trigger">Resume Builder</a></li>
+          <li>
+            <button id="login-btn" class="nav-link btn-login">Login</button>
+          </li>
+          <li class="user-menu-container">
+            <button id="user-menu-btn" class="nav-link user-menu-btn" style="display:none;">👤 User</button>
+            <div id="user-dropdown" class="user-dropdown" style="display:none;">
+              <a href="#" onclick="showStudentDetails(event)"><i class="fas fa-user-circle"></i> Student Profile</a>
+              <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="year-hero fourth-year-hero">
+      <div class="container">
+        <h1 class="gradient-text-fourth">Fourth Year <span>Placement & Higher Education</span></h1>
+        <p>Crack top placements, master system design, and get into top 30 global universities.</p>
+      </div>
+    </section>
+
+    <section class="placement-grid">
+      <div class="container">
+        <h2 class="section-title">🎯 Interview & Placement Preparation</h2>
+        <div class="prep-cards">
+          <div class="prep-card">
+            <i class="fas fa-bullseye"></i>
+            <h3>Placement Preparation</h3>
+            <p>Resume screening, mock tests, company bootcamps, and HR rounds.</p>
+          </div>
+          <div class="prep-card">
+            <i class="fas fa-laptop-code"></i>
+            <h3>Technical Interview Prep</h3>
+            <p>DSA, System design, ML cross questions, and whiteboard practice.</p>
+          </div>
+          <div class="prep-card">
+            <i class="fas fa-calculator"></i>
+            <h3>Aptitude Guidance</h3>
+            <p>Quants, logical reasoning, verbal ability, and previous year papers.</p>
+          </div>
+          <div class="prep-card">
+            <i class="fas fa-sitemap"></i>
+            <h3>System Design</h3>
+            <p>HLD, LLD, scalability, database design, and case studies.</p>
+          </div>
+          <div class="prep-card">
+            <i class="fas fa-handshake"></i>
+            <h3>Behavioral Interview</h3>
+            <p>STAR method, leadership principles, and cultural fit assessment.</p>
+          </div>
+          <div class="prep-card">
+            <i class="fas fa-building"></i>
+            <h3>Company Specific Prep</h3>
+            <p>Google, Microsoft, Amazon, Uber, and high-growth startups.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="universities">
+      <div class="container">
+        <h2 class="section-title">🌍 Top 30 Universities for MS/PhD in AI</h2>
+        <p class="section-subtitle">Click on any university to visit official website</p>
+        <div class="university-grid" id="university-grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-container">
+      <div class="footer-newsletter">
+        <h4>Newsletter</h4>
+        <p>Get weekly AI roadmap updates</p>
+        <form class="newsletter-form">
+          <input type="email" placeholder="Your email" required>
+          <button type="submit" class="btn-subscribe"><i class="fas fa-paper-plane"></i></button>
+        </form>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h5>Quick links</h5>
+          <ul>
+            <li><a href="first-year.html">First Year</a></li>
+            <li><a href="second-year.html">Second Year</a></li>
+            <li><a href="third-year.html">Third Year</a></li>
+            <li><a href="fourth-year.html">Fourth Year</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Resources</h5>
+          <ul>
+            <li><a href="#">Placement guide</a></li>
+            <li><a href="#">University hub</a></li>
+            <li><a href="#">Resume builder</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Contact</h5>
+          <ul>
+            <li><a href="mailto:hello@airoadmap.com">hello@airoadmap.com</a></li>
+          </ul>
+          <div class="social-icons">
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-github"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 AI Engineering Roadmap</p>
+    </div>
+  </footer>
+
+  <!-- AUTH MODAL (LOGIN/SIGNUP) -->
+  <div id="auth-modal" class="modal auth-modal">
+    <div class="modal-content auth-modal-content">
+      <button class="auth-close-btn">&times;</button>
+      <div class="auth-modal-header">
+        <h2>Login</h2>
+      </div>
+
+      <div id="auth-message" class="auth-message" style="display:none;"></div>
+
+      <!-- LOGIN FORM -->
+      <form id="login-form" class="auth-form" style="display:block;">
+        <div class="form-group">
+          <label for="auth-email">Email</label>
+          <input type="email" id="auth-email" placeholder="your@email.com" required>
+        </div>
+        <div class="form-group">
+          <label for="auth-password">Password</label>
+          <input type="password" id="auth-password" placeholder="••••••••" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 16px;">Login</button>
+      </form>
+
+      <!-- REGISTER FORM -->
+      <form id="register-form" class="auth-form" style="display:none;">
+        <div class="form-group">
+          <label for="auth-email">Email</label>
+          <input type="email" id="auth-email" placeholder="your@email.com" required>
+        </div>
+        <div class="form-group">
+          <label for="auth-username">Username</label>
+          <input type="text" id="auth-username" placeholder="your_username" required>
+        </div>
+        <div class="form-group">
+          <label for="auth-year">Year of Study</label>
+          <select id="auth-year" required>
+            <option value="">Select your year</option>
+            <option value="1">First Year</option>
+            <option value="2">Second Year</option>
+            <option value="3">Third Year</option>
+            <option value="4">Fourth Year</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="auth-password">Password</label>
+          <input type="password" id="auth-password" placeholder="••••••••" required>
+        </div>
+        <div class="form-group">
+          <label for="auth-confirm-password">Confirm Password</label>
+          <input type="password" id="auth-confirm-password" placeholder="••••••••" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 16px;">Sign Up</button>
+      </form>
+
+      <div class="auth-footer">
+        <button id="switch-auth-mode" class="btn-text">Don't have an account? Sign up</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESUME BUILDER MODAL -->
+<div id="resume-modal" class="modal" style="display: none;">
+
+  <div class="modal-content">
+    <button class="close-modal" style="position: absolute; top: 16px; right: 24px; background: none; border: none; font-size: 28px; cursor: pointer; color: #666;">&times;</button>
+
+    <h2>Resume Builder</h2>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; height: calc(90vh - 250px); margin-bottom: 16px;">
+      <!-- LEFT COLUMN: FORM INPUTS -->
+      <div style="overflow-y: auto; padding-right: 8px;">
+        <form id="resume-form">
+
+          <input id="full-name" placeholder="Full Name" required>
+          <div id="full-name-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/100</div>
+
+          <input id="email" placeholder="Email" required>
+          <div id="email-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/100</div>
+
+          <input id="phone" placeholder="Phone">
+          <div id="phone-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/20</div>
+
+          <input id="linkedin" placeholder="LinkedIn">
+          <div id="linkedin-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/100</div>
+
+          <textarea id="summary" placeholder="Summary"></textarea>
+          <div id="summary-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/500</div>
+
+          <textarea id="education" placeholder="Education"></textarea>
+          <div id="education-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/500</div>
+
+          <textarea id="skills" placeholder="Skills (comma separated)"></textarea>
+          <div id="skills-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/500</div>
+
+          <textarea id="projects" placeholder="Projects"></textarea>
+          <div id="projects-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/500</div>
+
+          <textarea id="certifications" placeholder="Certifications (one per line)"></textarea>
+          <div id="certifications-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/500</div>
+
+          <textarea id="achievements" placeholder="Achievements (one per line)"></textarea>
+          <div id="achievements-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/500</div>
+        </form>
+      </div>
+
+      <!-- RIGHT COLUMN: PREVIEW -->
+      <div style="overflow-y: auto; border-left: 2px solid #e2e8f0; padding-left: 16px;">
+        <h3 style="margin-top: 0; color: #333;">📄 Preview</h3>
+        <div id="preview-content"></div>
+      </div>
+    </div>
+
+    <div style="display: flex; gap: 8px; flex-wrap: wrap; flex-shrink: 0;">
+      <button type="button" id="generate-resume" style="background: #3b82f6; color: white; padding: 10px 16px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">Generate Preview</button>
+      <button type="button" id="save-resume-btn" style="background: #10b981; color: white; padding: 10px 16px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">💾 Save Resume</button>
+      <button type="button" id="download-pdf" style="background: #f59e0b; color: white; padding: 10px 16px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">📥 Download PDF</button>
+      <button type="button" id="clear-form" style="background: #ef4444; color: white; padding: 10px 16px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">🗑️ Clear</button>
+      <button type="button" id="view-resumes" style="background: #8b5cf6; color: white; padding: 10px 16px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">📄 Saved Resumes</button>
+    </div>
+
+  </div>
+
+</div>
+
+  <script src="js/auth.js"></script>
+  <script src="js/saved-resumes.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/counter.js"></script>
+  <script src="js/certificates.js"></script>
+  <script src="js/resume-builder.js"></script>
+  <script src="js/year-pages.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const universities = [
+        { name: 'Carnegie Mellon University', loc: 'Pittsburgh, USA', rank: '#1 in AI', desc: 'Top-tier AI & ML research with world-renowned faculty.', url: 'https://www.cmu.edu' },
+        { name: 'Stanford University', loc: 'California, USA', rank: '#2', desc: 'AI lab, famous for deep learning and robotics.', url: 'https://www.stanford.edu' },
+        { name: 'Massachusetts Institute of Technology', loc: 'Cambridge, USA', rank: '#3', desc: 'CSAIL, cutting-edge AI and computation.', url: 'https://www.mit.edu' },
+        { name: 'University of California, Berkeley', loc: 'California, USA', rank: '#4', desc: 'BAIR lab, reinforcement learning and computer vision.', url: 'https://www.berkeley.edu' },
+        { name: 'University of Oxford', loc: 'Oxford, UK', rank: '#5', desc: 'AI ethics, computer vision, and NLP research.', url: 'https://www.ox.ac.uk' },
+        { name: 'University of Cambridge', loc: 'Cambridge, UK', rank: '#6', desc: 'ML research groups and AI for science.', url: 'https://www.cam.ac.uk' },
+        { name: 'ETH Zurich', loc: 'Zurich, Switzerland', rank: '#7', desc: 'Robotics, computer vision, and intelligent systems.', url: 'https://www.ethz.ch' },
+        { name: 'National University of Singapore', loc: 'Singapore', rank: '#8', desc: 'Strong AI research hub in Asia.', url: 'https://www.nus.edu.sg' },
+        { name: 'University of Toronto', loc: 'Toronto, Canada', rank: '#9', desc: 'Vector Institute, deep learning pioneers.', url: 'https://www.utoronto.ca' },
+        { name: 'University of Washington', loc: 'Seattle, USA', rank: '#10', desc: 'NLP, computer vision, and AI for healthcare.', url: 'https://www.washington.edu' },
+        { name: 'Georgia Institute of Technology', loc: 'Atlanta, USA', rank: '#11', desc: 'Interactive computing, ML, and robotics.', url: 'https://www.gatech.edu' },
+        { name: 'University of Illinois Urbana-Champaign', loc: 'Illinois, USA', rank: '#12', desc: 'AI and data science research powerhouse.', url: 'https://www.illinois.edu' },
+        { name: 'California Institute of Technology', loc: 'California, USA', rank: '#13', desc: 'Computation and neural systems.', url: 'https://www.caltech.edu' },
+        { name: 'Imperial College London', loc: 'London, UK', rank: '#14', desc: 'AI and medical imaging.', url: 'https://www.imperial.ac.uk' },
+        { name: 'École Polytechnique Fédérale de Lausanne', loc: 'Lausanne, Switzerland', rank: '#15', desc: 'Intelligent systems and robotics.', url: 'https://www.epfl.ch' },
+        { name: 'University of California, Los Angeles', loc: 'California, USA', rank: '#16', desc: 'Vision lab and statistical ML.', url: 'https://www.ucla.edu' },
+        { name: 'University of Michigan', loc: 'Ann Arbor, USA', rank: '#17', desc: 'Data science and AI for social good.', url: 'https://www.umich.edu' },
+        { name: 'Columbia University', loc: 'New York, USA', rank: '#18', desc: 'ML theory and applications.', url: 'https://www.columbia.edu' },
+        { name: 'University of California, San Diego', loc: 'San Diego, USA', rank: '#19', desc: 'AI and healthcare, robotics.', url: 'https://www.ucsd.edu' },
+        { name: 'University of Edinburgh', loc: 'Edinburgh, UK', rank: '#20', desc: 'Informatics, NLP, and robotics.', url: 'https://www.ed.ac.uk' },
+        { name: 'New York University', loc: 'New York, USA', rank: '#21', desc: 'CILVR lab, deep learning.', url: 'https://www.nyu.edu' },
+        { name: 'Purdue University', loc: 'Indiana, USA', rank: '#22', desc: 'AI and autonomous systems.', url: 'https://www.purdue.edu' },
+        { name: 'University of British Columbia', loc: 'Vancouver, Canada', rank: '#23', desc: 'Reinforcement learning and computer vision.', url: 'https://www.ubc.ca' },
+        { name: 'Johns Hopkins University', loc: 'Maryland, USA', rank: '#24', desc: 'NLP, CLSP, and AI for medicine.', url: 'https://www.jhu.edu' },
+        { name: 'University of Sydney', loc: 'Sydney, Australia', rank: '#25', desc: 'AI in health and computer vision.', url: 'https://www.sydney.edu.au' },
+        { name: 'University of Melbourne', loc: 'Melbourne, Australia', rank: '#26', desc: 'ML and optimisation.', url: 'https://www.unimelb.edu.au' },
+        { name: 'Technical University of Munich', loc: 'Munich, Germany', rank: '#27', desc: 'Robotics and AI.', url: 'https://www.tum.de' },
+        { name: 'KAIST', loc: 'Daejeon, South Korea', rank: '#28', desc: 'AI and semiconductor integration.', url: 'https://www.kaist.ac.kr' },
+        { name: 'Tsinghua University', loc: 'Beijing, China', rank: '#29', desc: 'AI research powerhouse in Asia.', url: 'https://www.tsinghua.edu.cn' },
+        { name: 'Indian Institute of Technology Bombay', loc: 'Mumbai, India', rank: '#30', desc: 'Top AI/ML research in India.', url: 'https://www.iitb.ac.in' }
+      ];
+
+      const uniGrid = document.getElementById('university-grid');
+      if (uniGrid) {
+        universities.forEach(u => {
+          const card = document.createElement('div');
+          card.className = 'uni-card';
+          card.innerHTML = `
+            <h4>${u.name}</h4>
+            <p><i class="fas fa-map-marker-alt"></i> ${u.loc} · <span class="rank">${u.rank}</span></p>
+            <p class="uni-desc">${u.desc}</p>
+            <a href="${u.url}" target="_blank" rel="noopener" class="uni-link">Official website →</a>
+          `;
+          uniGrid.appendChild(card);
+        });
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
+  <title>Third Year Roadmap | AI Engineering</title>
+  <link rel="icon" type="image/png" href="https://via.placeholder.com/32/f59e0b/ffffff?text=AI">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/third-year.css">
+</head>
+<body>
+  <canvas id="neural-canvas" class="neural-bg" aria-hidden="true"></canvas>
+  
+  <header class="header glass-header">
+    <div class="container header-container">
+      <div class="logo">
+        <i class="fas fa-robot"></i>
+        <span>AI Roadmap<span class="dot">.</span></span>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+      <nav class="navbar" id="navbar">
+        <ul class="nav-menu">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="first-year.html" class="nav-link">First Year</a></li>
+          <li><a href="second-year.html" class="nav-link">Second Year</a></li>
+          <li><a href="third-year.html" class="nav-link active">Third Year</a></li>
+          <li><a href="fourth-year.html" class="nav-link">Fourth Year</a></li>
+          <li><a href="blog.html" class="nav-link">Blog</a></li>
+          <li><a href="#" class="nav-link" id="resume-trigger">Resume Builder</a></li>
+          <li>
+            <button id="login-btn" class="nav-link btn-login">Login</button>
+          </li>
+          <li class="user-menu-container">
+            <button id="user-menu-btn" class="nav-link user-menu-btn" style="display:none;">👤 User</button>
+            <div id="user-dropdown" class="user-dropdown" style="display:none;">
+              <a href="#" onclick="showStudentDetails(event)"><i class="fas fa-user-circle"></i> Student Profile</a>
+              <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="year-hero third-year-hero">
+      <div class="container">
+        <h1 class="gradient-text-third">Third Year <span>AI Specialization</span></h1>
+        <p>Deep dive into Artificial Intelligence, Computer Vision, Deep Learning, and Advanced Full-Stack.</p>
+      </div>
+    </section>
+
+    <section class="subjects">
+      <div class="container">
+        <h2 class="section-title">🧠 Core AI & CS Subjects</h2>
+        <div class="subject-grid">
+          <!-- Artificial Intelligence -->
+          <div class="subject-card" data-subject="Artificial Intelligence">
+            <h3><i class="fas fa-brain"></i> Artificial Intelligence</h3>
+            <div class="resources">
+              <a href="https://youtube.com/playlist?list=PLxCzCOWd7aiHGhOHV-nwb0HR5US5GFKFI&si=oPHtVFE2dPhvbVAR" class="resource-link youtube" target="_blank" rel="noopener"><i class="fab fa-youtube"></i> YouTube</a>
+              <a href="#" class="resource-link notes"><i class="fas fa-file-alt"></i> Notes</a>
+            </div>
+            <div class="certificates" id="cert-AI"></div>
+          </div>
+          
+          <!-- Computer Networks -->
+          <div class="subject-card" data-subject="Computer Networks">
+            <h3><i class="fas fa-network-wired"></i> Computer Networks</h3>
+            <div class="resources">
+              <a href="https://youtube.com/playlist?list=PLxCzCOWd7aiGFBD2-2joCpWOLUrDLvVV_&si=QN3TsLkFSPyJGrkv" class="resource-link youtube" target="_blank" rel="noopener"><i class="fab fa-youtube"></i> YouTube</a>
+              <a href="#" class="resource-link notes"><i class="fas fa-file-alt"></i> Notes</a>
+            </div>
+            <div class="certificates" id="cert-CN"></div>
+          </div>
+          
+          <!-- Embedded AI -->
+          <div class="subject-card" data-subject="Embedded AI">
+            <h3><i class="fas fa-microchip"></i> Embedded AI</h3>
+            <div class="resources">
+              <a href="https://youtube.com/playlist?list=PL7VEa1KauMQqZFj_nWRfsCZNXaBbkuurG&si=h4mU126fY2l7GULN" class="resource-link youtube" target="_blank" rel="noopener"><i class="fab fa-youtube"></i> YouTube</a>
+              <a href="#" class="resource-link notes"><i class="fas fa-file-alt"></i> Notes</a>
+            </div>
+            <div class="certificates" id="cert-EmbeddedAI"></div>
+          </div>
+          
+          <!-- Design & Analysis of Algorithms -->
+          <div class="subject-card" data-subject="DAA">
+            <h3><i class="fas fa-chart-bar"></i> Design & Analysis of Algorithms</h3>
+            <div class="resources">
+              <a href="https://youtube.com/playlist?list=PLxCzCOWd7aiHcmS4i14bI0VrMbZTUvlTa&si=GNMPC1ZGTDGm-b5F" class="resource-link youtube" target="_blank" rel="noopener"><i class="fab fa-youtube"></i> YouTube</a>
+              <a href="#" class="resource-link notes"><i class="fas fa-file-alt"></i> Notes</a>
+            </div>
+            <div class="certificates" id="cert-DAA"></div>
+          </div>
+          
+          <!-- Computer Vision -->
+          <div class="subject-card" data-subject="Computer Vision">
+            <h3><i class="fas fa-eye"></i> Computer Vision</h3>
+            <div class="resources">
+              <a href="https://youtube.com/playlist?list=PLoROMvodv4rOmsNzYBMe0gJY2XS8AQg16&si=iuTgchoT0PYDvon7" class="resource-link youtube" target="_blank" rel="noopener"><i class="fab fa-youtube"></i> YouTube</a>
+              <a href="#" class="resource-link notes"><i class="fas fa-file-alt"></i> Notes</a>
+            </div>
+            <div class="certificates" id="cert-CV"></div>
+          </div>
+          
+          <!-- Deep Learning -->
+          <div class="subject-card" data-subject="Deep Learning">
+            <h3><i class="fas fa-layer-group"></i> Deep Learning</h3>
+            <div class="resources">
+              <a href="https://youtube.com/playlist?list=PLoROMvodv4rNRRGdS0rBbXOUGA0wjdh1X&si=lNqm034fp4uciyex" class="resource-link youtube" target="_blank" rel="noopener"><i class="fab fa-youtube"></i> YouTube</a>
+              <a href="#" class="resource-link notes"><i class="fas fa-file-alt"></i> Notes</a>
+            </div>
+            <div class="certificates" id="cert-DL"></div>
+          </div>
+          
+          <!-- Full Stack Development-2 -->
+          <div class="subject-card" data-subject="Full Stack Development-2">
+            <h3><i class="fas fa-cubes"></i> Full Stack Development-2</h3>
+            <div class="resources">
+              <a href="https://youtube.com/playlist?list=PLbtI3_MArDOkxh7XzixN2G4NAGIVqTFon&si=0K9RK-_j241mYRfw" class="resource-link youtube" target="_blank" rel="noopener"><i class="fab fa-youtube"></i> YouTube</a>
+              <a href="#" class="resource-link notes"><i class="fas fa-file-alt"></i> Notes</a>
+            </div>
+            <div class="certificates" id="cert-FS2"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="career-tracks">
+      <div class="container">
+        <h2 class="section-title">🤖 6 AI Career Tracks</h2>
+        <p class="section-subtitle">4-step roadmap for each specialization</p>
+        <div class="tracks-grid">
+          <div class="track-card">
+            <h4><i class="fas fa-flask"></i><br> AI Researcher</h4>
+            <ul>
+              <li><span>1.</span> Advanced Mathematics & Statistics</li>
+              <li><span>2.</span> Deep Learning Specialization</li>
+              <li><span>3.</span> Research Internship</li>
+              <li><span>4.</span> PhD Prep & Publications</li>
+            </ul>
+          </div>
+          <div class="track-card">
+            <h4><i class="fas fa-cogs"></i><br> ML Engineer</h4>
+            <ul>
+              <li><span>1.</span> Python/ML Libraries</li>
+              <li><span>2.</span> System Design for ML</li>
+              <li><span>3.</span> MLOps & Deployment</li>
+              <li><span>4.</span> Productionize Models</li>
+            </ul>
+          </div>
+          <div class="track-card">
+            <h4><i class="fas fa-eye"></i><br> Computer Vision Engineer</h4>
+            <ul>
+              <li><span>1.</span> Image Processing & OpenCV</li>
+              <li><span>2.</span> CNN Architectures</li>
+              <li><span>3.</span> 3D Vision & SLAM</li>
+              <li><span>4.</span> Edge AI & Deployment</li>
+            </ul>
+          </div>
+          <div class="track-card">
+            <h4><i class="fas fa-language"></i><br> NLP Engineer</h4>
+            <ul>
+              <li><span>1.</span> Computational Linguistics</li>
+              <li><span>2.</span> Transformers & BERT</li>
+              <li><span>3.</span> LLMs & Fine-tuning</li>
+              <li><span>4.</span> Chatbot Development</li>
+            </ul>
+          </div>
+          <div class="track-card">
+            <h4><i class="fas fa-microchip"></i><br> Embedded AI</h4>
+            <ul>
+              <li><span>1.</span> C++/RTOS Fundamentals</li>
+              <li><span>2.</span> TinyML & TensorFlow Lite</li>
+              <li><span>3.</span> Edge Impulse</li>
+              <li><span>4.</span> IoT Integration</li>
+            </ul>
+          </div>
+          <div class="track-card">
+            <h4><i class="fas fa-chart-pie"></i><br> AI Product Manager</h4>
+            <ul>
+              <li><span>1.</span> Domain Knowledge</li>
+              <li><span>2.</span> Agile & Scrum</li>
+              <li><span>3.</span> Analytics & Metrics</li>
+              <li><span>4.</span> Go-to-Market Strategy</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-container">
+      <div class="footer-newsletter">
+        <h4>Newsletter</h4>
+        <p>Get weekly AI roadmap updates</p>
+        <form class="newsletter-form">
+          <input type="email" placeholder="Your email" required>
+          <button type="submit" class="btn-subscribe"><i class="fas fa-paper-plane"></i></button>
+        </form>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h5>Quick links</h5>
+          <ul>
+            <li><a href="first-year.html">First Year</a></li>
+            <li><a href="second-year.html">Second Year</a></li>
+            <li><a href="third-year.html">Third Year</a></li>
+            <li><a href="fourth-year.html">Fourth Year</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Resources</h5>
+          <ul>
+            <li><a href="#">Certificates</a></li>
+            <li><a href="#">Resume builder</a></li>
+            <li><a href="#">Career tracks</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Contact</h5>
+          <ul>
+            <li><a href="mailto:hello@airoadmap.com">hello@airoadmap.com</a></li>
+          </ul>
+          <div class="social-icons">
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-github"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 AI Engineering Roadmap</p>
+    </div>
+  </footer>
+
+  <!-- AUTH MODAL (LOGIN/SIGNUP) -->
+  <div id="auth-modal" class="modal auth-modal">
+    <div class="modal-content auth-modal-content">
+      <button class="auth-close-btn">&times;</button>
+      <div class="auth-modal-header">
+        <h2>Login</h2>
+      </div>
+
+      <div id="auth-message" class="auth-message" style="display:none;"></div>
+
+      <!-- LOGIN FORM -->
+      <form id="login-form" class="auth-form" style="display:block;">
+        <div class="form-group">
+          <label for="auth-email">Email</label>
+          <input type="email" id="auth-email" placeholder="your@email.com" required>
+        </div>
+        <div class="form-group">
+          <label for="auth-password">Password</label>
+          <input type="password" id="auth-password" placeholder="••••••••" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 16px;">Login</button>
+      </form>
+
+      <!-- REGISTER FORM -->
+      <form id="register-form" class="auth-form" style="display:none;">
+        <div class="form-group">
+          <label for="auth-email">Email</label>
+          <input type="email" id="auth-email" placeholder="your@email.com" required>
+        </div>
+        <div class="form-group">
+          <label for="auth-username">Username</label>
+          <input type="text" id="auth-username" placeholder="your_username" required>
+        </div>
+        <div class="form-group">
+          <label for="auth-year">Year of Study</label>
+          <select id="auth-year" required>
+            <option value="">Select your year</option>
+            <option value="1">First Year</option>
+            <option value="2">Second Year</option>
+            <option value="3">Third Year</option>
+            <option value="4">Fourth Year</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="auth-password">Password</label>
+          <input type="password" id="auth-password" placeholder="••••••••" required>
+        </div>
+        <div class="form-group">
+          <label for="auth-confirm-password">Confirm Password</label>
+          <input type="password" id="auth-confirm-password" placeholder="••••••••" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 16px;">Sign Up</button>
+      </form>
+
+      <div class="auth-footer">
+        <button id="switch-auth-mode" class="btn-text">Don't have an account? Sign up</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Resume Modal -->
+  <!-- RESUME BUILDER MODAL -->
+<div id="resume-modal" class="modal" style="display: none;">
+
+  <div class="modal-content">
+    <button class="close-modal" style="position: absolute; top: 16px; right: 24px; background: none; border: none; font-size: 28px; cursor: pointer; color: #666;">&times;</button>
+
+    <h2>Resume Builder</h2>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; height: calc(90vh - 250px); margin-bottom: 16px;">
+      <!-- LEFT COLUMN: FORM INPUTS -->
+      <div style="overflow-y: auto; padding-right: 8px;">
+        <form id="resume-form">
+
+          <input id="full-name" placeholder="Full Name" required>
+          <div id="full-name-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/100</div>
+
+          <input id="email" placeholder="Email" required>
+          <div id="email-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/100</div>
+
+          <input id="phone" placeholder="Phone">
+          <div id="phone-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/20</div>
+
+          <input id="linkedin" placeholder="LinkedIn">
+          <div id="linkedin-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/100</div>
+
+          <textarea id="summary" placeholder="Summary"></textarea>
+          <div id="summary-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/500</div>
+
+          <textarea id="education" placeholder="Education"></textarea>
+          <div id="education-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/500</div>
+
+          <textarea id="skills" placeholder="Skills (comma separated)"></textarea>
+          <div id="skills-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/500</div>
+
+          <textarea id="projects" placeholder="Projects"></textarea>
+          <div id="projects-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/500</div>
+
+          <textarea id="certifications" placeholder="Certifications (one per line)"></textarea>
+          <div id="certifications-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/500</div>
+
+          <textarea id="achievements" placeholder="Achievements (one per line)"></textarea>
+          <div id="achievements-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/500</div>
+        </form>
+      </div>
+
+      <!-- RIGHT COLUMN: PREVIEW -->
+      <div style="overflow-y: auto; border-left: 2px solid #e2e8f0; padding-left: 16px;">
+        <h3 style="margin-top: 0; color: #333;">📄 Preview</h3>
+        <div id="preview-content"></div>
+      </div>
+    </div>
+
+    <div style="display: flex; gap: 8px; flex-wrap: wrap; flex-shrink: 0;">
+      <button type="button" id="generate-resume" style="background: #3b82f6; color: white; padding: 10px 16px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">Generate Preview</button>
+      <button type="button" id="save-resume-btn" style="background: #10b981; color: white; padding: 10px 16px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">💾 Save Resume</button>
+      <button type="button" id="download-pdf" style="background: #f59e0b; color: white; padding: 10px 16px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">📥 Download PDF</button>
+      <button type="button" id="clear-form" style="background: #ef4444; color: white; padding: 10px 16px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">🗑️ Clear</button>
+      <button type="button" id="view-resumes" style="background: #8b5cf6; color: white; padding: 10px 16px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">📄 Saved Resumes</button>
+    </div>
+
+  </div>
+
+</div>
+
+  <script src="js/auth.js"></script>
+  <script src="js/saved-resumes.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/counter.js"></script>
+  <script src="js/certificates.js"></script>
+  <script src="js/resume-builder.js"></script>
+  <script src="js/year-pages.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const subjects = [
+        'Artificial Intelligence',
+        'Computer Networks',
+        'Embedded AI',
+        'DAA',
+        'Computer Vision',
+        'Deep Learning',
+        'Full Stack Development-2'
+      ];
+      subjects.forEach(s => {
+        if (typeof showCertificates === 'function') {
+          showCertificates(s);
+        }
+      });
+    });
+  </script>
+</body>
+</html>

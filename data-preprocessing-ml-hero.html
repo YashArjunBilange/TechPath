@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
+  <meta name="description" content="Data Preprocessing: The Unsung Hero of ML - TechPath Blog">
+  <title>Data Preprocessing: The Unsung Hero of ML | TechPath Blog</title>
+  <link rel="icon" type="image/png" href="https://via.placeholder.com/32/3b82f6/ffffff?text=AI">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/blog.css">
+</head>
+<body>
+  <canvas id="neural-canvas" class="neural-bg" aria-hidden="true"></canvas>
+
+  <header class="header glass-header">
+    <div class="container header-container">
+      <div class="logo">
+        <i class="fas fa-robot" aria-hidden="true"></i>
+        <span>TechPath<span class="dot">.</span></span>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+      <nav class="navbar" id="navbar">
+        <ul class="nav-menu">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="first-year.html" class="nav-link">First Year</a></li>
+          <li><a href="second-year.html" class="nav-link">Second Year</a></li>
+          <li><a href="third-year.html" class="nav-link">Third Year</a></li>
+          <li><a href="fourth-year.html" class="nav-link">Fourth Year</a></li>
+          <li><a href="blog.html" class="nav-link active">Blog</a></li>
+          <li><a href="#" class="nav-link" id="resume-trigger">Resume Builder</a></li>
+          <li>
+            <button id="login-btn" class="nav-link btn-login">Login</button>
+          </li>
+          <li class="user-menu-container">
+            <button id="user-menu-btn" class="nav-link user-menu-btn" style="display:none;">👤 User</button>
+            <div id="user-dropdown" class="user-dropdown" style="display:none;">
+              <a href="#" onclick="showStudentDetails(event)"><i class="fas fa-user-circle"></i> Student Profile</a>
+              <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- ARTICLE HEADER -->
+    <section class="article-header">
+      <div class="container">
+        <div class="article-meta-header">
+          <span class="article-category tutorial-badge"><i class="fas fa-graduation-cap"></i> Tutorial</span>
+          <span class="article-date"><i class="fas fa-calendar"></i> March 10, 2026</span>
+          <span class="read-time"><i class="fas fa-clock"></i> 12 min read</span>
+        </div>
+        <h1 class="article-title-full">Data Preprocessing: The Unsung Hero of ML</h1>
+        <p class="article-subtitle">Master data preprocessing techniques that separate good ML projects from great ones. Learn to handle missing data, outliers, and transformations that actually matter.</p>
+        <div class="article-author">
+          <div class="author-info">
+            <div class="author-avatar">
+              <i class="fas fa-user-circle"></i>
+            </div>
+            <div class="author-details">
+              <span class="author-name">TechPath Editorial</span>
+              <span class="author-bio">AI Engineering Education Experts</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ARTICLE CONTENT -->
+    <section class="article-content-section">
+      <div class="container">
+        <div class="article-body">
+
+          <div class="article-intro">
+            <p>Data preprocessing is the foundation of every successful machine learning project. While algorithms and architectures get all the attention, the truth is that 80% of your model's performance depends on how well you prepare your data. Poor preprocessing leads to garbage in, garbage out. Great preprocessing turns mediocre algorithms into production-ready systems. This guide covers the essential preprocessing techniques every ML engineer should master.</p>
+          </div>
+
+          <h2>Why Data Preprocessing Matters</h2>
+          <p>Raw data is rarely ready for machine learning. Real-world data is messy, incomplete, and inconsistent. Without proper preprocessing, even the most sophisticated algorithms will underperform.</p>
+
+          <p><strong>The Impact</strong>:</p>
+          <ul>
+            <li><strong>Model Accuracy</strong>: Well-preprocessed data can improve model performance by 20-50%</li>
+            <li><strong>Training Stability</strong>: Proper scaling prevents gradient issues and improves convergence</li>
+            <li><strong>Feature Engineering</strong>: Preprocessing reveals patterns algorithms can't see</li>
+            <li><strong>Production Reliability</strong>: Consistent preprocessing ensures models work in production</li>
+          </ul>
+
+          <p><strong>Common Mistakes</strong>:</p>
+          <ul>
+            <li>Training on raw data without exploration</li>
+            <li>Applying transformations inconsistently between train/test sets</li>
+            <li>Ignoring data leakage from preprocessing</li>
+            <li>Not handling edge cases in production</li>
+          </ul>
+
+          <h2>Step 1: Data Understanding & Exploration</h2>
+          <p>Before preprocessing, understand your data. This step informs all subsequent decisions.</p>
+
+          <h3>Data Profiling</h3>
+          <p>Start with comprehensive data profiling:</p>
+
+          <pre><code class="language-python"># Basic data profiling
+import pandas as pd
+import numpy as np
+
+def profile_data(df):
+    """Comprehensive data profiling"""
+    profile = {}
+
+    # Basic info
+    profile['shape'] = df.shape
+    profile['dtypes'] = df.dtypes.to_dict()
+    profile['memory_usage'] = df.memory_usage(deep=True).sum()
+
+    # Missing values
+    profile['missing'] = df.isnull().sum().to_dict()
+    profile['missing_pct'] = (df.isnull().sum() / len(df) * 100).to_dict()
+
+    # Numeric columns
+    numeric_cols = df.select_dtypes(include=[np.number]).columns
+    if len(numeric_cols) > 0:
+        profile['numeric_stats'] = df[numeric_cols].describe().to_dict()
+
+    # Categorical columns
+    cat_cols = df.select_dtypes(include=['object', 'category']).columns
+    if len(cat_cols) > 0:
+        profile['categorical_stats'] = {}
+        for col in cat_cols:
+            profile['categorical_stats'][col] = {
+                'unique_values': df[col].nunique(),
+                'most_common': df[col].value_counts().head(5).to_dict(),
+                'missing': df[col].isnull().sum()
+            }
+
+    return profile
+
+# Usage
+profile = profile_data(df)
+print(f"Dataset shape: {profile['shape']}")
+print(f"Missing data summary: {profile['missing']}")</code></pre>
+
+          <h3>Distribution Analysis</h3>
+          <p>Understand data distributions to identify preprocessing needs:</p>
+
+          <pre><code class="language-python">import matplotlib.pyplot as plt
+import seaborn as sns
+from scipy import stats
+
+def analyze_distributions(df, numeric_cols):
+    """Analyze distributions for preprocessing decisions"""
+
+    for col in numeric_cols:
+        data = df[col].dropna()
+
+        # Basic statistics
+        print(f"\n{col} Statistics:")
+        print(f"Mean: {data.mean():.2f}")
+        print(f"Median: {data.median():.2f}")
+        print(f"Std: {data.std():.2f}")
+        print(f"Skewness: {stats.skew(data):.2f}")
+        print(f"Kurtosis: {stats.kurtosis(data):.2f}")
+
+        # Normality test
+        _, p_value = stats.shapiro(data.sample(min(5000, len(data))))
+        print(f"Normal distribution (p-value): {p_value:.4f}")
+
+        # Outlier detection using IQR
+        Q1 = data.quantile(0.25)
+        Q3 = data.quantile(0.75)
+        IQR = Q3 - Q1
+        outliers = ((data < (Q1 - 1.5 * IQR)) | (data > (Q3 + 1.5 * IQR))).sum()
+        print(f"Potential outliers (IQR method): {outliers}")
+
+# Usage
+numeric_cols = df.select_dtypes(include=[np.number]).columns
+analyze_distributions(df, numeric_cols)</code></pre>
+
+          <h2>Step 2: Handling Missing Values</h2>
+          <p>Missing data is inevitable. The key is choosing the right imputation strategy.</p>
+
+          <h3>Understanding Missing Data Patterns</h3>
+          <p>Analyze missing data patterns to choose appropriate strategies:</p>
+
+          <pre><code class="language-python">import missingno as msno
+
+def analyze_missing_patterns(df):
+    """Analyze missing data patterns"""
+
+    # Missing data matrix
+    msno.matrix(df)
+    plt.title("Missing Data Pattern")
+    plt.show()
+
+    # Missing data correlation
+    msno.heatmap(df)
+    plt.title("Missing Data Correlation")
+    plt.show()
+
+    # Missing data by column
+    missing_by_col = df.isnull().sum()
+    missing_by_col = missing_by_col[missing_by_col > 0]
+    missing_by_col.plot(kind='bar', figsize=(10, 6))
+    plt.title("Missing Values by Column")
+    plt.ylabel("Count")
+    plt.xticks(rotation=45)
+    plt.show()
+
+# Usage
+analyze_missing_patterns(df)</code></pre>
+
+          <h3>Imputation Strategies</h3>
+          <p>Choose the right imputation method based on data characteristics:</p>
+
+          <pre><code class="language-python">from sklearn.impute import SimpleImputer, KNNImputer
+from sklearn.experimental import enable_iterative_imputer
+from sklearn.impute import IterativeImputer
+
+class DataImputer:
+    """Advanced data imputation strategies"""
+
+    def __init__(self, strategy='auto'):
+        self.strategy = strategy
+        self.imputers = {}
+
+    def fit_transform(self, df):
+        """Apply appropriate imputation for each column type"""
+
+        df_imputed = df.copy()
+
+        # Numeric columns
+        numeric_cols = df.select_dtypes(include=[np.number]).columns
+        numeric_cols = [col for col in numeric_cols if df[col].isnull().sum() > 0]
+
+        for col in numeric_cols:
+            missing_pct = df[col].isnull().sum() / len(df)
+
+            if missing_pct < 0.05:
+                # Low missing - mean/median imputation
+                imputer = SimpleImputer(strategy='median')
+                df_imputed[col] = imputer.fit_transform(df[[col]])
+                self.imputers[col] = imputer
+
+            elif missing_pct < 0.30:
+                # Moderate missing - KNN imputation
+                imputer = KNNImputer(n_neighbors=5)
+                df_imputed[col] = imputer.fit_transform(df[[col]])
+                self.imputers[col] = imputer
+
+            else:
+                # High missing - model-based imputation
+                imputer = IterativeImputer(random_state=42)
+                df_imputed[col] = imputer.fit_transform(df[[col]])
+                self.imputers[col] = imputer
+
+        # Categorical columns
+        cat_cols = df.select_dtypes(include=['object', 'category']).columns
+        cat_cols = [col for col in cat_cols if df[col].isnull().sum() > 0]
+
+        for col in cat_cols:
+            imputer = SimpleImputer(strategy='most_frequent')
+            df_imputed[col] = imputer.fit_transform(df[[col]])
+            self.imputers[col] = imputer
+
+        return df_imputed
+
+# Usage
+imputer = DataImputer()
+df_imputed = imputer.fit_transform(df)</code></pre>
+
+          <h2>Step 3: Outlier Detection & Treatment</h2>
+          <p>Outliers can significantly impact model performance. Learn to detect and handle them appropriately.</p>
+
+          <h3>Statistical Outlier Detection</h3>
+          <p>Multiple methods for detecting outliers:</p>
+
+          <pre><code class="language-python">from scipy import stats
+import numpy as np
+
+class OutlierDetector:
+    """Comprehensive outlier detection"""
+
+    def __init__(self, method='iqr', threshold=1.5):
+        self.method = method
+        self.threshold = threshold
+
+    def detect_outliers(self, data):
+        """Detect outliers using specified method"""
+
+        if self.method == 'iqr':
+            return self._iqr_outliers(data)
+        elif self.method == 'zscore':
+            return self._zscore_outliers(data)
+        elif self.method == 'isolation_forest':
+            return self._isolation_forest_outliers(data)
+        else:
+            raise ValueError(f"Unknown method: {self.method}")
+
+    def _iqr_outliers(self, data):
+        """IQR-based outlier detection"""
+        Q1 = data.quantile(0.25)
+        Q3 = data.quantile(0.75)
+        IQR = Q3 - Q1
+
+        lower_bound = Q1 - self.threshold * IQR
+        upper_bound = Q3 + self.threshold * IQR
+
+        return (data < lower_bound) | (data > upper_bound)
+
+    def _zscore_outliers(self, data):
+        """Z-score based outlier detection"""
+        z_scores = np.abs(stats.zscore(data))
+        return z_scores > 3
+
+    def _isolation_forest_outliers(self, data):
+        """Isolation Forest for outlier detection"""
+        from sklearn.ensemble import IsolationForest
+
+        iso_forest = IsolationForest(contamination=0.1, random_state=42)
+        predictions = iso_forest.fit_predict(data.values.reshape(-1, 1))
+        return predictions == -1
+
+# Usage
+detector = OutlierDetector(method='iqr')
+outliers = detector.detect_outliers(df['price'])
+print(f"Number of outliers detected: {outliers.sum()}")</code></pre>
+
+          <h3>Outlier Treatment Strategies</h3>
+          <p>Choose appropriate treatment based on context:</p>
+
+          <pre><code class="language-python">def treat_outliers(df, column, method='cap', outliers=None):
+    """Treat outliers using various strategies"""
+
+    if outliers is None:
+        detector = OutlierDetector()
+        outliers = detector.detect_outliers(df[column])
+
+    if method == 'remove':
+        # Remove outliers
+        return df[~outliers].copy()
+
+    elif method == 'cap':
+        # Cap outliers at percentile values
+        lower_cap = df[column].quantile(0.05)
+        upper_cap = df[column].quantile(0.95)
+
+        df_treated = df.copy()
+        df_treated.loc[df_treated[column] < lower_cap, column] = lower_cap
+        df_treated.loc[df_treated[column] > upper_cap, column] = upper_cap
+
+        return df_treated
+
+    elif method == 'transform':
+        # Log transformation for right-skewed data
+        df_treated = df.copy()
+        df_treated[column] = np.log1p(df_treated[column])
+        return df_treated
+
+    else:
+        raise ValueError(f"Unknown treatment method: {method}")
+
+# Usage
+df_clean = treat_outliers(df, 'price', method='cap')</code></pre>
+
+          <h2>Step 4: Feature Scaling & Transformation</h2>
+          <p>Most ML algorithms require properly scaled features for optimal performance.</p>
+
+          <h3>Scaling Methods</h3>
+          <p>Choose the right scaling method for your algorithm:</p>
+
+          <pre><code class="language-python">from sklearn.preprocessing import StandardScaler, MinMaxScaler, RobustScaler
+import pandas as pd
+
+class FeatureScaler:
+    """Advanced feature scaling with multiple methods"""
+
+    def __init__(self, method='standard'):
+        self.method = method
+        self.scalers = {}
+
+    def fit_transform(self, df, columns=None):
+        """Scale specified columns using chosen method"""
+
+        if columns is None:
+            columns = df.select_dtypes(include=[np.number]).columns.tolist()
+
+        df_scaled = df.copy()
+
+        for col in columns:
+            if self.method == 'standard':
+                # StandardScaler: mean=0, std=1
+                scaler = StandardScaler()
+            elif self.method == 'minmax':
+                # MinMaxScaler: range [0,1]
+                scaler = MinMaxScaler()
+            elif self.method == 'robust':
+                # RobustScaler: uses median and IQR, robust to outliers
+                scaler = RobustScaler()
+            else:
+                raise ValueError(f"Unknown scaling method: {self.method}")
+
+            # Fit and transform
+            scaled_values = scaler.fit_transform(df[[col]])
+            df_scaled[col] = scaled_values.flatten()
+
+            self.scalers[col] = scaler
+
+        return df_scaled
+
+    def transform(self, df, columns=None):
+        """Transform using fitted scalers"""
+
+        if columns is None:
+            columns = list(self.scalers.keys())
+
+        df_scaled = df.copy()
+
+        for col in columns:
+            if col in self.scalers:
+                scaled_values = self.scalers[col].transform(df[[col]])
+                df_scaled[col] = scaled_values.flatten()
+
+        return df_scaled
+
+# Usage
+scaler = FeatureScaler(method='robust')  # Good for data with outliers
+df_scaled = scaler.fit_transform(df, columns=['price', 'area', 'rooms'])</code></pre>
+
+          <h3>Distribution Transformations</h3>
+          <p>Transform skewed distributions to improve model performance:</p>
+
+          <pre><code class="language-python">from sklearn.preprocessing import PowerTransformer, QuantileTransformer
+
+class DistributionTransformer:
+    """Transform distributions for better model performance"""
+
+    def __init__(self, method='yeo-johnson'):
+        self.method = method
+        self.transformers = {}
+
+    def fit_transform(self, df, columns=None):
+        """Apply distribution transformations"""
+
+        if columns is None:
+            columns = df.select_dtypes(include=[np.number]).columns.tolist()
+
+        df_transformed = df.copy()
+
+        for col in columns:
+            # Check skewness
+            skewness = stats.skew(df[col].dropna())
+
+            if abs(skewness) > 0.5:  # Only transform if significantly skewed
+                if self.method == 'yeo-johnson':
+                    transformer = PowerTransformer(method='yeo-johnson')
+                elif self.method == 'box-cox':
+                    transformer = PowerTransformer(method='box-cox')
+                elif self.method == 'quantile':
+                    transformer = QuantileTransformer(output_distribution='normal')
+                else:
+                    raise ValueError(f"Unknown transformation method: {self.method}")
+
+                transformed_values = transformer.fit_transform(df[[col]])
+                df_transformed[col] = transformed_values.flatten()
+
+                self.transformers[col] = transformer
+
+        return df_transformed
+
+# Usage
+transformer = DistributionTransformer(method='yeo-johnson')
+df_transformed = transformer.fit_transform(df)</code></pre>
+
+          <h2>Step 5: Categorical Variable Encoding</h2>
+          <p>Convert categorical variables to numerical representations.</p>
+
+          <h3>Encoding Strategies</h3>
+          <p>Choose encoding based on variable characteristics:</p>
+
+          <pre><code class="language-python">from sklearn.preprocessing import LabelEncoder, OneHotEncoder
+from category_encoders import TargetEncoder, CatBoostEncoder
+
+class CategoricalEncoder:
+    """Advanced categorical encoding strategies"""
+
+    def __init__(self, method='auto', target=None):
+        self.method = method
+        self.target = target
+        self.encoders = {}
+
+    def fit_transform(self, df, cat_columns=None):
+        """Encode categorical variables"""
+
+        if cat_columns is None:
+            cat_columns = df.select_dtypes(include=['object', 'category']).columns.tolist()
+
+        df_encoded = df.copy()
+
+        for col in cat_columns:
+            unique_values = df[col].nunique()
+            missing_pct = df[col].isnull().sum() / len(df)
+
+            if self.method == 'auto':
+                # Choose method based on characteristics
+                if unique_values == 2:
+                    method = 'label'
+                elif unique_values <= 10 and missing_pct < 0.1:
+                    method = 'onehot'
+                elif self.target is not None:
+                    method = 'target'
+                else:
+                    method = 'frequency'
+            else:
+                method = self.method
+
+            if method == 'label':
+                encoder = LabelEncoder()
+                df_encoded[col] = encoder.fit_transform(df[col].astype(str))
+
+            elif method == 'onehot':
+                # One-hot encoding
+                dummies = pd.get_dummies(df[col], prefix=col, drop_first=True)
+                df_encoded = pd.concat([df_encoded.drop(col, axis=1), dummies], axis=1)
+
+            elif method == 'target' and self.target is not None:
+                encoder = TargetEncoder()
+                df_encoded[col] = encoder.fit_transform(df[col], df[self.target])
+
+            elif method == 'frequency':
+                # Frequency encoding
+                freq_map = df[col].value_counts() / len(df)
+                df_encoded[col] = df[col].map(freq_map)
+
+            self.encoders[col] = {'method': method, 'encoder': encoder if 'encoder' in locals() else None}
+
+        return df_encoded
+
+# Usage
+encoder = CategoricalEncoder(method='auto', target='price')
+df_encoded = encoder.fit_transform(df)</code></pre>
+
+          <h2>Step 6: Feature Engineering</h2>
+          <p>Create new features that capture domain knowledge and improve model performance.</p>
+
+          <h3>Automated Feature Engineering</h3>
+          <p>Use domain knowledge to create meaningful features:</p>
+
+          <pre><code class="language-python">class FeatureEngineer:
+    """Automated feature engineering"""
+
+    def __init__(self):
+        self.new_features = []
+
+    def create_features(self, df):
+        """Create domain-specific features"""
+
+        df_featured = df.copy()
+
+        # Date features (if date columns exist)
+        date_cols = df.select_dtypes(include=['datetime64']).columns
+        for col in date_cols:
+            df_featured[f'{col}_year'] = df[col].dt.year
+            df_featured[f'{col}_month'] = df[col].dt.month
+            df_featured[f'{col}_day'] = df[col].dt.day
+            df_featured[f'{col}_weekday'] = df[col].dt.weekday
+            self.new_features.extend([f'{col}_year', f'{col}_month', f'{col}_day', f'{col}_weekday'])
+
+        # Numeric feature interactions
+        numeric_cols = df.select_dtypes(include=[np.number]).columns
+        if len(numeric_cols) >= 2:
+            for i, col1 in enumerate(numeric_cols):
+                for col2 in numeric_cols[i+1:]:
+                    # Ratios
+                    df_featured[f'{col1}_div_{col2}'] = df[col1] / (df[col2] + 1e-6)
+                    # Products
+                    df_featured[f'{col1}_times_{col2}'] = df[col1] * df[col2]
+                    self.new_features.extend([f'{col1}_div_{col2}', f'{col1}_times_{col2}'])
+
+        # Statistical aggregations
+        if len(numeric_cols) > 1:
+            df_featured['numeric_mean'] = df[numeric_cols].mean(axis=1)
+            df_featured['numeric_std'] = df[numeric_cols].std(axis=1)
+            df_featured['numeric_min'] = df[numeric_cols].min(axis=1)
+            df_featured['numeric_max'] = df[numeric_cols].max(axis=1)
+            self.new_features.extend(['numeric_mean', 'numeric_std', 'numeric_min', 'numeric_max'])
+
+        return df_featured
+
+# Usage
+engineer = FeatureEngineer()
+df_featured = engineer.create_features(df)</code></pre>
+
+          <h2>Step 7: Data Pipeline & Validation</h2>
+          <p>Create reproducible preprocessing pipelines that work in production.</p>
+
+          <h3>Preprocessing Pipeline</h3>
+          <p>Combine all preprocessing steps into a single pipeline:</p>
+
+          <pre><code class="language-python">from sklearn.pipeline import Pipeline
+from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import FunctionTransformer
+
+class MLPreprocessingPipeline:
+    """Complete ML preprocessing pipeline"""
+
+    def __init__(self):
+        self.pipeline = None
+        self.feature_names = None
+
+    def create_pipeline(self, df, target_col=None):
+        """Create comprehensive preprocessing pipeline"""
+
+        # Separate features and target
+        if target_col:
+            X = df.drop(target_col, axis=1)
+            y = df[target_col]
+        else:
+            X = df
+
+        # Identify column types
+        numeric_cols = X.select_dtypes(include=[np.number]).columns.tolist()
+        categorical_cols = X.select_dtypes(include=['object', 'category']).columns.tolist()
+
+        # Create preprocessing steps
+        numeric_transformer = Pipeline(steps=[
+            ('imputer', SimpleImputer(strategy='median')),
+            ('scaler', StandardScaler())
+        ])
+
+        categorical_transformer = Pipeline(steps=[
+            ('imputer', SimpleImputer(strategy='most_frequent')),
+            ('encoder', OneHotEncoder(handle_unknown='ignore'))
+        ])
+
+        # Combine transformers
+        preprocessor = ColumnTransformer(
+            transformers=[
+                ('num', numeric_transformer, numeric_cols),
+                ('cat', categorical_transformer, categorical_cols)
+            ])
+
+        # Create full pipeline
+        self.pipeline = Pipeline(steps=[
+            ('preprocessor', preprocessor)
+        ])
+
+        # Fit pipeline
+        self.pipeline.fit(X)
+
+        # Get feature names after transformation
+        if hasattr(self.pipeline.named_steps['preprocessor'], 'get_feature_names_out'):
+            self.feature_names = self.pipeline.named_steps['preprocessor'].get_feature_names_out()
+
+        return self.pipeline
+
+    def transform(self, df, target_col=None):
+        """Transform new data using fitted pipeline"""
+
+        if target_col:
+            X = df.drop(target_col, axis=1)
+        else:
+            X = df
+
+        return self.pipeline.transform(X)
+
+# Usage
+pipeline = MLPreprocessingPipeline()
+pipeline.create_pipeline(df, target_col='price')
+X_transformed = pipeline.transform(df)</code></pre>
+
+          <h3>Pipeline Validation</h3>
+          <p>Validate preprocessing doesn't introduce data leakage:</p>
+
+          <pre><code class="language-python">def validate_preprocessing(train_df, test_df, pipeline, target_col):
+    """Validate preprocessing maintains data integrity"""
+
+    # Transform both sets
+    X_train = pipeline.transform(train_df)
+    X_test = pipeline.transform(test_df)
+
+    # Check for data leakage
+    print("Preprocessing Validation:")
+    print(f"Train shape: {X_train.shape}")
+    print(f"Test shape: {X_test.shape}")
+
+    # Check feature distributions (should be similar after scaling)
+    if hasattr(pipeline.pipeline.named_steps['preprocessor'], 'named_transformers_'):
+        num_transformer = pipeline.pipeline.named_steps['preprocessor'].named_transformers_['num']
+
+        if hasattr(num_transformer, 'named_steps') and 'scaler' in num_transformer.named_steps:
+            scaler = num_transformer.named_steps['scaler']
+
+            # Check if scaler was fit only on training data
+            if hasattr(scaler, 'mean_'):
+                print("✓ Scaler properly fitted on training data only")
+
+    # Check for NaN/inf values
+    train_nans = np.isnan(X_train).sum()
+    test_nans = np.isnan(X_test).sum()
+
+    if train_nans == 0 and test_nans == 0:
+        print("✓ No NaN values in transformed data")
+    else:
+        print(f"⚠ Found {train_nans} NaN in train, {test_nans} NaN in test")
+
+    return X_train, X_test
+
+# Usage
+X_train_processed, X_test_processed = validate_preprocessing(
+    train_df, test_df, pipeline, 'price'
+)</code></pre>
+
+          <div class="article-conclusion">
+            <h2>Conclusion</h2>
+            <p>Data preprocessing is the foundation of successful machine learning. While it may seem tedious, the impact on model performance is undeniable. The techniques covered here—handling missing values, outlier treatment, feature scaling, encoding, and pipeline creation—form the essential toolkit for any ML engineer. Remember: great preprocessing can turn a mediocre algorithm into a production-ready model. Poor preprocessing dooms even the best algorithms to failure. Invest time in understanding your data and applying these techniques systematically. The results will speak for themselves.</p>
+
+            <div class="cta-section">
+              <p><strong>What's your biggest preprocessing challenge?</strong> Are you struggling with missing data, outliers, or categorical encoding? Share your experiences and questions below. Let's build better preprocessing practices together. The preprocessing techniques that work in research often fail in production—let's discuss how to bridge that gap.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- BACK TO BLOG -->
+    <section class="back-to-blog">
+      <div class="container">
+        <a href="blog.html" class="back-btn">
+          <i class="fas fa-arrow-left"></i> Back to Blog
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <div class="footer-logo">
+            <i class="fas fa-robot"></i>
+            <span>TechPath<span class="dot">.</span></span>
+          </div>
+          <p>Empowering the next generation of AI engineers through comprehensive roadmaps, resources, and community.</p>
+        </div>
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="first-year.html">First Year</a></li>
+            <li><a href="second-year.html">Second Year</a></li>
+            <li><a href="third-year.html">Third Year</a></li>
+            <li><a href="fourth-year.html">Fourth Year</a></li>
+            <li><a href="blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Connect</h4>
+          <div class="social-links">
+            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-discord"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 TechPath. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/blog.js"></script>
+</body>
+</html>

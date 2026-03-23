@@ -1,0 +1,120 @@
+/* FOURTH YEAR - #8b5cf6 */
+:root {
+  --year-primary: #8b5cf6;
+  --year-gradient: linear-gradient(145deg, #8b5cf6, #7c3aed);
+}
+
+.fourth-year-hero {
+  background: var(--year-gradient);
+  color: white;
+  padding: 80px 0;
+  text-align: center;
+}
+
+.gradient-text-fourth {
+  font-size: 3rem;
+  font-weight: 700;
+  color: white;
+}
+
+.section-title {
+  font-size: 2.2rem;
+  margin-bottom: 40px;
+  position: relative;
+  display: inline-block;
+}
+
+.section-title:after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 80px;
+  height: 4px;
+  background: var(--year-primary);
+  border-radius: 2px;
+}
+
+.prep-cards {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 24px;
+  margin: 40px 0;
+}
+
+.prep-card {
+  background: white;
+  padding: 32px 24px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(139,92,246,0.1);
+  text-align: center;
+  transition: all 0.3s;
+}
+
+.prep-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 35px rgba(139,92,246,0.15);
+}
+
+.prep-card i {
+  font-size: 2.5rem;
+  color: #8b5cf6;
+  margin-bottom: 16px;
+}
+
+.university-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px,1fr));
+  gap: 24px;
+  margin-top: 32px;
+}
+
+.uni-card {
+  background: #f5f3ff;
+  border-radius: 16px;
+  padding: 24px;
+  border: 1px solid #ede9fe;
+  transition: all 0.2s;
+}
+
+.uni-card:hover {
+  background: white;
+  border-color: #8b5cf6;
+  transform: scale(1.02);
+  box-shadow: 0 10px 25px rgba(139,92,246,0.1);
+}
+
+.uni-card h4 {
+  color: #5b21b6;
+  margin-bottom: 12px;
+  font-size: 1.2rem;
+}
+
+.uni-card .rank {
+  color: #8b5cf6;
+  font-weight: 600;
+}
+
+.uni-desc {
+  margin: 12px 0;
+  color: var(--gray);
+  font-size: 0.95rem;
+}
+
+.uni-link {
+  display: inline-block;
+  margin-top: 16px;
+  color: #7c3aed;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.uni-link:hover {
+  color: #5b21b6;
+}
+
+.section-subtitle {
+  color: var(--gray);
+  margin-bottom: 32px;
+  font-size: 1.2rem;
+}

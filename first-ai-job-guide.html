@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
+  <meta name="description" content="Landing Your First AI Job: A Complete Guide - TechPath Blog">
+  <title>Landing Your First AI Job: A Complete Guide | TechPath Blog</title>
+  <link rel="icon" type="image/png" href="https://via.placeholder.com/32/3b82f6/ffffff?text=AI">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/blog.css">
+</head>
+<body>
+  <canvas id="neural-canvas" class="neural-bg" aria-hidden="true"></canvas>
+
+  <header class="header glass-header">
+    <div class="container header-container">
+      <div class="logo">
+        <i class="fas fa-robot" aria-hidden="true"></i>
+        <span>TechPath<span class="dot">.</span></span>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+      <nav class="navbar" id="navbar">
+        <ul class="nav-menu">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="first-year.html" class="nav-link">First Year</a></li>
+          <li><a href="second-year.html" class="nav-link">Second Year</a></li>
+          <li><a href="third-year.html" class="nav-link">Third Year</a></li>
+          <li><a href="fourth-year.html" class="nav-link">Fourth Year</a></li>
+          <li><a href="blog.html" class="nav-link active">Blog</a></li>
+          <li><a href="#" class="nav-link" id="resume-trigger">Resume Builder</a></li>
+          <li>
+            <button id="login-btn" class="nav-link btn-login">Login</button>
+          </li>
+          <li class="user-menu-container">
+            <button id="user-menu-btn" class="nav-link user-menu-btn" style="display:none;">👤 User</button>
+            <div id="user-dropdown" class="user-dropdown" style="display:none;">
+              <a href="#" onclick="showStudentDetails(event)"><i class="fas fa-user-circle"></i> Student Profile</a>
+              <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- ARTICLE HEADER -->
+    <section class="article-header">
+      <div class="container">
+        <div class="article-meta-header">
+          <span class="article-category career-badge"><i class="fas fa-briefcase"></i> Career</span>
+          <span class="article-date"><i class="fas fa-calendar"></i> March 18, 2026</span>
+          <span class="read-time"><i class="fas fa-clock"></i> 14 min read</span>
+        </div>
+        <h1 class="article-title-full">Landing Your First AI Job: A Complete Guide</h1>
+        <p class="article-subtitle">Your roadmap to securing your first AI job in 2026. Learn what employers want, how to build a standout portfolio, and strategies for landing interviews.</p>
+        <div class="article-author">
+          <div class="author-info">
+            <div class="author-avatar">
+              <i class="fas fa-user-circle"></i>
+            </div>
+            <div class="author-details">
+              <span class="author-name">TechPath Editorial</span>
+              <span class="author-bio">AI Engineering Education Experts</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ARTICLE CONTENT -->
+    <section class="article-content-section">
+      <div class="container">
+        <div class="article-body">
+
+          <div class="article-intro">
+            <p>The AI job market is booming, but landing your first position requires more than just enthusiasm. Employers in 2026 are looking for a specific blend of technical skills, portfolio evidence, and professional maturity. Whether you're transitioning from another field or graduating with a computer science degree, this guide provides a actionable roadmap to help you stand out from the competition and secure your first AI role.</p>
+          </div>
+
+          <h2>Understanding the AI Job Market in 2026</h2>
+          <p>The AI job landscape has matured significantly. In early days, companies hired anyone with 'machine learning' on their resume. Today, they want proof of competence.</p>
+          <p><strong>Market Trends</strong>:</p>
+          <ul>
+            <li><strong>Specialization is valued</strong>: General 'AI engineers' are less sought after than specialists in LLMs, computer vision, or MLOps.</li>
+            <li><strong>Production experience matters</strong>: Companies want engineers who can deploy models, not just train them.</li>
+            <li><strong>Hybrid roles</strong>: You'll see positions requiring ML + DevOps, ML + Domain expertise, or ML + product understanding.</li>
+            <li><strong>Competitive landscape</strong>: Entry-level positions receive hundreds of applications. You must differentiate.</li>
+          </ul>
+
+          <p><strong>Salary Expectations</strong>:</p>
+          <ul>
+            <li>Entry-level ML Engineer: $110k-$150k base (depending on location and company)</li>
+            <li>Entry-level AI Engineer: $120k-$160k base</li>
+            <li>Startups often offer equity compensating for lower base salaries</li>
+            <li>Location matters significantly; Bay Area and NYC positions pay 30-40% premiums</li>
+          </ul>
+
+          <p><strong>Seeking Opportunities</strong>: Focus on companies actively hiring in AI: established tech giants (Google, Microsoft, Meta), growing AI-native companies (Anthropic, Hugging Face), and industry leaders adopting AI across domains.</p>
+
+          <h2>Building Your Foundational Skill Stack</h2>
+          <p>Employers expect a specific set of technical competencies.</p>
+          <p><strong>Essential Technical Skills</strong>:</p>
+          <p><strong>Programming Proficiency</strong>: Python is non-negotiable. Most AI roles expect fluency beyond basic scripts—you should be comfortable with object-oriented programming, debugging, and writing production-quality code.</p>
+          <ul>
+            <li>Recommended libraries: pandas, NumPy, scikit-learn, PyTorch or TensorFlow</li>
+            <li>Secondary valuable languages: C++, Java, SQL</li>
+          </ul>
+
+          <p><strong>Machine Learning Fundamentals</strong>: As covered in fundamentals deeper areas:</p>
+          <ul>
+            <li>Supervised learning (regression, classification)</li>
+            <li>Unsupervised learning (clustering, dimensionality reduction)</li>
+            <li>Model evaluation and metrics</li>
+            <li>Cross-validation and regularization</li>
+            <li>Hyperparameter tuning</li>
+          </ul>
+
+          <p><strong>Deep Learning</strong>: Increasingly important, especially for vision and NLP roles.</p>
+          <ul>
+            <li>Neural network architectures (CNNs, RNNs, Transformers)</li>
+            <li>Training techniques (optimization, batch normalization, dropout)</li>
+            <li>Fine-tuning pre-trained models</li>
+            <li>Understanding attention mechanisms</li>
+          </ul>
+
+          <p><strong>Data Engineering Basics</strong>: Production ML requires data pipeline knowledge.</p>
+          <ul>
+            <li>SQL for querying databases</li>
+            <li>Data preprocessing and cleaning</li>
+            <li>Feature engineering at scale</li>
+            <li>Basic understanding of data warehousing (Snowflake, BigQuery)</li>
+          </ul>
+
+          <p><strong>Development Practices</strong>:</p>
+          <ul>
+            <li>Version control (Git/GitHub)</li>
+            <li>Debugging and testing</li>
+            <li>Documentation</li>
+            <li>Containerization (Docker basics)</li>
+            <li>API development (FastAPI, Flask)</li>
+          </ul>
+
+          <p><strong>Learning Roadmap</strong>:</p>
+          <ol>
+            <li>Months 1-2: Python fundamentals + data manipulation (pandas, NumPy)</li>
+            <li>Months 3-4: ML algorithms + scikit-learn projects</li>
+            <li>Months 5-6: Deep learning frameworks + one specialty (NLP or CV)</li>
+            <li>Months 7-8: Production ML + portfolio projects</li>
+            <li>Months 9-12: Systems design + interview preparation</li>
+          </ol>
+
+          <h2>Creating a Portfolio That Gets Noticed</h2>
+          <p>Your portfolio is your proof of competence. Employers want to see evidence you can execute.</p>
+          <p><strong>Portfolio Project Criteria</strong>:</p>
+          <p><strong>Project 1: End-to-End ML Project</strong> Build something from raw data to deployed model. Example: Predict house prices using public data.</p>
+          <ul>
+            <li>Includes: data collection, EDA, preprocessing, feature engineering, model training, evaluation</li>
+            <li>Documentation: README explaining your process and findings</li>
+            <li>Code: Clean, well-commented, using version control</li>
+            <li>Results: Quantified performance metrics</li>
+          </ul>
+
+          <p><strong>Project 2: Specialty Deep Dive</strong> Choose based on target role (NLP or Computer Vision). Example: Build a sentiment analysis model.</p>
+          <ul>
+            <li>Show domain-specific knowledge</li>
+            <li>Demonstrate use of transfer learning</li>
+            <li>Include novelty or custom approach</li>
+            <li>Deployment or API endpoint</li>
+          </ul>
+
+          <p><strong>Project 3: Real-World Problem</strong> Solve an actual problem requiring ML. Examples:</p>
+          <ul>
+            <li>Predict customer churn for a business</li>
+            <li>Recommend products or content</li>
+            <li>Detect anomalies in data streams</li>
+            <li>Classify or cluster non-trivial data</li>
+          </ul>
+
+          <p><strong>Portfolio Best Practices</strong>:</p>
+          <p><strong>Quality over Quantity</strong>: 3 excellent projects trump 10 mediocre ones. Each should demonstrate mastery of different concepts.</p>
+          <p><strong>Tell the Story</strong>: In your README and comments, explain:</p>
+          <ul>
+            <li>Problem statement and motivation</li>
+            <li>Data exploration findings</li>
+            <li>Feature engineering decisions</li>
+            <li>Model selection reasoning</li>
+            <li>Results and business impact</li>
+            <li>Lessons learned</li>
+          </ul>
+
+          <p><strong>Show Production Thinking</strong>:</p>
+          <ul>
+            <li>Include model evaluation code</li>
+            <li>Document hyperparameter tuning process</li>
+            <li>Show train-test validation strategy</li>
+            <li>Consider real-world constraints (latency, cost)</li>
+          </ul>
+
+          <p><strong>Code Quality Matters</strong>:</p>
+          <ul>
+            <li>Use virtual environments</li>
+            <li>Write tests</li>
+            <li>Follow PEP 8</li>
+            <li>Use type hints</li>
+            <li>Avoid hardcoded values; use configuration files</li>
+          </ul>
+
+          <p><strong>GitHub as Your Storefront</strong>:</p>
+          <ul>
+            <li>Keep repos public (unless sharing proprietary work)</li>
+            <li>Write comprehensive READMEs</li>
+            <li>Pin your best projects on your profile</li>
+            <li>Maintain an up-to-date profile</li>
+            <li>Show contributions beyond just portfolio projects (contribute to open-source)</li>
+          </ul>
+
+          <h2>Crafting Your Resume and Online Presence</h2>
+          <p>Your resume is your first impression. Make it count.</p>
+          <p><strong>Resume Strategy for Entry-Level AI Roles</strong>:</p>
+          <p><strong>Skills Section</strong>:</p>
+          <ul>
+            <li>Languages: Python, SQL, Java</li>
+            <li>ML Frameworks: PyTorch, TensorFlow, scikit-learn</li>
+            <li>Tools: Git, Docker, Jupyter, FastAPI</li>
+            <li>Specialties: NLP, Computer Vision, Reinforcement Learning (if applicable)</li>
+          </ul>
+
+          <p><strong>Experience Section</strong>: If you lack professional AI experience, leverage:</p>
+          <ul>
+            <li>Internships (even non-AI tech internships demonstrate professionalism)</li>
+            <li>Academic projects (capstone, thesis)</li>
+            <li>Freelance or personal projects</li>
+            <li>Open-source contributions (cite fix numbers and impact)</li>
+            <li>Teaching or tutoring (demonstrates mastery)</li>
+          </ul>
+
+          <p><strong>Action-Oriented Descriptions</strong>:</p>
+          <p>Not: "Created machine learning models"</p>
+          <p>But: "Built and deployed a neural network classifier achieving 94% accuracy on 50k+ samples, reducing manual review time by 30%"</p>
+
+          <p><strong>Education</strong>:</p>
+          <ul>
+            <li>Include GPA if above 3.5</li>
+            <li>List relevant coursework</li>
+            <li>Highlight machine learning, data structures, algorithms</li>
+            <li>Awards, scholarships, honors</li>
+          </ul>
+
+          <p><strong>Beyond Resume - Your Online Presence</strong>:</p>
+          <p><strong>LinkedIn Profile</strong>:</p>
+          <ul>
+            <li>Professional photo</li>
+            <li>Headline: "AI Engineer | Machine Learning | Python"</li>
+            <li>Summary: 2-3 sentences about your passion for AI and what you've built</li>
+            <li>Projects section: Link to portfolio projects</li>
+            <li>Recommendations: Request from professors, colleagues, or internship managers</li>
+            <li>Engagement: Share AI insights, comment thoughtfully on AI content</li>
+          </ul>
+
+          <p><strong>Personal Website</strong>:</p>
+          <ul>
+            <li>Central hub for portfolio, resume, and contact</li>
+            <li>Blog posts demonstrating knowledge (improves SEO for your name)</li>
+            <li>Projects showcase</li>
+            <li>Contact form or email</li>
+          </ul>
+
+          <p><strong>Medium or Dev.to</strong>:</p>
+          <ul>
+            <li>Write about your learning journey</li>
+            <li>Explain concepts you've learned (teaches you deeper understanding)</li>
+            <li>Document projects and findings</li>
+          </ul>
+
+          <h2>Networking: Who You Know Matters</h2>
+          <p>Statistically, 70-80% of jobs are filled through networking, not applications. This is especially true in AI.</p>
+          <p><strong>Effective Networking Strategies</strong>:</p>
+          <p><strong>Leverage Conference Attendance</strong>:</p>
+          <ul>
+            <li>AI conferences: NeurIPS, ICML, conferences in your region</li>
+            <li>Meetups: Local ML or AI meetups (increasingly hybrid)</li>
+            <li>Hackathons: Compete and network simultaneously</li>
+            <li>Research presentations: If you've published or presented work</li>
+          </ul>
+
+          <p><strong>Online Communities</strong>:</p>
+          <ul>
+            <li>Reddit: r/MachineLearning, r/learnmachinelearning</li>
+            <li>Discord communities: AI enthusiast groups</li>
+            <li>Twitter: Follow and engage with AI researchers and engineers</li>
+            <li>GitHub discussions: Contribute to popular ML libraries</li>
+          </ul>
+
+          <p><strong>Informational Interviews</strong>:</p>
+          <ul>
+            <li>Find someone working at your target company on LinkedIn</li>
+            <li>Request 15-20 minutes to learn about their experience</li>
+            <li>Prepare thoughtful questions</li>
+            <li>Follow up with thanks and connection requests</li>
+          </ul>
+
+          <p><strong>Alumni Network</strong>:</p>
+          <ul>
+            <li>Connect with graduates from your school working in AI</li>
+            <li>Attend alumni events in tech hubs</li>
+            <li>Leverage shared background in conversations</li>
+          </ul>
+
+          <p><strong>Mentorship</strong>:</p>
+          <ul>
+            <li>Find a mentor in industry</li>
+            <li>Regular meetings (monthly or quarterly)</li>
+            <li>Show your work, get feedback</li>
+            <li>Mentors often know of opportunities before they're posted</li>
+          </ul>
+
+          <p><strong>Networking Tips</strong>:</p>
+          <ul>
+            <li>Be genuine; people detect insincerity</li>
+            <li>Help others before asking for help</li>
+            <li>Follow up consistently</li>
+            <li>Remember details about people</li>
+            <li>Provide value (share articles, make introductions)</li>
+            <li>Think long-term; relationships last years</li>
+          </ul>
+
+          <h2>Navigating the Interview Process</h2>
+          <p>AI interviews typically have multiple rounds.</p>
+          <p><strong>Round 1: Phone Screening</strong> Recruiter or junior engineer assesses basic fit. Questions about background, motivation, technical depth. Preparation: Know your projects cold. Be able to explain any on your resume.</p>
+          <p><strong>Round 2: Technical Assessment</strong> Coding problems (LeetCode-style or ML-specific). System design for ML (designing a recommendation system, for example). Time: Usually 60-90 minutes.</p>
+          <p><strong>Preparation</strong>:</p>
+          <div class="code-block">
+            <pre><code>def train_evaluate_model(X, y, test_size=0.2):
+    """Train and evaluate a classification model."""
+    from sklearn.model_selection import train_test_split
+    from sklearn.ensemble import RandomForestClassifier
+    from sklearn.metrics import accuracy_score, precision_score, recall_score
+    
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=test_size, random_state=42
+    )
+    
+    model = RandomForestClassifier(n_estimators=100, random_state=42)
+    model.fit(X_train, y_train)
+    
+    predictions = model.predict(X_test)
+    return {
+        'accuracy': accuracy_score(y_test, predictions),
+        'precision': precision_score(y_test, predictions),
+        'recall': recall_score(y_test, predictions),
+        'model': model
+    }</code></pre>
+          </div>
+
+          <p><strong>Round 3: Take-Home Project</strong> Real-world problem to solve. 2-4 hours of work over 3-7 days. Demonstrate your practices: documentation, testing, design.</p>
+          <p><strong>Round 4: System Design Interview</strong> Design an ML system end-to-end. Discuss: data pipeline, model architecture, evaluation, deployment.</p>
+          <p><strong>Round 5: Behavioral Interview</strong> Tell me about a time you faced a challenge. How do you work in teams? Where do you see yourself in 5 years? Why this company/role? Use STAR method: Situation, Task, Action, Result.</p>
+          <p><strong>Interview Preparation</strong>: Practice LeetCode: 20-30 problems minimum. Study ML systems design. Prepare stories demonstrating teamwork, problem-solving, overcoming challenges. Research the company thoroughly. Prepare thoughtful questions about role, team, company culture. Mock interviews with friends or AI-focused communities.</p>
+
+          <h2>Common Mistakes to Avoid</h2>
+          <p>Learning from others' mistakes accelerates your success.</p>
+          <p><strong>Technical Mistakes</strong>:</p>
+          <ul>
+            <li><strong>Incomplete projects</strong>: Don't submit unfinished work; it signals poor execution</li>
+            <li><strong>No testing</strong>: Always test your code; bugs during interviews are career-limiting</li>
+            <li><strong>Ignoring performance</strong>: Don't optimize without measuring; premature optimization wastes time</li>
+            <li><strong>Not understanding your own code</strong>: If it's in your portfolio, explain every line</li>
+          </ul>
+
+          <p><strong>Career Mistakes</strong>:</p>
+          <ul>
+            <li><strong>Only applying</strong>: Passive applications to job boards rarely succeed; network actively</li>
+            <li><strong>Too broad positioning</strong>: "I want any AI job" is weaker than "I'm passionate about NLP"</li>
+            <li><strong>Weak cover letters</strong>: Generic letters get deleted; customize for each company</li>
+            <li><strong>Poor communication</strong>: Quick to respond, clear emails matter in first impressions</li>
+          </ul>
+
+          <p><strong>Interview Mistakes</strong>:</p>
+          <ul>
+            <li><strong>Overcomplicating solutions</strong>: Start simple, then optimize</li>
+            <li><strong>Not asking clarifying questions</strong>: Double-check assumptions</li>
+            <li><strong>Talking too much</strong>: Let the interviewer speak; answer their question</li>
+            <li><strong>Negativity</strong>: Never criticize previous employers or companies</li>
+            <li><strong>Not asking about the role</strong>: Show genuine interest</li>
+          </ul>
+
+          <h2>Your 6-Month Action Plan</h2>
+          <p>Transform these concepts into action.</p>
+          <p><strong>Month 1: Foundation</strong> Solidify Python fundamentals. Complete 1-2 online ML courses. Start reading ML research papers (arXiv). Set up GitHub and create initial portfolio structure.</p>
+          <p><strong>Month 2-3: Build First Project</strong> Choose dataset from Kaggle. Complete end-to-end ML pipeline. Document thoroughly. Deploy on Heroku or AWS.</p>
+          <p><strong>Month 3-4: Deepen Knowledge</strong> Specialize in one area (NLP or Computer Vision). Build second project in this specialty. Start contributing to open-source ML projects. Join local meetups or online communities.</p>
+          <p><strong>Month 4-5: Portfolio Polish</strong> Complete third project with real-world focus. Write blog posts about your projects. Update LinkedIn and GitHub profiles. Create personal website.</p>
+          <p><strong>Month 5-6: Interview Preparation</strong> Practice LeetCode problems. Mock interviews with friends. Research target companies. Begin informational interviews. Start applying to positions.</p>
+
+          <div class="article-conclusion">
+            <h2>Conclusion</h2>
+            <p>Landing your first AI job requires strategic effort across multiple dimensions: technical skill development, portfolio building, professional presentation, and networking. There's no single path—your journey will be unique. However, by investing in genuine expertise, creating concrete evidence of your abilities, and building authentic professional relationships, you'll position yourself competitively in the 2026 AI job market. Remember, companies ultimately hire people who can solve problems, communicate effectively, and grow within their teams. Focus on becoming exactly that person.</p>
+
+            <div class="cta-section">
+              <p><strong>Start today.</strong> Pick one action from this guide and complete it this week. Whether it's building your first project, attending a local meetup, or reaching out to someone in the industry, momentum is your friend. Share your journey with our community—let us know how you're progressing toward your first AI role. We're rooting for you!</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- BACK TO BLOG -->
+    <section class="back-to-blog">
+      <div class="container">
+        <a href="blog.html" class="back-btn">
+          <i class="fas fa-arrow-left"></i> Back to Blog
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <div class="footer-logo">
+            <i class="fas fa-robot"></i>
+            <span>TechPath<span class="dot">.</span></span>
+          </div>
+          <p>Empowering the next generation of AI engineers through comprehensive roadmaps, resources, and community.</p>
+        </div>
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="first-year.html">First Year</a></li>
+            <li><a href="second-year.html">Second Year</a></li>
+            <li><a href="third-year.html">Third Year</a></li>
+            <li><a href="fourth-year.html">Fourth Year</a></li>
+            <li><a href="blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Connect</h4>
+          <div class="social-links">
+            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-discord"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 TechPath. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/blog.js"></script>
+</body>
+</html>

@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
+  <meta name="description" content="Deep Learning Architecture Explained - TechPath Blog">
+  <title>Deep Learning Architecture Explained | TechPath Blog</title>
+  <link rel="icon" type="image/png" href="https://via.placeholder.com/32/3b82f6/ffffff?text=AI">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/blog.css">
+</head>
+<body>
+  <canvas id="neural-canvas" class="neural-bg" aria-hidden="true"></canvas>
+
+  <header class="header glass-header">
+    <div class="container header-container">
+      <div class="logo">
+        <i class="fas fa-robot" aria-hidden="true"></i>
+        <span>TechPath<span class="dot">.</span></span>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+      <nav class="navbar" id="navbar">
+        <ul class="nav-menu">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="first-year.html" class="nav-link">First Year</a></li>
+          <li><a href="second-year.html" class="nav-link">Second Year</a></li>
+          <li><a href="third-year.html" class="nav-link">Third Year</a></li>
+          <li><a href="fourth-year.html" class="nav-link">Fourth Year</a></li>
+          <li><a href="blog.html" class="nav-link active">Blog</a></li>
+          <li><a href="#" class="nav-link" id="resume-trigger">Resume Builder</a></li>
+          <li>
+            <button id="login-btn" class="nav-link btn-login">Login</button>
+          </li>
+          <li class="user-menu-container">
+            <button id="user-menu-btn" class="nav-link user-menu-btn" style="display:none;">👤 User</button>
+            <div id="user-dropdown" class="user-dropdown" style="display:none;">
+              <a href="#" onclick="showStudentDetails(event)"><i class="fas fa-user-circle"></i> Student Profile</a>
+              <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- ARTICLE HEADER -->
+    <section class="article-header">
+      <div class="container">
+        <div class="article-meta-header">
+          <span class="article-category ai-badge"><i class="fas fa-brain"></i> AI</span>
+          <span class="article-date"><i class="fas fa-calendar"></i> March 8, 2026</span>
+          <span class="read-time"><i class="fas fa-clock"></i> 14 min read</span>
+        </div>
+        <h1 class="article-title-full">Deep Learning Architecture Explained</h1>
+        <p class="article-subtitle">Understand the fundamental architectures powering modern AI. From CNNs to Transformers, learn how different neural network designs solve different problems.</p>
+        <div class="article-author">
+          <div class="author-info">
+            <div class="author-avatar">
+              <i class="fas fa-user-circle"></i>
+            </div>
+            <div class="author-details">
+              <span class="author-name">TechPath Editorial</span>
+              <span class="author-bio">AI Engineering Education Experts</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ARTICLE CONTENT -->
+    <section class="article-content-section">
+      <div class="container">
+        <div class="article-body">
+
+          <div class="article-intro">
+            <p>Deep learning architectures are the engines of modern AI. Understanding these architectures isn't just academic—it's practical knowledge that guides your model selection and design decisions. Each architecture was created to solve specific problems, and knowing when to use which one separates competent engineers from exceptional ones. This guide covers the fundamental architectures, their strengths, limitations, and practical applications.</p>
+          </div>
+
+          <h2>Foundation: The Multilayer Perceptron (MLP)</h2>
+          <p>Before diving into specialized architectures, understand the foundation: the multilayer perceptron.</p>
+
+          <h3>What is an MLP?</h3>
+          <p>The MLP is the basic building block of deep learning:</p>
+
+          <pre><code class="language-python">import torch.nn as nn
+
+class MLP(nn.Module):
+    """Basic Multilayer Perceptron"""
+
+    def __init__(self, input_size, hidden_sizes, output_size, dropout=0.1):
+        super(MLP, self).__init__()
+
+        # Build layers
+        layers = []
+        prev_size = input_size
+
+        for hidden_size in hidden_sizes:
+            layers.extend([
+                nn.Linear(prev_size, hidden_size),
+                nn.ReLU(),
+                nn.Dropout(dropout)
+            ])
+            prev_size = hidden_size
+
+        # Output layer
+        layers.append(nn.Linear(prev_size, output_size))
+
+        self.network = nn.Sequential(*layers)
+
+    def forward(self, x):
+        return self.network(x)
+
+# Usage
+model = MLP(input_size=784, hidden_sizes=[512, 256, 128], output_size=10)</code></pre>
+
+          <p><strong>MLP Characteristics</strong>:</p>
+          <ul>
+            <li><strong>Architecture</strong>: Fully connected layers with non-linear activations</li>
+            <li><strong>Strengths</strong>: Universal approximator, works with any input type (after flattening)</li>
+            <li><strong>Limitations</strong>: Ignores spatial relationships, parameter explosion with large inputs</li>
+            <li><strong>Use Cases</strong>: Tabular data, simple classification/regression</li>
+          </ul>
+
+          <h2>Convolutional Neural Networks (CNNs)</h2>
+          <p>CNNs revolutionized computer vision by exploiting spatial relationships in data.</p>
+
+          <h3>CNN Fundamentals</h3>
+          <p>CNNs use convolutional layers to extract spatial features:</p>
+
+          <pre><code class="language-python">class CNN(nn.Module):
+    """Basic Convolutional Neural Network"""
+
+    def __init__(self, num_classes=10):
+        super(CNN, self).__init__()
+
+        # Convolutional layers
+        self.conv_layers = nn.Sequential(
+            # Conv block 1
+            nn.Conv2d(3, 64, kernel_size=3, padding=1),
+            nn.BatchNorm2d(64),
+            nn.ReLU(),
+            nn.Conv2d(64, 64, kernel_size=3, padding=1),
+            nn.BatchNorm2d(64),
+            nn.ReLU(),
+            nn.MaxPool2d(2, 2),
+            nn.Dropout(0.25),
+
+            # Conv block 2
+            nn.Conv2d(64, 128, kernel_size=3, padding=1),
+            nn.BatchNorm2d(128),
+            nn.ReLU(),
+            nn.Conv2d(128, 128, kernel_size=3, padding=1),
+            nn.BatchNorm2d(128),
+            nn.ReLU(),
+            nn.MaxPool2d(2, 2),
+            nn.Dropout(0.25),
+
+            # Conv block 3
+            nn.Conv2d(128, 256, kernel_size=3, padding=1),
+            nn.BatchNorm2d(256),
+            nn.ReLU(),
+            nn.Conv2d(256, 256, kernel_size=3, padding=1),
+            nn.BatchNorm2d(256),
+            nn.ReLU(),
+            nn.MaxPool2d(2, 2),
+            nn.Dropout(0.25)
+        )
+
+        # Fully connected layers
+        self.fc_layers = nn.Sequential(
+            nn.AdaptiveAvgPool2d((1, 1)),
+            nn.Flatten(),
+            nn.Linear(256, 512),
+            nn.ReLU(),
+            nn.Dropout(0.5),
+            nn.Linear(512, num_classes)
+        )
+
+    def forward(self, x):
+        x = self.conv_layers(x)
+        x = self.fc_layers(x)
+        return x
+
+# Usage
+model = CNN(num_classes=1000)  # For ImageNet</code></pre>
+
+          <h3>CNN Architecture Patterns</h3>
+          <p>Modern CNNs follow established design patterns:</p>
+
+          <pre><code class="language-python">class ResNetBlock(nn.Module):
+    """Residual block for ResNet architecture"""
+
+    def __init__(self, in_channels, out_channels, stride=1, downsample=None):
+        super(ResNetBlock, self).__init__()
+
+        self.conv1 = nn.Conv2d(in_channels, out_channels, kernel_size=3,
+                              stride=stride, padding=1, bias=False)
+        self.bn1 = nn.BatchNorm2d(out_channels)
+        self.relu = nn.ReLU(inplace=True)
+
+        self.conv2 = nn.Conv2d(out_channels, out_channels, kernel_size=3,
+                              stride=1, padding=1, bias=False)
+        self.bn2 = nn.BatchNorm2d(out_channels)
+
+        self.downsample = downsample
+
+    def forward(self, x):
+        identity = x
+
+        out = self.conv1(x)
+        out = self.bn1(out)
+        out = self.relu(out)
+
+        out = self.conv2(out)
+        out = self.bn2(out)
+
+        if self.downsample is not None:
+            identity = self.downsample(x)
+
+        out += identity  # Residual connection
+        out = self.relu(out)
+
+        return out</code></pre>
+
+          <p><strong>CNN Variants</strong>:</p>
+          <ul>
+            <li><strong>ResNet</strong>: Residual connections solve vanishing gradient problem</li>
+            <li><strong>DenseNet</strong>: Dense connections between layers</li>
+            <li><strong>EfficientNet</strong>: Compound scaling for efficiency</li>
+            <li><strong>Vision Transformer (ViT)</strong>: Transformer architecture for vision</li>
+          </ul>
+
+          <h3>When to Use CNNs</h3>
+          <ul>
+            <li>Image classification and recognition</li>
+            <li>Object detection</li>
+            <li>Image segmentation</li>
+            <li>Medical image analysis</li>
+            <li>Satellite imagery</li>
+          </ul>
+
+          <h2>Recurrent Neural Networks (RNNs)</h2>
+          <p>RNNs process sequential data by maintaining internal state across time steps.</p>
+
+          <h3>Basic RNN Architecture</h3>
+          <p>RNNs maintain a hidden state that captures sequence information:</p>
+
+          <pre><code class="language-python">class RNNModel(nn.Module):
+    """Basic RNN for sequence processing"""
+
+    def __init__(self, input_size, hidden_size, num_layers, output_size):
+        super(RNNModel, self).__init__()
+
+        self.hidden_size = hidden_size
+        self.num_layers = num_layers
+
+        # RNN layer
+        self.rnn = nn.RNN(input_size, hidden_size, num_layers,
+                         batch_first=True, dropout=0.2)
+
+        # Output layer
+        self.fc = nn.Linear(hidden_size, output_size)
+
+    def forward(self, x):
+        # Initialize hidden state
+        h0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size).to(x.device)
+
+        # Forward pass
+        out, _ = self.rnn(x, h0)
+
+        # Take the last time step output
+        out = self.fc(out[:, -1, :])
+        return out
+
+# Usage
+model = RNNModel(input_size=100, hidden_size=128, num_layers=2, output_size=10)</code></pre>
+
+          <h3>LSTM and GRU: Solving the Vanishing Gradient</h3>
+          <p>Modern RNN variants solve the vanishing gradient problem:</p>
+
+          <pre><code class="language-python">class LSTMModel(nn.Module):
+    """LSTM for sequence modeling"""
+
+    def __init__(self, input_size, hidden_size, num_layers, output_size, bidirectional=False):
+        super(LSTMModel, self).__init__()
+
+        self.hidden_size = hidden_size
+        self.num_layers = num_layers
+        self.bidirectional = bidirectional
+
+        # LSTM layer
+        self.lstm = nn.LSTM(input_size, hidden_size, num_layers,
+                           batch_first=True, dropout=0.2,
+                           bidirectional=bidirectional)
+
+        # Output layer
+        direction_factor = 2 if bidirectional else 1
+        self.fc = nn.Linear(hidden_size * direction_factor, output_size)
+
+    def forward(self, x):
+        # Initialize hidden and cell states
+        num_directions = 2 if self.bidirectional else 1
+        h0 = torch.zeros(self.num_layers * num_directions, x.size(0), self.hidden_size).to(x.device)
+        c0 = torch.zeros(self.num_layers * num_directions, x.size(0), self.hidden_size).to(x.device)
+
+        # Forward pass
+        out, _ = self.lstm(x, (h0, c0))
+
+        # Take the last time step output
+        out = self.fc(out[:, -1, :])
+        return out
+
+# Usage
+model = LSTMModel(input_size=100, hidden_size=128, num_layers=2,
+                 output_size=10, bidirectional=True)</code></pre>
+
+          <h3>RNN Use Cases</h3>
+          <ul>
+            <li><strong>Time Series Prediction</strong>: Stock prices, weather forecasting</li>
+            <li><strong>Natural Language Processing</strong>: Sentiment analysis, text classification</li>
+            <li><strong>Sequence Generation</strong>: Music generation, text generation</li>
+            <li><strong>Machine Translation</strong>: Converting between languages</li>
+            <li><strong>Speech Recognition</strong>: Converting audio to text</li>
+          </ul>
+
+          <h2>Transformer Architecture</h2>
+          <p>Transformers revolutionized NLP and are now the foundation of most modern AI systems.</p>
+
+          <h3>Attention Mechanism</h3>
+          <p>The core innovation: attention allows the model to focus on relevant parts of the input:</p>
+
+          <pre><code class="language-python">import torch
+import torch.nn as nn
+import torch.nn.functional as F
+
+class MultiHeadAttention(nn.Module):
+    """Multi-head attention mechanism"""
+
+    def __init__(self, d_model, num_heads):
+        super(MultiHeadAttention, self).__init__()
+        assert d_model % num_heads == 0
+
+        self.d_model = d_model
+        self.num_heads = num_heads
+        self.d_k = d_model // num_heads
+
+        self.W_q = nn.Linear(d_model, d_model)
+        self.W_k = nn.Linear(d_model, d_model)
+        self.W_v = nn.Linear(d_model, d_model)
+        self.W_o = nn.Linear(d_model, d_model)
+
+    def scaled_dot_product_attention(self, Q, K, V, mask=None):
+        """Compute scaled dot-product attention"""
+
+        # Calculate attention scores
+        scores = torch.matmul(Q, K.transpose(-2, -1)) / (self.d_k ** 0.5)
+
+        if mask is not None:
+            scores = scores.masked_fill(mask == 0, -1e9)
+
+        # Apply softmax
+        attention_weights = F.softmax(scores, dim=-1)
+
+        # Apply attention to values
+        output = torch.matmul(attention_weights, V)
+
+        return output, attention_weights
+
+    def forward(self, Q, K, V, mask=None):
+        batch_size = Q.size(0)
+
+        # Linear transformations and reshape
+        Q = self.W_q(Q).view(batch_size, -1, self.num_heads, self.d_k).transpose(1, 2)
+        K = self.W_k(K).view(batch_size, -1, self.num_heads, self.d_k).transpose(1, 2)
+        V = self.W_v(V).view(batch_size, -1, self.num_heads, self.d_k).transpose(1, 2)
+
+        # Apply attention
+        attn_output, attn_weights = self.scaled_dot_product_attention(Q, K, V, mask)
+
+        # Concatenate heads and put through final linear layer
+        attn_output = attn_output.transpose(1, 2).contiguous().view(batch_size, -1, self.d_model)
+        output = self.W_o(attn_output)
+
+        return output, attn_weights</code></pre>
+
+          <h3>Complete Transformer Block</h3>
+          <p>Transformers combine attention with feed-forward networks:</p>
+
+          <pre><code class="language-python">class TransformerBlock(nn.Module):
+    """Single transformer block"""
+
+    def __init__(self, d_model, num_heads, d_ff, dropout=0.1):
+        super(TransformerBlock, self).__init__()
+
+        self.attention = MultiHeadAttention(d_model, num_heads)
+        self.norm1 = nn.LayerNorm(d_model)
+        self.norm2 = nn.LayerNorm(d_model)
+
+        self.feed_forward = nn.Sequential(
+            nn.Linear(d_model, d_ff),
+            nn.ReLU(),
+            nn.Dropout(dropout),
+            nn.Linear(d_ff, d_model)
+        )
+
+        self.dropout = nn.Dropout(dropout)
+
+    def forward(self, x, mask=None):
+        # Multi-head attention with residual connection
+        attn_output, _ = self.attention(x, x, x, mask)
+        x = self.norm1(x + self.dropout(attn_output))
+
+        # Feed-forward with residual connection
+        ff_output = self.feed_forward(x)
+        x = self.norm2(x + self.dropout(ff_output))
+
+        return x
+
+class Transformer(nn.Module):
+    """Complete transformer model"""
+
+    def __init__(self, vocab_size, d_model, num_heads, num_layers, d_ff, max_len, num_classes):
+        super(Transformer, self).__init__()
+
+        self.embedding = nn.Embedding(vocab_size, d_model)
+        self.pos_encoding = self.create_positional_encoding(max_len, d_model)
+
+        self.layers = nn.ModuleList([
+            TransformerBlock(d_model, num_heads, d_ff)
+            for _ in range(num_layers)
+        ])
+
+        self.fc = nn.Linear(d_model, num_classes)
+        self.dropout = nn.Dropout(0.1)
+
+    def create_positional_encoding(self, max_len, d_model):
+        """Create positional encodings"""
+        pos_encoding = torch.zeros(max_len, d_model)
+        positions = torch.arange(0, max_len).unsqueeze(1)
+        div_term = torch.exp(torch.arange(0, d_model, 2) * -(torch.log(torch.tensor(10000.0)) / d_model))
+
+        pos_encoding[:, 0::2] = torch.sin(positions * div_term)
+        pos_encoding[:, 1::2] = torch.cos(positions * div_term)
+
+        return pos_encoding.unsqueeze(0)
+
+    def forward(self, x):
+        # Add embeddings and positional encoding
+        x = self.embedding(x) + self.pos_encoding[:, :x.size(1), :].to(x.device)
+        x = self.dropout(x)
+
+        # Apply transformer blocks
+        for layer in self.layers:
+            x = layer(x)
+
+        # Global average pooling and classification
+        x = torch.mean(x, dim=1)
+        x = self.fc(x)
+        return x</code></pre>
+
+          <h3>Transformer Applications</h3>
+          <ul>
+            <li><strong>BERT/GPT</strong>: Language understanding and generation</li>
+            <li><strong>Vision Transformer (ViT)</strong>: Image classification</li>
+            <li><strong>DALL-E</strong>: Text-to-image generation</li>
+            <li><strong>Code Generation</strong>: GitHub Copilot, ChatGPT</li>
+            <li><strong>Protein Folding</strong>: AlphaFold</li>
+          </ul>
+
+          <h2>Autoencoders and Generative Models</h2>
+          <p>Autoencoders learn efficient data representations and enable generative modeling.</p>
+
+          <h3>Variational Autoencoder (VAE)</h3>
+          <p>VAEs learn latent representations and can generate new data:</p>
+
+          <pre><code class="language-python">class VAE(nn.Module):
+    """Variational Autoencoder"""
+
+    def __init__(self, input_dim, hidden_dim, latent_dim):
+        super(VAE, self).__init__()
+
+        # Encoder
+        self.encoder = nn.Sequential(
+            nn.Linear(input_dim, hidden_dim),
+            nn.ReLU(),
+            nn.Linear(hidden_dim, hidden_dim),
+            nn.ReLU()
+        )
+
+        self.fc_mu = nn.Linear(hidden_dim, latent_dim)
+        self.fc_var = nn.Linear(hidden_dim, latent_dim)
+
+        # Decoder
+        self.decoder = nn.Sequential(
+            nn.Linear(latent_dim, hidden_dim),
+            nn.ReLU(),
+            nn.Linear(hidden_dim, hidden_dim),
+            nn.ReLU(),
+            nn.Linear(hidden_dim, input_dim),
+            nn.Sigmoid()
+        )
+
+    def encode(self, x):
+        h = self.encoder(x)
+        mu = self.fc_mu(h)
+        log_var = self.fc_var(h)
+        return mu, log_var
+
+    def reparameterize(self, mu, log_var):
+        std = torch.exp(0.5 * log_var)
+        eps = torch.randn_like(std)
+        return mu + eps * std
+
+    def decode(self, z):
+        return self.decoder(z)
+
+    def forward(self, x):
+        mu, log_var = self.encode(x)
+        z = self.reparameterize(mu, log_var)
+        reconstructed = self.decode(z)
+        return reconstructed, mu, log_var
+
+    def loss_function(self, reconstructed, original, mu, log_var):
+        # Reconstruction loss
+        reconstruction_loss = F.mse_loss(reconstructed, original, reduction='sum')
+
+        # KL divergence
+        kl_loss = -0.5 * torch.sum(1 + log_var - mu.pow(2) - log_var.exp())
+
+        return reconstruction_loss + kl_loss
+
+# Usage
+vae = VAE(input_dim=784, hidden_dim=256, latent_dim=20)</code></pre>
+
+          <h3>Generative Adversarial Networks (GANs)</h3>
+          <p>GANs pit generator against discriminator for high-quality generation:</p>
+
+          <pre><code class="language-python">class Generator(nn.Module):
+    """GAN Generator"""
+
+    def __init__(self, latent_dim, output_dim):
+        super(Generator, self).__init__()
+
+        self.model = nn.Sequential(
+            nn.Linear(latent_dim, 256),
+            nn.ReLU(),
+            nn.Linear(256, 512),
+            nn.ReLU(),
+            nn.Linear(512, 1024),
+            nn.ReLU(),
+            nn.Linear(1024, output_dim),
+            nn.Tanh()
+        )
+
+    def forward(self, z):
+        return self.model(z)
+
+class Discriminator(nn.Module):
+    """GAN Discriminator"""
+
+    def __init__(self, input_dim):
+        super(Discriminator, self).__init__()
+
+        self.model = nn.Sequential(
+            nn.Linear(input_dim, 1024),
+            nn.ReLU(),
+            nn.Dropout(0.3),
+            nn.Linear(1024, 512),
+            nn.ReLU(),
+            nn.Dropout(0.3),
+            nn.Linear(512, 256),
+            nn.ReLU(),
+            nn.Dropout(0.3),
+            nn.Linear(256, 1),
+            nn.Sigmoid()
+        )
+
+    def forward(self, x):
+        return self.model(x)
+
+class GAN(nn.Module):
+    """Complete GAN"""
+
+    def __init__(self, latent_dim, data_dim):
+        super(GAN, self).__init__()
+
+        self.generator = Generator(latent_dim, data_dim)
+        self.discriminator = Discriminator(data_dim)
+
+        # Loss functions
+        self.adversarial_loss = nn.BCELoss()
+
+    def generator_loss(self, fake_outputs):
+        """Generator wants discriminator to think fake data is real"""
+        return self.adversarial_loss(fake_outputs, torch.ones_like(fake_outputs))
+
+    def discriminator_loss(self, real_outputs, fake_outputs):
+        """Discriminator wants to correctly classify real and fake"""
+        real_loss = self.adversarial_loss(real_outputs, torch.ones_like(real_outputs))
+        fake_loss = self.adversarial_loss(fake_outputs, torch.zeros_like(fake_outputs))
+        return real_loss + fake_loss
+
+# Usage
+gan = GAN(latent_dim=100, data_dim=784)</code></pre>
+
+          <h2>Architecture Selection Guide</h2>
+          <p>Choose the right architecture based on your problem:</p>
+
+          <h3>Problem Type → Architecture</h3>
+          <pre><code class="language-markdown"># Image Classification
+- Small datasets: CNN (ResNet, EfficientNet)
+- Large datasets: Vision Transformer (ViT)
+
+# Object Detection
+- Real-time: YOLO, SSD
+- High accuracy: Faster R-CNN, Mask R-CNN
+
+# Text Classification
+- Short text: CNN, RNN
+- Long text: Transformer (BERT)
+
+# Time Series
+- Univariate: LSTM, GRU
+- Multivariate: Transformer, Temporal Convolutional Networks
+
+# Generation
+- Images: GAN, VAE, Diffusion Models
+- Text: Transformer (GPT)
+- Audio: WaveNet, Transformer
+
+# Recommendation
+- Collaborative filtering: Matrix factorization + MLP
+- Content-based: CNN/RNN for features + MLP</code></pre>
+
+          <h3>Practical Considerations</h3>
+          <ul>
+            <li><strong>Data Size</strong>: Transformers need large datasets; CNNs work with smaller data</li>
+            <li><strong>Compute Resources</strong>: Transformers are compute-intensive; CNNs are more efficient</li>
+            <li><strong>Interpretability</strong>: CNNs are more interpretable than Transformers</li>
+            <li><strong>Training Time</strong>: RNNs train slower than CNNs; Transformers slowest</li>
+            <li><strong>Production Deployment</strong>: Consider model size and inference speed</li>
+          </ul>
+
+          <h2>Modern Architecture Trends</h2>
+          <p>Current research directions shaping future architectures:</p>
+
+          <h3>Mixture of Experts (MoE)</h3>
+          <p>MoE models route different inputs to specialized sub-models:</p>
+
+          <pre><code class="language-python">class MixtureOfExperts(nn.Module):
+    """Mixture of Experts layer"""
+
+    def __init__(self, input_dim, output_dim, num_experts, top_k=2):
+        super(MixtureOfExperts, self).__init__()
+
+        self.num_experts = num_experts
+        self.top_k = top_k
+
+        # Expert networks
+        self.experts = nn.ModuleList([
+            nn.Sequential(
+                nn.Linear(input_dim, output_dim * 2),
+                nn.ReLU(),
+                nn.Linear(output_dim * 2, output_dim)
+            ) for _ in range(num_experts)
+        ])
+
+        # Gating network
+        self.gate = nn.Linear(input_dim, num_experts)
+
+    def forward(self, x):
+        # Get gating weights
+        gate_logits = self.gate(x)
+        gate_weights = F.softmax(gate_logits, dim=-1)
+
+        # Select top-k experts
+        top_k_weights, top_k_indices = torch.topk(gate_weights, self.top_k, dim=-1)
+
+        # Normalize weights
+        top_k_weights = top_k_weights / top_k_weights.sum(dim=-1, keepdim=True)
+
+        # Compute expert outputs
+        expert_outputs = torch.stack([expert(x) for expert in self.experts], dim=1)
+
+        # Combine expert outputs
+        output = torch.zeros_like(expert_outputs[:, 0])
+        for i in range(self.top_k):
+            output += top_k_weights[:, i:i+1] * expert_outputs[torch.arange(x.size(0)), top_k_indices[:, i]]
+
+        return output</code></pre>
+
+          <h3>Diffusion Models</h3>
+          <p>Diffusion models achieve state-of-the-art generation quality:</p>
+
+          <pre><code class="language-python">class DiffusionModel(nn.Module):
+    """Simplified diffusion model"""
+
+    def __init__(self, input_dim, hidden_dim, time_dim=128):
+        super(DiffusionModel, self).__init__()
+
+        self.time_embedding = nn.Embedding(1000, time_dim)
+
+        self.network = nn.Sequential(
+            nn.Linear(input_dim + time_dim, hidden_dim),
+            nn.ReLU(),
+            nn.Linear(hidden_dim, hidden_dim),
+            nn.ReLU(),
+            nn.Linear(hidden_dim, input_dim)
+        )
+
+    def forward(self, x, t):
+        # Embed time step
+        t_emb = self.time_embedding(t)
+
+        # Concatenate input and time embedding
+        x_t = torch.cat([x, t_emb], dim=-1)
+
+        # Predict noise
+        return self.network(x_t)
+
+    def q_sample(self, x_0, t, noise=None):
+        """Forward diffusion process"""
+        if noise is None:
+            noise = torch.randn_like(x_0)
+
+        sqrt_alpha_cumprod = torch.sqrt(self.alpha_cumprod[t])
+        sqrt_one_minus_alpha_cumprod = torch.sqrt(1 - self.alpha_cumprod[t])
+
+        return sqrt_alpha_cumprod * x_0 + sqrt_one_minus_alpha_cumprod * noise
+
+    def p_sample(self, x_t, t, predicted_noise):
+        """Reverse diffusion process"""
+        # Remove noise prediction
+        x_t_minus_1 = (x_t - predicted_noise) / torch.sqrt(self.alpha[t])
+
+        # Add noise for stochasticity (except t=0)
+        if t > 0:
+            noise = torch.randn_like(x_t)
+            x_t_minus_1 += torch.sqrt(self.beta[t]) * noise
+
+        return x_t_minus_1</code></pre>
+
+          <div class="article-conclusion">
+            <h2>Conclusion</h2>
+            <p>Deep learning architectures are tools in your AI engineering toolkit. Each architecture was designed to solve specific problems, and understanding their strengths and limitations is crucial for building effective systems. CNNs excel at spatial data, RNNs handle sequences, and Transformers have revolutionized both NLP and vision tasks. The key is matching the architecture to your problem, data, and computational constraints. As the field evolves, new architectures like MoE and diffusion models are pushing the boundaries of what's possible. Stay curious, experiment with different approaches, and always consider the practical implications of your architectural choices.</p>
+
+            <div class="cta-section">
+              <p><strong>Which architecture are you currently working with?</strong> Are you building CNNs for computer vision, Transformers for NLP, or exploring the latest diffusion models? Share your experiences and challenges below. The architecture landscape is constantly evolving—let's discuss how these different approaches are shaping the future of AI. What architecture innovations are you most excited about?</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- BACK TO BLOG -->
+    <section class="back-to-blog">
+      <div class="container">
+        <a href="blog.html" class="back-btn">
+          <i class="fas fa-arrow-left"></i> Back to Blog
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <div class="footer-logo">
+            <i class="fas fa-robot"></i>
+            <span>TechPath<span class="dot">.</span></span>
+          </div>
+          <p>Empowering the next generation of AI engineers through comprehensive roadmaps, resources, and community.</p>
+        </div>
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="first-year.html">First Year</a></li>
+            <li><a href="second-year.html">Second Year</a></li>
+            <li><a href="third-year.html">Third Year</a></li>
+            <li><a href="fourth-year.html">Fourth Year</a></li>
+            <li><a href="blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Connect</h4>
+          <div class="social-links">
+            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-discord"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 TechPath. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/blog.js"></script>
+</body>
+</html>

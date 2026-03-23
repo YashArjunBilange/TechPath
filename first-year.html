@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
+  <title>First Year Roadmap | AI Engineering</title>
+  <link rel="icon" type="image/png" href="https://via.placeholder.com/32/3b82f6/ffffff?text=AI">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/first-year.css">
+</head>
+<body>
+  <canvas id="neural-canvas" class="neural-bg" aria-hidden="true"></canvas>
+  
+  <header class="header glass-header">
+    <div class="container header-container">
+      <div class="logo">
+        <i class="fas fa-robot"></i>
+        <span>AI Roadmap<span class="dot">.</span></span>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+      <nav class="navbar" id="navbar">
+        <ul class="nav-menu">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="first-year.html" class="nav-link active">First Year</a></li>
+          <li><a href="second-year.html" class="nav-link">Second Year</a></li>
+          <li><a href="third-year.html" class="nav-link">Third Year</a></li>
+          <li><a href="fourth-year.html" class="nav-link">Fourth Year</a></li>
+          <li><a href="blog.html" class="nav-link">Blog</a></li>
+          <li><a href="#" class="nav-link" id="resume-trigger">Resume Builder</a></li>
+          <li>
+            <button id="login-btn" class="nav-link btn-login">Login</button>
+          </li>
+          <li class="user-menu-container">
+            <button id="user-menu-btn" class="nav-link user-menu-btn" style="display:none;">👤 User</button>
+            <div id="user-dropdown" class="user-dropdown" style="display:none;">
+              <a href="#" onclick="showStudentDetails(event)"><i class="fas fa-user-circle"></i> Student Profile</a>
+              <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="year-hero first-year-hero">
+      <div class="container">
+        <h1 class="gradient-text-first">First Year <span>Engineering</span></h1>
+        <p>Build a rock‑solid foundation in programming, data science, and OOP.</p>
+      </div>
+    </section>
+
+    <section class="subjects">
+      <div class="container"><br>
+        <h2 class="section-title">Core Subjects</h2>
+        <div class="subject-grid">
+          <!-- C Programming -->
+          <div class="subject-card" data-subject="C">
+            <h3><i class="fas fa-code"></i> C Programming</h3>
+            <div class="resources">
+              <a href="https://www.youtube.com/playlist?list=PL5I7BBI84gbFW7zhQ5wL92lGDXNsmuPyV" class="resource-link youtube" target="_blank" rel="noopener"><i class="fab fa-youtube"></i> YouTube</a>
+              <a href="https://drive.google.com/drive/folders/1SEfL7Yw3nJfVLToz9MAuAm2_NoCCk1qD" class="resource-link notes" target="_blank" rel="noopener"><i class="fas fa-file-alt"></i> Notes</a>
+            </div>
+            <div class="certificates" id="cert-CProgramming"></div>
+          </div>
+          
+          <!-- Data Science -->
+          <div class="subject-card" data-subject="Data Science">
+            <h3><i class="fas fa-chart-bar"></i> Data Science</h3>
+            <div class="resources">
+              <a href="https://www.youtube.com/watch?v=uIUvpJdYgSA&t=2s" class="resource-link youtube" target="_blank" rel="noopener"><i class="fab fa-youtube"></i> YouTube</a>
+            </div>
+            <div class="certificates" id="cert-DataScience"></div>
+          </div>
+          
+          <!-- OOP using C++ -->
+          <div class="subject-card" data-subject="OOP using C++">
+            <h3><i class="fas fa-cubes"></i> OOP using C++</h3>
+            <div class="resources">
+              <a href="https://youtu.be/mlIUKyZIUUU?si=GCpCbJC4JK7NgyfP" class="resource-link youtube" target="_blank" rel="noopener"><i class="fab fa-youtube"></i> YouTube</a>
+              <a href="https://drive.google.com/file/d/1-fSUUeI02QdHv5x7SJWVtrMId9BEeYXw/view" class="resource-link notes" target="_blank" rel="noopener"><i class="fas fa-file-alt"></i> MCQs</a>
+            </div>
+            <div class="certificates" id="cert-OOPCpp"></div>
+          </div>
+          
+          <!-- Software Engineering -->
+          <div class="subject-card" data-subject="Software Engineering">
+            <h3><i class="fas fa-cogs"></i> Software Engineering</h3>
+            <div class="resources">
+              <a href="https://youtube.com/playlist?list=PLxCzCOWd7aiEed7SKZBnC6ypFDWYLRvB2&si=y_2ZT1yJFcQAEtYI" class="resource-link youtube" target="_blank" rel="noopener"><i class="fab fa-youtube"></i> YouTube</a>
+              <a href="https://drive.google.com/drive/folders/1y5MMvJkECes41fdm1tcAPswcfrh8gkwQ" class="resource-link notes" target="_blank" rel="noopener"><i class="fas fa-file-alt"></i> Notes</a>
+            </div>
+            <div class="certificates" id="cert-SoftwareEngineering"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-container">
+      <div class="footer-newsletter">
+        <h4>Newsletter</h4>
+        <p>Get weekly AI roadmap updates</p>
+        <form class="newsletter-form">
+          <input type="email" placeholder="Your email" required>
+          <button type="submit" class="btn-subscribe"><i class="fas fa-paper-plane"></i></button>
+        </form>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h5>Quick links</h5>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="second-year.html">Second Year</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Resources</h5>
+          <ul>
+            <li><a href="#">Certificates</a></li>
+            <li><a href="#">Resume builder</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Contact</h5>
+          <ul>
+            <li><a href="mailto:hello@airoadmap.com">hello@airoadmap.com</a></li>
+          </ul>
+          <div class="social-icons">
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-github"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 AI Engineering Roadmap</p>
+    </div>
+  </footer>
+
+  <!-- AUTH MODAL (LOGIN/SIGNUP) -->
+  <div id="auth-modal" class="modal auth-modal">
+    <div class="modal-content auth-modal-content">
+      <button class="auth-close-btn">&times;</button>
+      <div class="auth-modal-header">
+        <h2>Login</h2>
+      </div>
+
+      <div id="auth-message" class="auth-message" style="display:none;"></div>
+
+      <!-- LOGIN FORM -->
+      <form id="login-form" class="auth-form" style="display:block;">
+        <div class="form-group">
+          <label for="auth-email">Email</label>
+          <input type="email" id="auth-email" placeholder="your@email.com" required>
+        </div>
+        <div class="form-group">
+          <label for="auth-password">Password</label>
+          <input type="password" id="auth-password" placeholder="••••••••" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 16px;">Login</button>
+      </form>
+
+      <!-- REGISTER FORM -->
+      <form id="register-form" class="auth-form" style="display:none;">
+        <div class="form-group">
+          <label for="auth-email">Email</label>
+          <input type="email" id="auth-email" placeholder="your@email.com" required>
+        </div>
+        <div class="form-group">
+          <label for="auth-username">Username</label>
+          <input type="text" id="auth-username" placeholder="your_username" required>
+        </div>
+        <div class="form-group">
+          <label for="auth-year">Year of Study</label>
+          <select id="auth-year" required>
+            <option value="">Select your year</option>
+            <option value="1">First Year</option>
+            <option value="2">Second Year</option>
+            <option value="3">Third Year</option>
+            <option value="4">Fourth Year</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="auth-password">Password</label>
+          <input type="password" id="auth-password" placeholder="••••••••" required>
+        </div>
+        <div class="form-group">
+          <label for="auth-confirm-password">Confirm Password</label>
+          <input type="password" id="auth-confirm-password" placeholder="••••••••" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 16px;">Sign Up</button>
+      </form>
+
+      <div class="auth-footer">
+        <button id="switch-auth-mode" class="btn-text">Don't have an account? Sign up</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Resume Modal -->
+  <!-- RESUME BUILDER MODAL -->
+<div id="resume-modal" class="modal" style="display: none;">
+
+  <div class="modal-content">
+    <button class="close-modal" style="position: absolute; top: 16px; right: 24px; background: none; border: none; font-size: 28px; cursor: pointer; color: #666;">&times;</button>
+
+    <h2>Resume Builder</h2>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; height: calc(90vh - 250px); margin-bottom: 16px;">
+      <!-- LEFT COLUMN: FORM INPUTS -->
+      <div style="overflow-y: auto; padding-right: 8px;">
+        <form id="resume-form">
+
+          <input id="full-name" placeholder="Full Name" required>
+          <div id="full-name-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/100</div>
+
+          <input id="email" placeholder="Email" required>
+          <div id="email-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/100</div>
+
+          <input id="phone" placeholder="Phone">
+          <div id="phone-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/20</div>
+
+          <input id="linkedin" placeholder="LinkedIn">
+          <div id="linkedin-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/100</div>
+
+          <textarea id="summary" placeholder="Summary"></textarea>
+          <div id="summary-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/500</div>
+
+          <textarea id="education" placeholder="Education"></textarea>
+          <div id="education-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/500</div>
+
+          <textarea id="skills" placeholder="Skills (comma separated)"></textarea>
+          <div id="skills-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/500</div>
+
+          <textarea id="projects" placeholder="Projects"></textarea>
+          <div id="projects-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/500</div>
+
+          <textarea id="certifications" placeholder="Certifications (one per line)"></textarea>
+          <div id="certifications-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/500</div>
+
+          <textarea id="achievements" placeholder="Achievements (one per line)"></textarea>
+          <div id="achievements-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/500</div>
+        </form>
+      </div>
+
+      <!-- RIGHT COLUMN: PREVIEW -->
+      <div style="overflow-y: auto; border-left: 2px solid #e2e8f0; padding-left: 16px;">
+        <h3 style="margin-top: 0; color: #333;">📄 Preview</h3>
+        <div id="preview-content"></div>
+      </div>
+    </div>
+
+    <div style="display: flex; gap: 8px; flex-wrap: wrap; flex-shrink: 0;">
+      <button type="button" id="generate-resume" style="background: #3b82f6; color: white; padding: 10px 16px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">Generate Preview</button>
+      <button type="button" id="save-resume-btn" style="background: #10b981; color: white; padding: 10px 16px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">💾 Save Resume</button>
+      <button type="button" id="download-pdf" style="background: #f59e0b; color: white; padding: 10px 16px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">📥 Download PDF</button>
+      <button type="button" id="clear-form" style="background: #ef4444; color: white; padding: 10px 16px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">🗑️ Clear</button>
+      <button type="button" id="view-resumes" style="background: #8b5cf6; color: white; padding: 10px 16px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">📄 Saved Resumes</button>
+    </div>
+
+  </div>
+
+</div>
+
+  <script src="js/auth.js"></script>
+  <script src="js/saved-resumes.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/counter.js"></script>
+  <script src="js/certificates.js"></script>
+  <script src="js/resume-builder.js"></script>
+  <script src="js/year-pages.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const subjects = ['C Programming', 'Data Science', 'OOP using C++', 'Software Engineering'];
+      subjects.forEach(s => {
+        if (typeof showCertificates === 'function') {
+          showCertificates(s);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
