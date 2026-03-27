@@ -377,13 +377,129 @@
     </div>
   </footer>
 
-  <!-- MODALS -->
-  <div id="auth-modal" class="modal" style="display: none;">
-    <div class="modal-content"></div>
+<!-- AUTH MODAL (LOGIN/SIGNUP) -->
+  <div id="auth-modal" class="modal auth-modal">
+    <div class="modal-content auth-modal-content">
+      <button class="auth-close-btn">&times;</button>
+      <div class="auth-modal-header">
+        <h2>Login</h2>
+      </div>
+
+      <div id="auth-message" class="auth-message" style="display:none;"></div>
+
+      <!-- LOGIN FORM -->
+      <form id="login-form" class="auth-form" style="display:block;">
+        <div class="form-group">
+          <label for="auth-email">Email</label>
+          <input type="email" id="auth-email" placeholder="your@email.com" required>
+        </div>
+        <div class="form-group">
+          <label for="auth-password">Password</label>
+          <input type="password" id="auth-password" placeholder="••••••••" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 16px;">Login</button>
+      </form>
+
+      <!-- REGISTER FORM -->
+      <form id="register-form" class="auth-form" style="display:none;">
+        <div class="form-group">
+          <label for="auth-email">Email</label>
+          <input type="email" id="auth-email" placeholder="your@email.com" required>
+        </div>
+        <div class="form-group">
+          <label for="auth-username">Username</label>
+          <input type="text" id="auth-username" placeholder="your_username" required>
+        </div>
+        <div class="form-group">
+          <label for="auth-year">Year of Study</label>
+          <select id="auth-year" required>
+            <option value="">Select your year</option>
+            <option value="1">First Year</option>
+            <option value="2">Second Year</option>
+            <option value="3">Third Year</option>
+            <option value="4">Fourth Year</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="auth-password">Password</label>
+          <input type="password" id="auth-password" placeholder="••••••••" required>
+        </div>
+        <div class="form-group">
+          <label for="auth-confirm-password">Confirm Password</label>
+          <input type="password" id="auth-confirm-password" placeholder="••••••••" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 16px;">Sign Up</button>
+      </form>
+
+      <div class="auth-footer">
+        <button id="switch-auth-mode" class="btn-text">Don't have an account? Sign up</button>
+      </div>
+    </div>
   </div>
-  <div id="resume-modal" class="modal" style="display: none;">
-    <div class="modal-content"></div>
+
+  <!-- RESUME BUILDER MODAL -->
+<div id="resume-modal" class="modal" style="display: none;">
+
+  <div class="modal-content">
+    <button class="close-modal" style="position: absolute; top: 16px; right: 24px; background: none; border: none; font-size: 28px; cursor: pointer; color: #666;">&times;</button>
+
+    <h2>Resume Builder</h2>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; height: calc(90vh - 250px); margin-bottom: 16px;">
+      <!-- LEFT COLUMN: FORM INPUTS -->
+      <div style="overflow-y: auto; padding-right: 8px;">
+        <form id="resume-form">
+
+          <input id="full-name" placeholder="Full Name" required>
+          <div id="full-name-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/100</div>
+
+          <input id="email" placeholder="Email" required>
+          <div id="email-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/100</div>
+
+          <input id="phone" placeholder="Phone">
+          <div id="phone-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/20</div>
+
+          <input id="linkedin" placeholder="LinkedIn">
+          <div id="linkedin-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/100</div>
+
+          <textarea id="summary" placeholder="Summary"></textarea>
+          <div id="summary-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/500</div>
+
+          <textarea id="education" placeholder="Education"></textarea>
+          <div id="education-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/500</div>
+
+          <textarea id="skills" placeholder="Skills (comma separated)"></textarea>
+          <div id="skills-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/500</div>
+
+          <textarea id="projects" placeholder="Projects"></textarea>
+          <div id="projects-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/500</div>
+
+          <textarea id="certifications" placeholder="Certifications (one per line)"></textarea>
+          <div id="certifications-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/500</div>
+
+          <textarea id="achievements" placeholder="Achievements (one per line)"></textarea>
+          <div id="achievements-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/500</div>
+        </form>
+      </div>
+
+      <!-- RIGHT COLUMN: PREVIEW -->
+      <div style="overflow-y: auto; border-left: 2px solid #e2e8f0; padding-left: 16px;">
+        <h3 style="margin-top: 0; color: #333;">📄 Preview</h3>
+        <div id="preview-content"></div>
+      </div>
+    </div>
+
+    <div style="display: flex; gap: 8px; flex-wrap: wrap; flex-shrink: 0;">
+      <button type="button" id="generate-resume" style="background: #3b82f6; color: white; padding: 10px 16px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">Generate Preview</button>
+      <button type="button" id="save-resume-btn" style="background: #10b981; color: white; padding: 10px 16px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">💾 Save Resume</button>
+      <button type="button" id="download-pdf" style="background: #f59e0b; color: white; padding: 10px 16px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">📥 Download PDF</button>
+      <button type="button" id="clear-form" style="background: #ef4444; color: white; padding: 10px 16px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">🗑️ Clear</button>
+      <button type="button" id="view-resumes" style="background: #8b5cf6; color: white; padding: 10px 16px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">📄 Saved Resumes</button>
+    </div>
+
   </div>
+
+</div>
 
   <script src="js/main.js"></script>
   <script src="js/auth.js"></script>
