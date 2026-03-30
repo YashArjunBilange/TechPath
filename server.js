@@ -97,19 +97,15 @@ app.post("/login", async (req, res) => {
 function auth(req, res, next) {
   const token = req.headers.authorization;
   if (!token) return res.status(401).json({ message: "No token" });
-
+  
   try {
     const decoded = jwt.verify(token, SECRET);
-    req.userId = decoded.id;
+    req.userId = decoded.id.toString(); // Convert to string for consistency
     next();
   } catch {
     res.status(401).json({ message: "Invalid token" });
   }
 }
-
-// ================= RESUME =================
-
-// 💾 Save
 app.post("/save-resume", auth, async (req, res) => {
   try {
     const user = await User.findById(req.userId);

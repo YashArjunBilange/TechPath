@@ -823,9 +823,11 @@ div[id$="-counter"] {
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
   max-width: 420px;
   width: 90%;
+  max-height: 90vh;
   padding: 40px;
   position: relative;
   animation: slideUp 0.3s ease-out;
+  overflow-y: auto;
 }
 
 @keyframes slideUp {
@@ -1059,6 +1061,12 @@ div[id$="-counter"] {
   resize: vertical;
 }
 
+#resume-form input::placeholder,
+#resume-form textarea::placeholder {
+  color: #6b7280;
+  opacity: 1;
+}
+
 #resume-form input:focus,
 #resume-form textarea:focus {
   outline: none;
@@ -1142,4 +1150,97 @@ div[id$="-counter"] {
 
 #view-resumes:hover {
   background: #7c3aed;
+}
+/* SAVED RESUMES MODAL */
+#saved-resumes-modal {
+  display: none;
+  position: fixed;
+  z-index: 2000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s ease-in;
+}
+
+#saved-resumes-modal.show {
+  display: flex;
+}
+
+#saved-resumes-modal .modal-content {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  max-width: 500px;
+  width: 95%;
+  max-height: 85vh;
+  padding: 32px;
+  position: relative;
+  animation: slideUp 0.3s ease-out;
+  overflow-y: auto;
+}
+
+#saved-resumes-modal h2 {
+  margin-top: 0;
+  color: var(--dark);
+  font-size: 24px;
+  margin-bottom: 24px;
+}
+
+#saved-resumes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+#saved-resumes-list > div {
+  border: 1.5px solid #e2e8f0;
+  padding: 16px;
+  border-radius: 8px;
+  background: #f8fafc;
+  transition: var(--transition);
+}
+
+#saved-resumes-list > div:hover {
+  background: #f1f5f9;
+  border-color: var(--first-year);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.1);
+}
+
+#saved-resumes-list h3 {
+  margin: 0 0 12px 0;
+  color: var(--dark);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+#saved-resumes-list p {
+  margin: 0 0 12px 0;
+  font-size: 12px;
+  color: #666;
+  line-height: 1.5;
+}
+
+#saved-resumes-list > div > div {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+#saved-resumes-list button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+#saved-resumes-list button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }

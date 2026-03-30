@@ -277,34 +277,44 @@
       <div style="overflow-y: auto; padding-right: 8px;">
         <form id="resume-form">
 
-          <input id="full-name" placeholder="Full Name" required>
+          <label for="full-name" style="display: block; font-weight: 600; margin-bottom: 4px; color: #374151;">Full Name</label>
+          <input id="full-name" placeholder="Enter your full name" required>
           <div id="full-name-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/100</div>
 
-          <input id="email" placeholder="Email" required>
+          <label for="email" style="display: block; font-weight: 600; margin-bottom: 4px; color: #374151;">Email</label>
+          <input id="email" placeholder="Enter your email address" required>
           <div id="email-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/100</div>
 
-          <input id="phone" placeholder="Phone">
+          <label for="phone" style="display: block; font-weight: 600; margin-bottom: 4px; color: #374151;">Phone</label>
+          <input id="phone" placeholder="Enter your phone number">
           <div id="phone-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/20</div>
 
-          <input id="linkedin" placeholder="LinkedIn">
+          <label for="linkedin" style="display: block; font-weight: 600; margin-bottom: 4px; color: #374151;">LinkedIn</label>
+          <input id="linkedin" placeholder="Enter your LinkedIn profile URL">
           <div id="linkedin-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/100</div>
 
-          <textarea id="summary" placeholder="Summary"></textarea>
+          <label for="summary" style="display: block; font-weight: 600; margin-bottom: 4px; color: #374151;">Summary</label>
+          <textarea id="summary" placeholder="Write a brief professional summary"></textarea>
           <div id="summary-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/500</div>
 
-          <textarea id="education" placeholder="Education"></textarea>
+          <label for="education" style="display: block; font-weight: 600; margin-bottom: 4px; color: #374151;">Education</label>
+          <textarea id="education" placeholder="List your educational background"></textarea>
           <div id="education-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/500</div>
 
-          <textarea id="skills" placeholder="Skills (comma separated)"></textarea>
+          <label for="skills" style="display: block; font-weight: 600; margin-bottom: 4px; color: #374151;">Skills</label>
+          <textarea id="skills" placeholder="List your skills (comma separated)"></textarea>
           <div id="skills-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/500</div>
 
-          <textarea id="projects" placeholder="Projects"></textarea>
+          <label for="projects" style="display: block; font-weight: 600; margin-bottom: 4px; color: #374151;">Projects</label>
+          <textarea id="projects" placeholder="Describe your projects"></textarea>
           <div id="projects-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/500</div>
 
-          <textarea id="certifications" placeholder="Certifications (one per line)"></textarea>
+          <label for="certifications" style="display: block; font-weight: 600; margin-bottom: 4px; color: #374151;">Certifications</label>
+          <textarea id="certifications" placeholder="List your certifications (one per line)"></textarea>
           <div id="certifications-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/500</div>
 
-          <textarea id="achievements" placeholder="Achievements (one per line)"></textarea>
+          <label for="achievements" style="display: block; font-weight: 600; margin-bottom: 4px; color: #374151;">Achievements</label>
+          <textarea id="achievements" placeholder="List your achievements (one per line)"></textarea>
           <div id="achievements-counter" style="font-size: 12px; color: #999; margin-bottom: 8px;">0/500</div>
         </form>
       </div>
@@ -326,6 +336,14 @@
 
   </div>
 
+</div>
+
+<div id="saved-resumes-modal" class="modal" style="display: none;">
+  <div class="modal-content">
+    <button class="close-modal" onclick="document.getElementById('saved-resumes-modal').style.display='none'" style="position: absolute; top: 16px; right: 24px; background: none; border: none; font-size: 28px; cursor: pointer; color: #666;">&times;</button>
+    <h2>📄 Saved Resumes</h2>
+    <div id="saved-resumes-list"></div>
+  </div>
 </div>
 
   <script src="js/auth.js"></script>

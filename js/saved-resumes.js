@@ -3,49 +3,84 @@
  */
 
 window.openSavedResumesModal = async function() {
-  if (!window.currentUser) {
-    alert("❌ Please login first");
+  if (!window.currentUser || !window.currentUser.token) {
+    alert("❌ Please login first to view saved resumes");
     return;
   }
-  
+
   const modal = document.getElementById("saved-resumes-modal");
-  if (!modal) return;
-  
+  if (!modal) {
+    alert("❌ Modal not found. Please reload the page.");
+    return;
+  }
+
+  // Show loading state
+  const listDiv = document.getElementById("saved-resumes-list");
+  if (listDiv) {
+    listDiv.innerHTML = "<p style='text-align: center; color: #666; padding: 20px;'>⏳ Loading resumes...</p>";
+  }
+
   modal.style.display = "flex";
   await loadResumes();
 };
 
 async function loadResumes() {
-  if (!window.currentUser || !window.currentUser.token) return;
+  if (!window.currentUser || !window.currentUser.token) {
+    console.error("❌ No authentication token");
+    return;
+  }
+
+  const listDiv = document.getElementById("saved-resumes-list");
+  if (!listDiv) {
+    console.error("❌ saved-resumes-list div not found");
+    return;
+  }
 
   try {
     const res = await fetch("http://localhost:5000/resumes", {
-      headers: { Authorization: window.currentUser.token }
+      method: "GET",
+      headers: {
+        "Authorization": window.currentUser.token,
+        "Content-Type": "application/json"
+      }
     });
 
     if (!res.ok) {
-      alert("❌ Error loading resumes");
-      return;
+      const errData = await res.json().catch(() => ({}));
+      throw new Error(errData.message || "Error loading resumes");
     }
 
     const data = await res.json();
 
-    document.getElementById("saved-resumes-list").innerHTML = data.length === 0
-      ? "<p>No saved resumes yet</p>"
-      : data.map(r => `
-        <div style="border: 1px solid #ddd; padding: 12px; margin: 8px 0; border-radius: 6px; background: #f9f9f9;">
-          <h3 style="margin: 0 0 8px 0; color: #333;">${r.resumeName}</h3>
-          <p style="margin: 0 0 8px 0; font-size: 12px; color: #666;">👤 ${r.name} | 📧 ${r.email}</p>
-          <div style="display: flex; gap: 8px;">
-            <button onclick="editResume('${r._id}')" style="background: #3b82f6; color: white; padding: 6px 12px; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">✏️ Edit</button>
-            <button onclick="deleteResume('${r._id}')" style="background: #ef4444; color: white; padding: 6px 12px; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">🗑️ Delete</button>
-          </div>
+    if (!Array.isArray(data) || data.length === 0) {
+      listDiv.innerHTML = "<p style='text-align: center; color: #999; padding: 40px 20px;'>📋 No saved resumes yet. Create one to get started!</p>";
+      return;
+    }
+
+    listDiv.innerHTML = data.map(r => `
+      <div style="border: 1px solid #ddd; padding: 12px; margin: 8px 0; border-radius: 6px; background: #f9f9f9;">
+        <h3 style="margin: 0 0 8px 0; color: #333;">${escapeHtml(r.resumeName || 'Untitled Resume')}</h3>
+        <p style="margin: 0 0 8px 0; font-size: 12px; color: #666;">👤 ${escapeHtml(r.name || 'N/A')} | 📧 ${escapeHtml(r.email || 'N/A')}</p>
+        <div style="display: flex; gap: 8px;">
+          <button onclick="window.editResume('${r._id}')" style="background: #3b82f6; color: white; padding: 6px 12px; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">✏️ Edit</button>
+          <button onclick="window.deleteResume('${r._id}')" style="background: #ef4444; color: white; padding: 6px 12px; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">🗑️ Delete</button>
         </div>
-      `).join("");
+      </div>
+    `).join("");
   } catch (err) {
     console.error("Error loading resumes:", err);
-    alert("❌ Error loading resumes");
+    listDiv.innerHTML = `<p style='color: #dc2626; padding: 20px;'>❌ Error: ${escapeHtml(err.message)}</p>`;
   }
+}
+
+// Helper function to escape HTML characters
+function escapeHtml(unsafe) {
+  return unsafe
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 }
 
 window.saveResumeToDB = async function() {
@@ -92,13 +127,13 @@ window.saveResumeToDB = async function() {
     });
 
     const data = await res.json();
-    
+
     if (!res.ok) {
       alert("❌ Error: " + (data.message || "Failed to save resume"));
       return;
     }
 
-    alert("✅ Resume saved successfully!");
+    alert(`✅ Resume ${window.editingResumeId ? 'updated' : 'saved'} successfully!`);
     window.editingResumeId = null;
   } catch (err) {
     console.error("Error saving resume:", err);
@@ -118,11 +153,20 @@ window.editResume = async function(id) {
     });
 
     if (!res.ok) {
-      alert("❌ Error loading resume");
-      return;
+      const errData = await res.json().catch(() => ({}));
+      throw new Error(errData.message || "Error loading resume");
     }
 
     const r = await res.json();
+
+    // Check if form fields exist
+    const fields = ["full-name", "email", "phone", "linkedin", "summary", "education", "skills", "projects", "certifications", "achievements"];
+    const missingFields = fields.filter(fieldId => !document.getElementById(fieldId));
+
+    if (missingFields.length > 0) {
+      alert("❌ Form fields not found. Please close resume modal and try again.");
+      return;
+    }
 
     // Load all 10 fields
     document.getElementById("full-name").value = r.name || '';
@@ -137,7 +181,7 @@ window.editResume = async function(id) {
     document.getElementById("achievements").value = r.achievements || '';
 
     // Update all counters
-    ['full-name', 'email', 'phone', 'linkedin', 'summary', 'education', 'skills', 'projects', 'certifications', 'achievements'].forEach(fieldId => {
+    fields.forEach(fieldId => {
       const field = document.getElementById(fieldId);
       const counter = document.getElementById(fieldId + "-counter");
       if (field && counter) {
@@ -147,18 +191,18 @@ window.editResume = async function(id) {
     });
 
     window.editingResumeId = id;
-    
+
     // Close saved resumes modal and open resume modal
     const savedModal = document.getElementById("saved-resumes-modal");
     if (savedModal) savedModal.style.display = "none";
-    
+
     const resumeModal = document.getElementById("resume-modal");
     if (resumeModal) resumeModal.style.display = "flex";
-    
-    alert("✏️ Edit mode enabled - modify and save");
+
+    alert("✏️ Edit mode enabled - modify and save to update");
   } catch (err) {
     console.error("Error editing resume:", err);
-    alert("❌ Error loading resume");
+    alert("❌ Error loading resume: " + err.message);
   }
 };
 
@@ -168,7 +212,7 @@ window.deleteResume = async function(id) {
     return;
   }
 
-  if (!confirm("⚠️ Are you sure you want to delete this resume? This cannot be undone.")) {
+  if (!confirm("⚠️ Are you sure you want to delete this resume? This action cannot be undone.")) {
     return;
   }
 
@@ -179,14 +223,14 @@ window.deleteResume = async function(id) {
     });
 
     if (!res.ok) {
-      alert("❌ Error deleting resume");
-      return;
+      const errData = await res.json().catch(() => ({}));
+      throw new Error(errData.message || "Error deleting resume");
     }
 
-    alert("✅ Resume deleted");
+    alert("✅ Resume deleted successfully");
     await loadResumes();
   } catch (err) {
     console.error("Error deleting resume:", err);
-    alert("❌ Error deleting resume");
+    alert("❌ Error deleting resume: " + err.message);
   }
 };
