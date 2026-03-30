@@ -4,17 +4,25 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const path = require("path");
 
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
+app.use(express.static('.'));
 
-const SECRET = "yash_secret_key"; // change later
+// Serve index.html on root
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+const SECRET = process.env.SECRET || "yash_secret_key"; // change later
 
 // 🔗 MongoDB
 // For local development, MongoDB must be running on localhost:27017
 // Or update this with your MongoDB Atlas connection string
-mongoose.connect("mongodb+srv://yashbilange_db_user:tLL8HuTNevLwjPRV@cluster0.75ukee7.mongodb.net/?appName=Cluster0")
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb+srv://yashbilange_db_user:tLL8HuTNevLwjPRV@cluster0.75ukee7.mongodb.net/?appName=Cluster0";
+mongoose.connect(MONGODB_URI)
   .then(() => console.log("✅ MongoDB Connected"))
   .catch(err => {
     console.log("❌ MongoDB Connection Error:");
@@ -182,4 +190,5 @@ app.delete("/resume/:id", auth, async (req, res) => {
 });
 
 // 🚀 Start
-app.listen(5000, () => console.log("Server running on 5000"));
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on ${PORT}`));
