@@ -9,7 +9,7 @@ const isDevelopment = window.location.hostname === 'localhost' || window.locatio
 // Set API URL based on environment
 const API_BASE_URL = isDevelopment 
   ? 'http://localhost:5000'           // Local development
-  : 'https://your-render-backend-url.onrender.com';  // Production (Update this!)
+  : 'https://techpath-kswb.onrender.com';  // Production (Update this!)
 
 console.log('🌐 API Environment:', isDevelopment ? 'Development' : 'Production');
 console.log('📍 API Base URL:', API_BASE_URL);
