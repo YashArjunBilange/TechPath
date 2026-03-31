@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -16,12 +18,12 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-const SECRET = process.env.SECRET || "yash_secret_key"; // change later
+const SECRET = process.env.SECRET || "your-fallback-secret-key";
 
 // 🔗 MongoDB
 // For local development, MongoDB must be running on localhost:27017
 // Or update this with your MongoDB Atlas connection string
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb+srv://yashbilange_db_user:tLL8HuTNevLwjPRV@cluster0.75ukee7.mongodb.net/?appName=Cluster0";
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb+srv://yashbilange_db_user:tLL8HuTNevLwjPRV@cluster0.75ukee7.mongodb.net/?appName=Cluster0"; 
 mongoose.connect(MONGODB_URI)
   .then(() => console.log("✅ MongoDB Connected"))
   .catch(err => {
