@@ -37,7 +37,7 @@ async function loadResumes() {
   }
 
   try {
-    const res = await fetch("http://localhost:5000/resumes", {
+    const res = await fetch(`${API_BASE_URL}/resumes`, {
       method: "GET",
       headers: {
         "Authorization": window.currentUser.token,
@@ -99,8 +99,8 @@ window.saveResumeToDB = async function() {
 
   try {
     const url = window.editingResumeId
-      ? `http://localhost:5000/resume/${window.editingResumeId}`
-      : "http://localhost:5000/save-resume";
+      ? `${API_BASE_URL}/resume/${window.editingResumeId}`
+      : `${API_BASE_URL}/save-resume`;
 
     const method = window.editingResumeId ? "PUT" : "POST";
 
@@ -148,7 +148,7 @@ window.editResume = async function(id) {
   }
 
   try {
-    const res = await fetch(`http://localhost:5000/resume/${id}`, {
+    const res = await fetch(`${API_BASE_URL}/resume/${id}`, {
       headers: { Authorization: window.currentUser.token }
     });
 
@@ -217,7 +217,7 @@ window.deleteResume = async function(id) {
   }
 
   try {
-    const res = await fetch(`http://localhost:5000/resume/${id}`, {
+    const res = await fetch(`${API_BASE_URL}/resume/${id}`, {
       method: "DELETE",
       headers: { Authorization: window.currentUser.token }
     });

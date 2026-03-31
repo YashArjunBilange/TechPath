@@ -3,7 +3,7 @@
  * Handles login, registration, logout, and session management
  */
 
-const API_URL = "http://localhost:5000";
+const API_URL = API_BASE_URL;
 
 // ============================================
 // AUTH STATE & INITIALIZATION

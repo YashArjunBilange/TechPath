@@ -9,7 +9,7 @@
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
-  await fetch("http://localhost:5000/register", {
+  await fetch(`${API_BASE_URL}/register`, {
     method: "POST",
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify({ email, password })
@@ -22,7 +22,7 @@
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
-  const res = await fetch("http://localhost:5000/login", {
+  const res = await fetch(`${API_BASE_URL}/login`, {
     method: "POST",
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify({ email, password })
@@ -38,7 +38,7 @@
   async function saveResumeToDB(data) {
   const token = localStorage.getItem("token");
 
-  await fetch("http://localhost:5000/save-resume", {
+  await fetch(`${API_BASE_URL}/save-resume`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
