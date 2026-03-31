@@ -23,6 +23,11 @@ const SECRET = process.env.SECRET || "your-fallback-secret-key";
 // 🔗 MongoDB
 // For local development, MongoDB must be running on localhost:27017
 // Or update this with your MongoDB Atlas connection string
+
+// Fix DNS resolution for MongoDB Atlas
+const dns = require('dns');
+dns.setServers(['8.8.8.8', '8.8.4.4']);
+
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb+srv://yashbilange_db_user:Y2a0s0h7@cluster0.75ukee7.mongodb.net/?appName=Cluster0"; 
 mongoose.connect(MONGODB_URI)
   .then(() => console.log("✅ MongoDB Connected"))
