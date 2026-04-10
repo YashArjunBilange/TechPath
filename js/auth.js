@@ -105,19 +105,11 @@ async function register() {
 
   try {
     showAuthMessage('Registering...', 'info');
-    
-    const response = await fetch(`${API_URL}/register`, {
+
+    await apiRequest('/register', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, username, password, yearOfStudy: parseInt(yearOfStudy) })
     });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      showAuthMessage(data.message || 'Registration failed', 'error');
-      return;
-    }
 
     showAuthMessage('✓ Registration successful! Please login.', 'success');
     
@@ -153,19 +145,11 @@ async function login() {
 
   try {
     showAuthMessage('Logging in...', 'info');
-    
-    const response = await fetch(`${API_URL}/login`, {
+
+    const data = await apiRequest('/login', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password })
     });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      showAuthMessage(data.message || 'Login failed', 'error');
-      return;
-    }
 
     if (!data.token || !data.username) {
       showAuthMessage('Invalid response from server', 'error');
@@ -238,20 +222,13 @@ async function loadSavedResumes() {
   }
 
   try {
-    const response = await fetch(`${API_URL}/resumes`, {
+    const resumes = await apiRequest('/resumes', {
       method: 'GET',
       headers: {
-        'Authorization': currentUser.token,
-        'Content-Type': 'application/json'
+        'Authorization': currentUser.token
       }
     });
-
-    if (!response.ok) {
-      throw new Error('Failed to load resumes');
-    }
-
-    const resumes = await response.json();
-    return resumes;
+    return Array.isArray(resumes) ? resumes : [];
   } catch (error) {
     console.error('Error loading resumes:', error);
     return [];
@@ -265,22 +242,13 @@ async function saveResume(resumeData) {
   }
 
   try {
-    const response = await fetch(`${API_URL}/save-resume`, {
+    await apiRequest('/save-resume', {
       method: 'POST',
       headers: {
-        'Authorization': currentUser.token,
-        'Content-Type': 'application/json'
+        'Authorization': currentUser.token
       },
       body: JSON.stringify(resumeData)
     });
-
-    if (!response.ok) {
-      const error = await response.json();
-      showAuthMessage(error.message || 'Failed to save resume', 'error');
-      return false;
-    }
-
-    const data = await response.json();
     showAuthMessage('✓ Resume saved successfully!', 'success');
     return true;
   } catch (error) {
@@ -299,16 +267,12 @@ async function deleteResume(resumeId) {
   if (!confirm('Are you sure you want to delete this resume?')) return false;
 
   try {
-    const response = await fetch(`${API_URL}/resume/${resumeId}`, {
+    await apiRequest(`/resume/${resumeId}`, {
       method: 'DELETE',
       headers: {
         'Authorization': currentUser.token
       }
     });
-
-    if (!response.ok) {
-      throw new Error('Failed to delete resume');
-    }
 
     showAuthMessage('✓ Resume deleted', 'success');
     return true;
@@ -327,17 +291,11 @@ async function loadResumeForEditing(resumeId) {
       return;
     }
 
-    const response = await fetch(`${API_URL}/resume/${resumeId}`, {
+    const resume = await apiRequest(`/resume/${resumeId}`, {
       headers: {
         'Authorization': currentUser.token
       }
     });
-
-    if (!response.ok) {
-      throw new Error('Failed to load resume');
-    }
-
-    const resume = await response.json();
     
     // Load the resume data into the form fields (using hyphenated IDs)
     document.getElementById('full-name').value = resume.fullName || '';
@@ -395,16 +353,12 @@ async function deleteResumeConfirm(resumeId) {
       return;
     }
 
-    const response = await fetch(`${API_URL}/resume/${resumeId}`, {
+    await apiRequest(`/resume/${resumeId}`, {
       method: 'DELETE',
       headers: {
         'Authorization': currentUser.token
       }
     });
-
-    if (!response.ok) {
-      throw new Error('Failed to delete resume');
-    }
 
     showAuthMessage('✓ Resume deleted', 'success');
     

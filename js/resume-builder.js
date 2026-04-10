@@ -326,32 +326,11 @@
     }
 
     async function fetchSuggestions(payload) {
-      const response = await fetch(`${API_BASE_URL}/api/suggest`, {
+      const data = await apiRequest("/api/suggest", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
       });
-      const contentType = response.headers.get("content-type") || "";
-      const rawBody = await response.text();
-      let data = {};
-
-      if (contentType.includes("application/json")) {
-        try {
-          data = JSON.parse(rawBody || "{}");
-        } catch {
-          throw new Error("Suggestion API returned invalid JSON.");
-        }
-      } else {
-        if (rawBody.trim().startsWith("<!DOCTYPE") || rawBody.trim().startsWith("<html")) {
-          throw new Error("Suggestion API route not found. Restart backend or use correct API_BASE_URL.");
-        }
-        throw new Error("Suggestion API returned non-JSON response.");
-      }
-
-      if (!response.ok) {
-        throw new Error(data.message || "Failed to generate suggestions");
-      }
-      return Array.isArray(data.suggestions) ? data.suggestions : [];
+      return Array.isArray(data?.suggestions) ? data.suggestions : [];
     }
 
     function insertSuggestion(field, text) {

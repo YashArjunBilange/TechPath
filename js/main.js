@@ -9,9 +9,8 @@
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
-  await fetch(`${API_BASE_URL}/register`, {
+  await apiRequest('/register', {
     method: "POST",
-    headers: {"Content-Type": "application/json"},
     body: JSON.stringify({ email, password })
   });
 
@@ -22,13 +21,10 @@
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
-  const res = await fetch(`${API_BASE_URL}/login`, {
+  const data = await apiRequest('/login', {
     method: "POST",
-    headers: {"Content-Type": "application/json"},
     body: JSON.stringify({ email, password })
   });
-
-  const data = await res.json();
 
   localStorage.setItem("token", data.token);
 
@@ -38,10 +34,9 @@
   async function saveResumeToDB(data) {
   const token = localStorage.getItem("token");
 
-  await fetch(`${API_BASE_URL}/save-resume`, {
+  await apiRequest('/save-resume', {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
       "Authorization": token
     },
     body: JSON.stringify(data)
@@ -864,9 +859,8 @@
       const typingIndicator = showTypingIndicator();
 
       try {
-        const response = await fetch(`${API_BASE_URL}/api/chatbot`, {
+        const data = await apiRequest('/api/chatbot', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             message: preview,
             history: chatHistory.slice(-8),
@@ -874,10 +868,8 @@
             attachment: attachment || null
           })
         });
-
-        const data = await response.json();
-        if (!response.ok || !data.reply) {
-          throw new Error(data.message || 'Failed to get chatbot response');
+        if (!data?.reply) {
+          throw new Error('Failed to get chatbot response');
         }
 
         if (typingIndicator && typingIndicator.parentNode) {
@@ -891,7 +883,7 @@
         if (typingIndicator && typingIndicator.parentNode) {
           typingIndicator.parentNode.removeChild(typingIndicator);
         }
-        addMessage('assistant', 'Sorry, I could not respond right now. Please try again in a moment.');
+        addMessage('assistant', error?.message || 'Sorry, I could not respond right now. Please try again in a moment.');
       } finally {
         clearSelectedImage();
         setSendingState(false);

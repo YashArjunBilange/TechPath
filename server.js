@@ -1,4 +1,6 @@
-require('dotenv').config();
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
 
 const express = require("express");
 const mongoose = require("mongoose");
@@ -15,9 +17,9 @@ app.use(cors());
 app.use(bodyParser.json({ limit: "30mb" }));
 app.use(express.static('.'));
 
-// Serve index.html on root
+// Root health route for Render uptime checks
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  res.send("TechPath backend is running");
 });
 
 const SECRET = process.env.SECRET || "your-fallback-secret-key";
@@ -68,10 +70,20 @@ const Resume = mongoose.model("Resume", new mongoose.Schema({
   updatedAt: { type: Date, default: Date.now }
 }));
 
+function asyncHandler(fn) {
+  return async (req, res, next) => {
+    try {
+      await fn(req, res, next);
+    } catch (error) {
+      next(error);
+    }
+  };
+}
+
 // ================= AUTH =================
 
 // 🔐 Register
-app.post("/register", async (req, res) => {
+app.post("/register", asyncHandler(async (req, res) => {
   const { email, username, password, yearOfStudy } = req.body;
 
   // Validate input
@@ -79,24 +91,19 @@ app.post("/register", async (req, res) => {
     return res.status(400).json({ message: "All fields required" });
   }
 
-  // Check if user already exists
   const existingUser = await User.findOne({ $or: [{ email }, { username }] });
   if (existingUser) {
     return res.status(400).json({ message: "Email or username already exists" });
   }
 
-  try {
-    const hashed = await bcrypt.hash(password, 10);
-    const newUser = new User({ email, username, password: hashed, yearOfStudy });
-    await newUser.save();
-    res.json({ message: "User registered successfully" });
-  } catch (err) {
-    res.status(500).json({ message: "Registration failed" });
-  }
-});
+  const hashed = await bcrypt.hash(password, 10);
+  const newUser = new User({ email, username, password: hashed, yearOfStudy });
+  await newUser.save();
+  return res.json({ message: "User registered successfully" });
+}));
 
 // 🔐 Login
-app.post("/login", async (req, res) => {
+app.post("/login", asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
   const user = await User.findOne({ email });
@@ -106,9 +113,8 @@ app.post("/login", async (req, res) => {
   if (!valid) return res.status(400).json({ message: "Invalid password" });
 
   const token = jwt.sign({ id: user._id }, SECRET);
-
-  res.json({ token, username: user.username, yearOfStudy: user.yearOfStudy, userId: user._id });
-});
+  return res.json({ token, username: user.username, yearOfStudy: user.yearOfStudy, userId: user._id });
+}));
 
 // 🔒 Middleware
 function auth(req, res, next) {
@@ -123,80 +129,60 @@ function auth(req, res, next) {
     res.status(401).json({ message: "Invalid token" });
   }
 }
-app.post("/save-resume", auth, async (req, res) => {
-  try {
-    const user = await User.findById(req.userId);
-    if (!user) return res.status(400).json({ message: "User not found" });
+app.post("/save-resume", auth, asyncHandler(async (req, res) => {
+  const user = await User.findById(req.userId);
+  if (!user) return res.status(400).json({ message: "User not found" });
 
-    const resume = new Resume({
-      ...req.body,
-      userId: req.userId,
-      username: user.username
-    });
+  const resume = new Resume({
+    ...req.body,
+    userId: req.userId,
+    username: user.username
+  });
 
-    const savedResume = await resume.save();
-    res.json({ message: "Resume saved", resumeId: savedResume._id });
-  } catch (err) {
-    res.status(500).json({ message: "Failed to save resume" });
-  }
-});
+  const savedResume = await resume.save();
+  return res.json({ message: "Resume saved", resumeId: savedResume._id });
+}));
 
 // 📂 Get all
-app.get("/resumes", auth, async (req, res) => {
-  try {
-    const data = await Resume.find({ userId: req.userId });
-    res.json(data);
-  } catch (err) {
-    res.status(500).json({ message: "Failed to fetch resumes" });
-  }
-});
+app.get("/resumes", auth, asyncHandler(async (req, res) => {
+  const data = await Resume.find({ userId: req.userId });
+  return res.json(data);
+}));
 
 // 📂 Get single
-app.get("/resume/:id", auth, async (req, res) => {
-  try {
-    const data = await Resume.findById(req.params.id);
-    if (!data || data.userId !== req.userId) {
-      return res.status(403).json({ message: "Access denied" });
-    }
-    res.json(data);
-  } catch (err) {
-    res.status(500).json({ message: "Failed to fetch resume" });
+app.get("/resume/:id", auth, asyncHandler(async (req, res) => {
+  const data = await Resume.findById(req.params.id);
+  if (!data || data.userId !== req.userId) {
+    return res.status(403).json({ message: "Access denied" });
   }
-});
+  return res.json(data);
+}));
 
 // ✏️ Update
-app.put("/resume/:id", auth, async (req, res) => {
-  try {
-    const resume = await Resume.findById(req.params.id);
-    if (!resume || resume.userId !== req.userId) {
-      return res.status(403).json({ message: "Access denied" });
-    }
-
-await Resume.findByIdAndUpdate(
-  req.params.id,
-  { ...req.body, updatedAt: new Date() },
-  { new: true }
-);
-    res.json({ message: "Resume updated" });
-  } catch (err) {
-    res.status(500).json({ message: "Failed to update resume" });
+app.put("/resume/:id", auth, asyncHandler(async (req, res) => {
+  const resume = await Resume.findById(req.params.id);
+  if (!resume || resume.userId !== req.userId) {
+    return res.status(403).json({ message: "Access denied" });
   }
-});
+
+  await Resume.findByIdAndUpdate(
+    req.params.id,
+    { ...req.body, updatedAt: new Date() },
+    { new: true }
+  );
+  return res.json({ message: "Resume updated" });
+}));
 
 // ❌ Delete
-app.delete("/resume/:id", auth, async (req, res) => {
-  try {
-    const resume = await Resume.findById(req.params.id);
-    if (!resume || resume.userId !== req.userId) {
-      return res.status(403).json({ message: "Access denied" });
-    }
-
-    await Resume.findByIdAndDelete(req.params.id);
-    res.json({ message: "Resume deleted" });
-  } catch (err) {
-    res.status(500).json({ message: "Failed to delete resume" });
+app.delete("/resume/:id", auth, asyncHandler(async (req, res) => {
+  const resume = await Resume.findById(req.params.id);
+  if (!resume || resume.userId !== req.userId) {
+    return res.status(403).json({ message: "Access denied" });
   }
-});
+
+  await Resume.findByIdAndDelete(req.params.id);
+  return res.json({ message: "Resume deleted" });
+}));
 
 // ================= CHATBOT (GROQ) =================
 function truncateText(text, maxLen = 7000) {
@@ -256,7 +242,7 @@ async function extractAttachmentContext(attachment) {
   }
 }
 
-app.post("/api/chatbot", async (req, res) => {
+app.post("/api/chatbot", asyncHandler(async (req, res) => {
   const { message, history = [], imageDataUrl = "", attachment = null } = req.body || {};
   const groqApiKey = process.env.GROQ_API_KEY;
 
@@ -280,56 +266,52 @@ app.post("/api/chatbot", async (req, res) => {
         .slice(-8)
     : [];
 
-  try {
-    const groqResponse = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${groqApiKey}`
-      },
-      body: JSON.stringify({
-        model: hasImage ? "meta-llama/llama-4-scout-17b-16e-instruct" : "llama-3.1-8b-instant",
-        temperature: 0.4,
-        max_tokens: 500,
-        messages: [
-          { role: "system", content: systemPrompt },
-          ...safeHistory,
-          hasImage
-            ? {
-                role: "user",
-                content: [
-                  { type: "text", text: message.trim() },
-                  { type: "image_url", image_url: { url: imageDataUrl } }
-                ]
-              }
-            : { role: "user", content: userTextWithAttachment }
-        ]
-      })
+  const groqResponse = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${groqApiKey}`
+    },
+    body: JSON.stringify({
+      model: hasImage ? "meta-llama/llama-4-scout-17b-16e-instruct" : "llama-3.1-8b-instant",
+      temperature: 0.4,
+      max_tokens: 350,
+      messages: [
+        { role: "system", content: systemPrompt },
+        ...safeHistory,
+        hasImage
+          ? {
+              role: "user",
+              content: [
+                { type: "text", text: message.trim() },
+                { type: "image_url", image_url: { url: imageDataUrl } }
+              ]
+            }
+          : { role: "user", content: userTextWithAttachment }
+      ]
+    })
+  });
+
+  if (!groqResponse.ok) {
+    const errorText = await groqResponse.text();
+    return res.status(502).json({
+      message: "Groq request failed",
+      details: errorText
     });
-
-    if (!groqResponse.ok) {
-      const errorText = await groqResponse.text();
-      return res.status(502).json({
-        message: "Groq request failed",
-        details: errorText
-      });
-    }
-
-    const data = await groqResponse.json();
-    const reply = data?.choices?.[0]?.message?.content?.trim();
-
-    if (!reply) {
-      return res.status(502).json({ message: "Groq returned an empty response" });
-    }
-
-    res.json({ reply });
-  } catch (error) {
-    res.status(500).json({ message: "Chatbot request failed" });
   }
-});
+
+  const data = await groqResponse.json();
+  const reply = data?.choices?.[0]?.message?.content?.trim();
+
+  if (!reply) {
+    return res.status(502).json({ message: "Groq returned an empty response" });
+  }
+
+  return res.json({ reply });
+}));
 
 // ================= RESUME AI SUGGESTIONS (GROQ) =================
-app.post("/api/suggest", async (req, res) => {
+app.post("/api/suggest", asyncHandler(async (req, res) => {
   const groqApiKey = process.env.GROQ_API_KEY;
   const { role = "", title = "", description = "", skills = "", targetField = "projects", sourceText = "" } = req.body || {};
 
@@ -439,30 +421,40 @@ Output format:
     return parseSuggestions(content);
   }
 
-  try {
-    let suggestions = await runSuggestPrompt(basePrompt);
+  let suggestions = await runSuggestPrompt(basePrompt);
 
-    // Retry once for summary if model drifts into project-like wording.
-    if (targetField === "summary" && isProjectLikeSummary(suggestions)) {
-      const retryPrompt = `${basePrompt}
+  // Retry once for summary if model drifts into project-like wording.
+  if (targetField === "summary" && isProjectLikeSummary(suggestions)) {
+    const retryPrompt = `${basePrompt}
 
 Critical retry rule for Summary:
 - Avoid project implementation verbs like Developed, Built, Implemented, Deployed.
 - Focus on candidate profile, strengths, domains, and career objective tone.
 - Do not mention specific project deliverables unless explicitly present in source text.`;
-      suggestions = await runSuggestPrompt(retryPrompt);
-    }
-
-    if (suggestions.length === 0) {
-      return res.status(502).json({ message: "No suggestions generated" });
-    }
-
-    return res.json({ suggestions });
-  } catch (error) {
-    return res.status(500).json({ message: "Failed to generate suggestions", details: error.message });
+    suggestions = await runSuggestPrompt(retryPrompt);
   }
+
+  if (suggestions.length === 0) {
+    return res.status(502).json({ message: "No suggestions generated" });
+  }
+
+  return res.json({ suggestions });
+}));
+
+app.use((err, req, res, next) => {
+  console.error("API Error:", err && err.message ? err.message : err);
+  if (res.headersSent) return next(err);
+  return res.status(500).json({ message: "Internal server error" });
+});
+
+process.on("uncaughtException", (err) => {
+  console.error("Uncaught Exception:", err);
+});
+
+process.on("unhandledRejection", (err) => {
+  console.error("Unhandled Rejection:", err);
 });
 
 // 🚀 Start
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => console.log(`Server running on ${PORT}`));

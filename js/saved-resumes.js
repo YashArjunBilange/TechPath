@@ -37,20 +37,12 @@ async function loadResumes() {
   }
 
   try {
-    const res = await fetch(`${API_BASE_URL}/resumes`, {
+    const data = await apiRequest('/resumes', {
       method: "GET",
       headers: {
-        "Authorization": window.currentUser.token,
-        "Content-Type": "application/json"
+        "Authorization": window.currentUser.token
       }
     });
-
-    if (!res.ok) {
-      const errData = await res.json().catch(() => ({}));
-      throw new Error(errData.message || "Error loading resumes");
-    }
-
-    const data = await res.json();
 
     if (!Array.isArray(data) || data.length === 0) {
       listDiv.innerHTML = "<p style='text-align: center; color: #999; padding: 40px 20px;'>📋 No saved resumes yet. Create one to get started!</p>";
@@ -104,10 +96,9 @@ window.saveResumeToDB = async function() {
 
     const method = window.editingResumeId ? "PUT" : "POST";
 
-    const res = await fetch(url, {
+    await apiRequest(url.replace(API_BASE_URL, ""), {
       method,
       headers: {
-        "Content-Type": "application/json",
         "Authorization": window.currentUser.token
       },
       body: JSON.stringify({
@@ -126,13 +117,6 @@ window.saveResumeToDB = async function() {
       })
     });
 
-    const data = await res.json();
-
-    if (!res.ok) {
-      alert("❌ Error: " + (data.message || "Failed to save resume"));
-      return;
-    }
-
     alert(`✅ Resume ${window.editingResumeId ? 'updated' : 'saved'} successfully!`);
     window.editingResumeId = null;
   } catch (err) {
@@ -148,16 +132,9 @@ window.editResume = async function(id) {
   }
 
   try {
-    const res = await fetch(`${API_BASE_URL}/resume/${id}`, {
+    const r = await apiRequest(`/resume/${id}`, {
       headers: { Authorization: window.currentUser.token }
     });
-
-    if (!res.ok) {
-      const errData = await res.json().catch(() => ({}));
-      throw new Error(errData.message || "Error loading resume");
-    }
-
-    const r = await res.json();
 
     // Check if form fields exist
     const fields = ["full-name", "email", "phone", "linkedin", "summary", "education", "skills", "projects", "certifications", "achievements"];
@@ -217,15 +194,10 @@ window.deleteResume = async function(id) {
   }
 
   try {
-    const res = await fetch(`${API_BASE_URL}/resume/${id}`, {
+    await apiRequest(`/resume/${id}`, {
       method: "DELETE",
       headers: { Authorization: window.currentUser.token }
     });
-
-    if (!res.ok) {
-      const errData = await res.json().catch(() => ({}));
-      throw new Error(errData.message || "Error deleting resume");
-    }
 
     alert("✅ Resume deleted successfully");
     await loadResumes();
