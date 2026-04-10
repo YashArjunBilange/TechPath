@@ -11,6 +11,28 @@ const API_URL = API_BASE_URL;
 
 let currentUser = null;
 
+async function loadDashboardData() {
+  if (!currentUser || !currentUser.token) return null;
+
+  const cacheKey = `dashboard:${currentUser.userId || currentUser.username}`;
+  const cachedDashboard = getCachedData(cacheKey, 180000);
+  if (cachedDashboard) return cachedDashboard;
+
+  try {
+    const dashboard = await apiRequest('/api/dashboard', {
+      method: 'GET',
+      headers: {
+        'Authorization': currentUser.token
+      }
+    });
+    setCachedData(cacheKey, dashboard);
+    return dashboard;
+  } catch (error) {
+    console.error('Dashboard load error:', error);
+    return null;
+  }
+}
+
 // Initialize auth state on page load
 document.addEventListener('DOMContentLoaded', () => {
   const token = localStorage.getItem('authToken');
@@ -221,6 +243,12 @@ async function loadSavedResumes() {
     return [];
   }
 
+  const cacheKey = `resumes:${currentUser.userId || currentUser.username}`;
+  const cachedResumes = getCachedData(cacheKey, 180000);
+  if (cachedResumes) {
+    return cachedResumes;
+  }
+
   try {
     const resumes = await apiRequest('/resumes', {
       method: 'GET',
@@ -228,7 +256,9 @@ async function loadSavedResumes() {
         'Authorization': currentUser.token
       }
     });
-    return Array.isArray(resumes) ? resumes : [];
+    const safeResumes = Array.isArray(resumes) ? resumes : [];
+    setCachedData(cacheKey, safeResumes);
+    return safeResumes;
   } catch (error) {
     console.error('Error loading resumes:', error);
     return [];
@@ -250,6 +280,10 @@ async function saveResume(resumeData) {
       body: JSON.stringify(resumeData)
     });
     showAuthMessage('✓ Resume saved successfully!', 'success');
+    if (currentUser) {
+      localStorage.removeItem(`techpath-cache:resumes:${currentUser.userId || currentUser.username}`);
+      localStorage.removeItem(`techpath-cache:dashboard:${currentUser.userId || currentUser.username}`);
+    }
     return true;
   } catch (error) {
     console.error('Error saving resume:', error);
@@ -275,6 +309,10 @@ async function deleteResume(resumeId) {
     });
 
     showAuthMessage('✓ Resume deleted', 'success');
+    if (currentUser) {
+      localStorage.removeItem(`techpath-cache:resumes:${currentUser.userId || currentUser.username}`);
+      localStorage.removeItem(`techpath-cache:dashboard:${currentUser.userId || currentUser.username}`);
+    }
     return true;
   } catch (error) {
     console.error('Error deleting resume:', error);
@@ -361,6 +399,10 @@ async function deleteResumeConfirm(resumeId) {
     });
 
     showAuthMessage('✓ Resume deleted', 'success');
+    if (currentUser) {
+      localStorage.removeItem(`techpath-cache:resumes:${currentUser.userId || currentUser.username}`);
+      localStorage.removeItem(`techpath-cache:dashboard:${currentUser.userId || currentUser.username}`);
+    }
     
     // Reload student resumes after deletion
     setTimeout(() => {
@@ -460,7 +502,8 @@ async function loadStudentResumes() {
   if (!resumesList) return;
   
   try {
-    const resumes = await loadSavedResumes();
+    const dashboard = await loadDashboardData();
+    const resumes = Array.isArray(dashboard?.resumes) ? dashboard.resumes : await loadSavedResumes();
     
     if (!resumes || resumes.length === 0) {
       resumesList.innerHTML = '<p style="text-align: center; color: #999;">No saved resumes yet</p>';

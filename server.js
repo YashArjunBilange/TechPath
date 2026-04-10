@@ -6,6 +6,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const compression = require("compression");
+const axios = require("axios");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const path = require("path");
@@ -14,6 +16,7 @@ const mammoth = require("mammoth");
 
 const app = express();
 app.use(cors());
+app.use(compression());
 app.use(bodyParser.json({ limit: "30mb" }));
 app.use(express.static('.'));
 
@@ -69,6 +72,25 @@ const Resume = mongoose.model("Resume", new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now }
 }));
+
+const cache = Object.create(null);
+
+function getFromCache(key) {
+  const entry = cache[key];
+  if (!entry) return null;
+  if (Date.now() > entry.expiresAt) {
+    delete cache[key];
+    return null;
+  }
+  return entry.value;
+}
+
+function setCache(key, value, ttlMs = 300000) {
+  cache[key] = {
+    value,
+    expiresAt: Date.now() + ttlMs
+  };
+}
 
 function asyncHandler(fn) {
   return async (req, res, next) => {
@@ -184,6 +206,46 @@ app.delete("/resume/:id", auth, asyncHandler(async (req, res) => {
   return res.json({ message: "Resume deleted" });
 }));
 
+// ================= DASHBOARD (COMBINED + CACHED) =================
+app.get("/api/dashboard", auth, asyncHandler(async (req, res) => {
+  const cacheKey = `dashboard:${req.userId}`;
+  const cachedDashboard = getFromCache(cacheKey);
+  if (cachedDashboard) {
+    return res.json(cachedDashboard);
+  }
+
+  const [user, resumes] = await Promise.all([
+    User.findById(req.userId).select("username email yearOfStudy createdAt"),
+    Resume.find({ userId: req.userId })
+      .select("resumeName atsScore updatedAt createdAt")
+      .sort({ updatedAt: -1 })
+      .limit(20)
+  ]);
+
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
+
+  const payload = {
+    user: {
+      username: user.username,
+      email: user.email,
+      yearOfStudy: user.yearOfStudy,
+      joinedAt: user.createdAt
+    },
+    stats: {
+      totalResumes: resumes.length,
+      avgAtsScore: resumes.length
+        ? Math.round(resumes.reduce((sum, r) => sum + (r.atsScore || 0), 0) / resumes.length)
+        : 0
+    },
+    resumes
+  };
+
+  setCache(cacheKey, payload, 300000);
+  return res.json(payload);
+}));
+
 // ================= CHATBOT (GROQ) =================
 function truncateText(text, maxLen = 7000) {
   if (!text || typeof text !== "string") return "";
@@ -254,25 +316,22 @@ app.post("/api/chatbot", asyncHandler(async (req, res) => {
     return res.status(400).json({ message: "Message is required" });
   }
 
-  const systemPrompt = "You are TechPath Assistant, a concise and helpful AI mentor for AI engineering students. Give practical, step-by-step guidance focused on learning roadmaps, projects, resumes, interviews, and career growth.";
+  const shortMessage = message.trim().slice(0, 2000);
+  const systemPrompt = "You are TechPath Assistant for AI students. Give concise, practical, step-by-step guidance for roadmap, projects, resume, interview, and career questions.";
   const hasImage = typeof imageDataUrl === "string" && /^data:image\/[a-zA-Z]+;base64,/.test(imageDataUrl);
   const attachmentContext = await extractAttachmentContext(attachment);
   const userTextWithAttachment = attachmentContext
-    ? `${message.trim()}\n\n${attachmentContext}`
-    : message.trim();
+    ? `${shortMessage}\n\n${attachmentContext.slice(0, 4000)}`
+    : shortMessage;
   const safeHistory = Array.isArray(history)
     ? history
         .filter((entry) => entry && (entry.role === "user" || entry.role === "assistant") && typeof entry.content === "string")
         .slice(-8)
     : [];
 
-  const groqResponse = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${groqApiKey}`
-    },
-    body: JSON.stringify({
+  const groqResponse = await axios.post(
+    "https://api.groq.com/openai/v1/chat/completions",
+    {
       model: hasImage ? "meta-llama/llama-4-scout-17b-16e-instruct" : "llama-3.1-8b-instant",
       temperature: 0.4,
       max_tokens: 350,
@@ -283,24 +342,23 @@ app.post("/api/chatbot", asyncHandler(async (req, res) => {
           ? {
               role: "user",
               content: [
-                { type: "text", text: message.trim() },
+                  { type: "text", text: shortMessage },
                 { type: "image_url", image_url: { url: imageDataUrl } }
               ]
             }
           : { role: "user", content: userTextWithAttachment }
       ]
-    })
-  });
+    },
+    {
+      timeout: 10000,
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${groqApiKey}`
+      }
+    }
+  );
 
-  if (!groqResponse.ok) {
-    const errorText = await groqResponse.text();
-    return res.status(502).json({
-      message: "Groq request failed",
-      details: errorText
-    });
-  }
-
-  const data = await groqResponse.json();
+  const data = groqResponse.data;
   const reply = data?.choices?.[0]?.message?.content?.trim();
 
   if (!reply) {
@@ -397,26 +455,24 @@ Output format:
   }
 
   async function runSuggestPrompt(promptText) {
-    const groqResponse = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${groqApiKey}`
-      },
-      body: JSON.stringify({
+    const groqResponse = await axios.post(
+      "https://api.groq.com/openai/v1/chat/completions",
+      {
         model: "llama-3.1-8b-instant",
         temperature: 0.3,
         max_tokens: 300,
         messages: [{ role: "user", content: promptText }]
-      })
-    });
+      },
+      {
+        timeout: 10000,
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${groqApiKey}`
+        }
+      }
+    );
 
-    if (!groqResponse.ok) {
-      const errorText = await groqResponse.text();
-      throw new Error(errorText || "Groq request failed");
-    }
-
-    const data = await groqResponse.json();
+    const data = groqResponse.data;
     const content = data?.choices?.[0]?.message?.content?.trim() || "";
     return parseSuggestions(content);
   }

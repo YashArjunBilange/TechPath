@@ -4,6 +4,7 @@
 
 const API_BASE_URL = "https://techpath-kswb.onrender.com";
 const API_TIMEOUT_MS = 10000;
+const CACHE_PREFIX = "techpath-cache:";
 
 async function apiRequest(endpoint, options = {}) {
   const controller = new AbortController();
@@ -39,5 +40,32 @@ async function apiRequest(endpoint, options = {}) {
     throw error;
   } finally {
     clearTimeout(timeoutId);
+  }
+}
+
+function getCachedData(key, maxAgeMs = 300000) {
+  try {
+    const raw = localStorage.getItem(`${CACHE_PREFIX}${key}`);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    if (!parsed || typeof parsed !== "object") return null;
+    if (!parsed.timestamp || Date.now() - parsed.timestamp > maxAgeMs) {
+      localStorage.removeItem(`${CACHE_PREFIX}${key}`);
+      return null;
+    }
+    return parsed.data ?? null;
+  } catch {
+    return null;
+  }
+}
+
+function setCachedData(key, data) {
+  try {
+    localStorage.setItem(
+      `${CACHE_PREFIX}${key}`,
+      JSON.stringify({ timestamp: Date.now(), data })
+    );
+  } catch {
+    // Ignore storage quota/private mode errors.
   }
 }

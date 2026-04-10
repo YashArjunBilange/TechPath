@@ -37,6 +37,21 @@ async function loadResumes() {
   }
 
   try {
+    const cacheKey = `resumes:${window.currentUser.userId || window.currentUser.username}`;
+    const cached = getCachedData(cacheKey, 180000);
+    if (cached && Array.isArray(cached) && cached.length) {
+      listDiv.innerHTML = cached.map(r => `
+      <div style="border: 1px solid #ddd; padding: 12px; margin: 8px 0; border-radius: 6px; background: #f9f9f9;">
+        <h3 style="margin: 0 0 8px 0; color: #333;">${escapeHtml((r && r.resumeName) || 'Untitled Resume')}</h3>
+        <p style="margin: 0 0 8px 0; font-size: 12px; color: #666;">👤 ${escapeHtml((r && r.name) || 'N/A')} | 📧 ${escapeHtml((r && r.email) || 'N/A')}</p>
+        <div style="display: flex; gap: 8px;">
+          <button onclick="window.editResume('${r && r._id ? r._id : ''}')" style="background: #3b82f6; color: white; padding: 6px 12px; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">✏️ Edit</button>
+          <button onclick="window.deleteResume('${r && r._id ? r._id : ''}')" style="background: #ef4444; color: white; padding: 6px 12px; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">🗑️ Delete</button>
+        </div>
+      </div>
+    `).join("");
+    }
+
     const data = await apiRequest('/resumes', {
       method: "GET",
       headers: {
@@ -48,6 +63,8 @@ async function loadResumes() {
       listDiv.innerHTML = "<p style='text-align: center; color: #999; padding: 40px 20px;'>📋 No saved resumes yet. Create one to get started!</p>";
       return;
     }
+
+    setCachedData(cacheKey, data);
 
     listDiv.innerHTML = data.map(r => `
       <div style="border: 1px solid #ddd; padding: 12px; margin: 8px 0; border-radius: 6px; background: #f9f9f9;">
@@ -118,6 +135,10 @@ window.saveResumeToDB = async function() {
     });
 
     alert(`✅ Resume ${window.editingResumeId ? 'updated' : 'saved'} successfully!`);
+    if (window.currentUser) {
+      localStorage.removeItem(`techpath-cache:resumes:${window.currentUser.userId || window.currentUser.username}`);
+      localStorage.removeItem(`techpath-cache:dashboard:${window.currentUser.userId || window.currentUser.username}`);
+    }
     window.editingResumeId = null;
   } catch (err) {
     console.error("Error saving resume:", err);
@@ -200,6 +221,10 @@ window.deleteResume = async function(id) {
     });
 
     alert("✅ Resume deleted successfully");
+    if (window.currentUser) {
+      localStorage.removeItem(`techpath-cache:resumes:${window.currentUser.userId || window.currentUser.username}`);
+      localStorage.removeItem(`techpath-cache:dashboard:${window.currentUser.userId || window.currentUser.username}`);
+    }
     await loadResumes();
   } catch (err) {
     console.error("Error deleting resume:", err);

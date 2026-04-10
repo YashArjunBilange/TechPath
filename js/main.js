@@ -1032,7 +1032,7 @@
     }
 
     updateChatbotAuthUI(false);
-    setInterval(() => updateChatbotAuthUI(false), 800);
+    setInterval(() => updateChatbotAuthUI(false), 3000);
   }
 
   initChatbot();
