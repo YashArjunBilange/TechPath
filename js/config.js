@@ -2,7 +2,7 @@
  * config.js – Centralized API configuration + safe request wrapper
  */
 
-const API_BASE_URL = "https://techpath-kswb.onrender.com";
+const API_BASE_URL = "https://ai-techpath.onrender.com";
 const API_TIMEOUT_MS = 10000;
 const CACHE_PREFIX = "techpath-cache:";
 
