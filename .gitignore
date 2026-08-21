@@ -1,2 +1,4 @@
+#files and folders not to push on github
+
 /node_modules
 .env
